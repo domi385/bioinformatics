@@ -30,3 +30,9 @@
 *.exe
 *.out
 *.app
+*.fasta
+*.paf
+
+# Directories
+.idea/*
+cmake-build-debug/*

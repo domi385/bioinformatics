@@ -7,7 +7,6 @@
 #include "file_structures/paf_entry.h"
 #include "utils/file_utils.h"
 
-
 std::vector<PafEntry> filterPAFOverlaps(std::vector<PafEntry> &paf_entries) {
     std::vector<PafEntry> filtered_entries;
     for (int i = 0, end = paf_entries.size(); i < end; i++) {
@@ -35,7 +34,6 @@ std::vector<PafEntry> filterPAFOverlaps(std::vector<PafEntry> &paf_entries) {
     }
     return filtered_entries;
 }
-
 
 int main(int argc, char **argv) {
     int expected_num_arguments = 5;

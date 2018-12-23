@@ -8,7 +8,6 @@
 #ifndef SCAFFOLD_PAFENTRY_H
 #define SCAFFOLD_PAFENTRY_H
 
-
 class PafEntry {
 private:
     std::string origin_id_;
@@ -25,12 +24,10 @@ private:
     int map_quality_;
     std::string sam_data_;
 
-
     //INITIALIZATION METHODS
     bool determine_order(long len1, long len2, long s1, long e1, long s2, long e2);
     void store(long el1, long ol1, long oh1, long oh2, long ol2, long el2);
     void calculate_scores();
-
 
 public:
 
@@ -53,6 +50,5 @@ public:
 
     long getNumMatchesWithoutGaps();
 };
-
 
 #endif //SCAFFOLD_PAFENTRY_H
