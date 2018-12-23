@@ -19,12 +19,7 @@ std::vector<PafEntry> filterPAFOverlaps(std::vector<PafEntry> &paf_entries) {
         long ol2 = curr_entry.getTargetEnd() - oh2;
         long el2 = curr_entry.getTargetLen() - curr_entry.getTargetEnd();
 
-        double sequence_identity = curr_entry.getNumMatchesWithoutGaps() /
-                                   (double) std::min(curr_entry.getQueryLen(), curr_entry.getTargetLen());
-        double overlap_score = sequence_identity * (ol1 + ol2) / 2.;
-        double mean_overhang = (oh1 + oh2) / 2.;
-        double extension_score1 = overlap_score + el1 / 2. - mean_overhang;
-        double extension_score2 = overlap_score + el2 / 2. - mean_overhang;
+
 
         //std::cout << i << "\t" << sequence_identity << "\t" << overlap_score << "\t" << extension_score1 << "\t"
         //          << extension_score2 << std::endl;
