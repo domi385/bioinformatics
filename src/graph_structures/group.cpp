@@ -4,8 +4,6 @@
 #include <algorithm>
 #include "group.h"
 
-
-
 Group::Group(std::vector<Path> &paths){
     this->paths_=paths;
 }

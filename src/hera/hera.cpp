@@ -4,7 +4,7 @@
 
 void Hera::ConstructOverlapGraph()
 {
-    for (int i = 0; i < paf_entries.size(); i++)
+    for (int i = 0, end = paf_entries.size(); i < end; i++)
     {
         Edge edge = Edge(paf_entries[i]);
         SequenceNode * pNode = NULL;

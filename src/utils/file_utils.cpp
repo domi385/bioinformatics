@@ -74,8 +74,7 @@ std::vector<PafEntry> loadFromPAF(std::string &file_name) {
 }
 
 bool filterPafEntries(PafEntry entry) {
-  //TODO add filtering
-  return false;
+  return (entry.GetSequenceIdentity() < 0.5) || (entry.GetSequenceIdentity() >=1);
 }
 
 }
