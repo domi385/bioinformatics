@@ -3,7 +3,7 @@
 //
 
 #include <string>
-#include "paf_entry.h"
+#include "../file_structures/paf_entry.h"
 
 #ifndef SCAFFOLD_EDGE_H
 #define SCAFFOLD_EDGE_H
