@@ -15,11 +15,12 @@ class Hera {
   std::unordered_map<std::string, SequenceNode> read_nodes_;
 
   Path GeneratePath(Path &path, Edge &edge, NodeSelection &selection);
-
+  SequenceNode GetNode(std::string& node_id);
+  void AddEdges(std::vector<PafEntry> &entries);
  public:
-  Hera();
+  Hera(std::unordered_map<std::string, SequenceNode> conting_nodes, std::unordered_map<std::string, SequenceNode> read_nodes);
 
-  void ConstructOverlapGraph(std::vector<PafEntry> &paf_entries);
+  void ConstructOverlapGraph(std::vector<PafEntry> &conting_read_paf_entries, std::vector<PafEntry> &read_read_paf_entries);
   std::vector<Path> GeneratePaths();
 };
 

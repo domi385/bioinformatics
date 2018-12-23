@@ -2,20 +2,32 @@
 #include "../graph_structures/edge.h"
 #include "../graph_structures/sequence_node.h"
 
-void Hera::ConstructOverlapGraph(std::vector<PafEntry> &paf_entries) {
-  for (int i = 0, end = paf_entries.size(); i < end; i++) {
-    Edge edge = Edge(paf_entries[i]);
-    SequenceNode *pNode = NULL;
-    if (conting_nodes_.find(edge.GetIdEnd()) != conting_nodes_.end()) {
-      pNode = &conting_nodes_[edge.GetIdEnd()];
-    } else {
-      pNode = &read_nodes_[edge.GetIdEnd()];
-    }
+Hera::Hera(std::unordered_map<std::string, SequenceNode> conting_nodes, std::unordered_map<std::string, SequenceNode> read_nodes){
+  conting_nodes_=conting_nodes;
+  read_nodes_=read_nodes;
+}
 
-    // jos treba na pNode pozvati funkciju add_edge i dodati edge
+void Hera::ConstructOverlapGraph(std::vector<PafEntry> &conting_read_paf_entries, std::vector<PafEntry> &read_read_paf_entries) {
+  AddEdges(conting_read_paf_entries);
+  AddEdges(read_read_paf_entries);
+
+}
+void Hera::AddEdges(std::vector<PafEntry>& entries){
+  for (int i = 0, end = entries.size(); i < end; i++) {
+    Edge edge = Edge(entries.at(i));
+    std::string currEndId = edge.GetIdEnd();
+    SequenceNode pNode = GetNode(currEndId);
+    pNode.add_edge(edge);
   }
 }
 
-Path Hera::GeneratePath(Path &path, Edge &edge, NodeSelection &selection) {
-  //TODO
+SequenceNode Hera::GetNode(std::string& node_id){
+  if (conting_nodes_.find(node_id)!=conting_nodes_.end()){
+    return conting_nodes_.at(node_id);
+  }
+  if (read_nodes_.find(node_id) != read_nodes_.end()){
+    return read_nodes_.at(node_id);
+  }
+  throw "Shouldn't never happen! Thrown if a node id is not in conting and read maps";
 }
+

@@ -16,10 +16,11 @@ void Group::FilterGroup() {
 
 void Group::CalculateFrequencies() {
   int n = max_length_ - min_length_ + 1;
-  frequencies_ = int[n];
+
+  frequencies_.resize(n, 0);
   for (int i = 0, end = paths_.size(); i < end; i++) {
     int index = paths_.at(i).getLength() - min_length_;
-    frequencies_[index]++;
+    frequencies_.at(index)++;
   }
-  max_frequency_ = *std::max_element(frequencies_, frequencies_ + n);
+  max_frequency_ = *std::max_element(std::begin(frequencies_), std::end(frequencies_));
 }

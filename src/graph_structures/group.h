@@ -15,7 +15,7 @@ class Group {
   long max_length_;
   int max_frequency_;
 
-  int frequencies_[];
+  std::vector<int> frequencies_;
   void CalculateFrequencies();
  public:
   explicit Group(std::vector<Path> &paths);

@@ -4,9 +4,14 @@
 
 
 #include <vector>
+#include <unordered_map>
 #include <string>
+
 #include <iostream>
+
 #include "project_utils.h"
+#include "../graph_structures/sequence_node.h"
+#include "../file_structures/fasta_entry.h"
 
 namespace project_utils {
 
@@ -30,6 +35,17 @@ std::vector<std::string> splitString(std::string &s, std::string &delimiter) {
   std::string last_part = s.substr(last_index);
   string_parts.push_back(last_part);
   return string_parts;
+}
+
+std::unordered_map<std::string, SequenceNode> ConvertFastaToNodeMap(std::vector<FastaEntry> &entries) {
+  std::unordered_map<std::string, SequenceNode> nodes_map;
+  for (int i = 0, end = entries.size(); i < end; i++) {
+    FastaEntry curr_entry = entries.at(i);
+    std::string entry_id = curr_entry.GetEntryId();
+    SequenceNode currNode = SequenceNode(entry_id, curr_entry.GetLength(), curr_entry.IsConting());
+    nodes_map.emplace(curr_entry.GetEntryId(), currNode);
+  }
+  return nodes_map;
 }
 
 }
