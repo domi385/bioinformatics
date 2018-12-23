@@ -1,5 +1,6 @@
-
 #include "hera.h"
+#include "../graph_structures/edge.h"
+#include "../graph_structures/sequence_node.h"
 
 void Hera::ConstructOverlapGraph()
 {
