@@ -65,7 +65,7 @@ void PafEntry::CalculateScores() {
 }
 
 std::string PafEntry::GetTargetId() {
-  return std::string();
+  return target_id_;
 }
 
 double PafEntry::GetOverlapScore() {
