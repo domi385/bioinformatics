@@ -14,12 +14,12 @@ class Hera {
   std::unordered_map<std::string, SequenceNode> conting_nodes_;
   std::unordered_map<std::string, SequenceNode> read_nodes_;
 
-  Path GeneratePath(Path& path, Edge& edge, NodeSelection& selection);
+  Path GeneratePath(Path &path, Edge &edge, NodeSelection &selection);
 
  public:
   Hera();
 
-  void ConstructOverlapGraph(std::vector<PafEntry>& paf_entries);
+  void ConstructOverlapGraph(std::vector<PafEntry> &paf_entries);
   std::vector<Path> GeneratePaths();
 };
 

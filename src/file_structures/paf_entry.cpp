@@ -5,7 +5,7 @@
 #include <algorithm>
 #include "paf_entry.h"
 
-PafEntry::PafEntry(std::vector<std::string>& paf_parts) {
+PafEntry::PafEntry(std::vector<std::string> &paf_parts) {
   std::string id1 = paf_parts.at(0);
   long len1 = stol(paf_parts.at(1));
   long s1 = stol(paf_parts.at(2));
@@ -25,8 +25,8 @@ PafEntry::PafEntry(std::vector<std::string>& paf_parts) {
 
 }
 
-bool PafEntry::DetermineOrder(std::string& id1, std::string& id2, long len1, long len2, long s1,
-                               long e1, long s2, long e2) {
+bool PafEntry::DetermineOrder(std::string &id1, std::string &id2, long len1, long len2, long s1,
+                              long e1, long s2, long e2) {
 
   long l1 = s1;
   long ol1 = e1 - s1;
@@ -43,7 +43,7 @@ bool PafEntry::DetermineOrder(std::string& id1, std::string& id2, long len1, lon
   return false;
 }
 
-void PafEntry::Store(std::string& id1, std::string& id2, long len1, long len2, long el1, long ol1, long oh1, long oh2,
+void PafEntry::Store(std::string &id1, std::string &id2, long len1, long len2, long el1, long ol1, long oh1, long oh2,
                      long ol2, long el2) {
   this->origin_id_ = id1;
   this->target_id_ = id2;

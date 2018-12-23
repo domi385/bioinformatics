@@ -4,7 +4,6 @@
 
 
 #include <vector>
-#include <unordered_map>
 #include <fstream>
 #include <iostream>
 #include "../file_structures/fasta_entry.h"
@@ -14,9 +13,9 @@
 
 namespace file_utils {
 
-std::unordered_map<std::string, FastaEntry> loadFromFasta(std::string &filename, bool is_conting_file) {
+std::vector<FastaEntry> loadFromFasta(std::string &filename, bool is_conting_file) {
 
-  std::unordered_map<std::string, FastaEntry> sequence_nodes;
+  std::vector<FastaEntry> sequence_nodes;
   std::ifstream fasta_file(filename);
 
   if (!fasta_file.is_open()) {
@@ -31,7 +30,7 @@ std::unordered_map<std::string, FastaEntry> loadFromFasta(std::string &filename,
     }
     if (line.rfind('>') == 0) {
       if (!node_id.empty()) {
-        sequence_nodes.emplace(node_id, FastaEntry(node_id, node_value, is_conting_file));
+        sequence_nodes.push_back(FastaEntry(node_id, node_value, is_conting_file));
         node_id.clear();
         node_value.clear();
       }
@@ -42,7 +41,7 @@ std::unordered_map<std::string, FastaEntry> loadFromFasta(std::string &filename,
   }
 
   if (!node_id.empty()) {
-    sequence_nodes.emplace(node_id, FastaEntry(node_id, node_value, is_conting_file));
+    sequence_nodes.push_back(FastaEntry(node_id, node_value, is_conting_file));
   }
 
   return sequence_nodes;

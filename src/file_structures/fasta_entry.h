@@ -26,6 +26,9 @@ class FastaEntry {
  public:
   FastaEntry(std::string &node_id, std::string &value, bool is_conting);
 
+  std::string GetEntryId();
+  long GetLength();
+  bool IsConting();
 };
 
 #endif //SCAFFOLD_FASTA_ENTRY_H

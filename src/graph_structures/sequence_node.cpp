@@ -4,27 +4,30 @@
 
 #include "sequence_node.h"
 
-SequenceNode::SequenceNode(std::string& id, long length, bool is_conting):
-    id_(id), length_(length), is_conting_(is_conting){}
-
-long SequenceNode::getLength(){
-    return length_;
+SequenceNode::SequenceNode(std::string& id, long length, bool is_conting) {
+  id_=id;
+  length_ = length;
+  is_conting_ = is_conting;
 }
 
-bool SequenceNode::isConting(){
-    return is_conting_;
+long SequenceNode::getLength() {
+  return length_;
 }
 
-std::string SequenceNode::getId(){
-    return id_;
+bool SequenceNode::isConting() {
+  return is_conting_;
 }
 
-std::vector<Edge> SequenceNode::getEdges(){
-    return edges;
+std::string SequenceNode::getId() {
+  return id_;
 }
 
-void SequenceNode::add_edge(Edge& edge){
-    edges.push_back(edge);
+std::vector<Edge> SequenceNode::getEdges() {
+  return edges;
+}
+
+void SequenceNode::add_edge(Edge &edge) {
+  edges.push_back(edge);
 }
 
 

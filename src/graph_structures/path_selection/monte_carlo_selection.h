@@ -7,7 +7,6 @@
 #include "../sequence_node.h"
 #include "node_selection.h"
 
-
 #ifndef SCAFFOLD_MONTE_CARLO_SELECTION_H
 #define SCAFFOLD_MONTE_CARLO_SELECTION_H
 
