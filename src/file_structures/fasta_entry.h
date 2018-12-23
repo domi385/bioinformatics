@@ -1,7 +1,7 @@
 #include <string>
 
-#ifndef SCAFFOLD_ANCHORN_NODE_H
-#define SCAFFOLD_ANCHORN_NODE_H
+#ifndef SCAFFOLD_FASTA_ENTRY_H
+#define SCAFFOLD_FASTA_ENTRY_H
 
 class FastaEntry {
 
@@ -21,11 +21,11 @@ class FastaEntry {
   /**
    * Sequence length;
    */
-  long length_;
+  unsigned int length_;
 
  public:
-  FastaEntry(std::string node_id, std::string value, bool is_conting);
+  FastaEntry(std::string &node_id, std::string &value, bool is_conting);
 
 };
 
-#endif //SCAFFOLD_ANCHORN_NODE_H
+#endif //SCAFFOLD_FASTA_ENTRY_H

@@ -14,13 +14,13 @@ private:
     std::vector<Path> paths_;
     long min_length_;
     long max_length_;
-    int max_frequency;
+    int max_frequency_;
 
     int frequencies_[];
-    void calculate_frequencies();
+    void CalculateFrequencies();
 public:
-    Group(std::vector<Path>& paths);
-    void filter_group();
+    explicit Group(std::vector<Path>& paths);
+    void FilterGroup();
 };
 
 

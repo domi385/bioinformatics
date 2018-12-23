@@ -7,28 +7,6 @@
 #include "file_structures/paf_entry.h"
 #include "utils/file_utils.h"
 
-std::vector<PafEntry> filterPAFOverlaps(std::vector<PafEntry> &paf_entries) {
-    std::vector<PafEntry> filtered_entries;
-    for (int i = 0, end = paf_entries.size(); i < end; i++) {
-        PafEntry curr_entry = paf_entries.at(i);
-        long el1 = curr_entry.getQueryStart();
-        long ol1 = curr_entry.getQueryEnd() - el1;
-        long oh1 = curr_entry.getQueryLen() - curr_entry.getQueryEnd();
-
-        long oh2 = curr_entry.getTargetStart();
-        long ol2 = curr_entry.getTargetEnd() - oh2;
-        long el2 = curr_entry.getTargetLen() - curr_entry.getTargetEnd();
-
-
-
-        //std::cout << i << "\t" << sequence_identity << "\t" << overlap_score << "\t" << extension_score1 << "\t"
-        //          << extension_score2 << std::endl;
-
-
-        filtered_entries.push_back(paf_entries.at(i));
-    }
-    return filtered_entries;
-}
 
 int main(int argc, char **argv) {
     int expected_num_arguments = 5;

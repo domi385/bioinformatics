@@ -18,8 +18,8 @@ private:
     bool finalized_;
 
 public:
-    Path(SequenceNode start_node, Edge start_edge);
-    void add(SequenceNode node, Edge edge);
+    explicit Path(SequenceNode& start_node, Edge& start_edge);
+    void add(SequenceNode& node, Edge& edge);
     void finalize();
     long getLength();
 };

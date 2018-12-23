@@ -4,7 +4,7 @@
 
 #include "fasta_entry.h"
 
-FastaEntry::FastaEntry(std::string node_id, std::string value, bool is_conting) {
+FastaEntry::FastaEntry(std::string& node_id, std::string& value, bool is_conting) {
     entry_id_ = node_id;
     value_ = value;
     length_ = value.length();

@@ -73,8 +73,8 @@ std::vector<PafEntry> loadFromPAF(std::string &file_name) {
   return sequence_overlaps;
 }
 
-bool filterPafEntries(PafEntry entry) {
-  return (entry.GetSequenceIdentity() < 0.5) || (entry.GetSequenceIdentity() >=1);
+bool filterPafEntries(PafEntry &entry) {
+  return (entry.GetSequenceIdentity() < 0.5) || (entry.GetSequenceIdentity() >= 1);
 }
 
 }

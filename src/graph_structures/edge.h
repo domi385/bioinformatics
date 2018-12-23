@@ -17,12 +17,12 @@ private:
     double sequence_identity_;
     long overlap_length_;
 
-    long overhang_start_; //oh1
-    long overhang_end_; //oh2
-    long extension_len_start_; //el1
-    long extension_len_end_; //el2
-    long overlap_len_start_; //ol1
-    long overlap_len_end_; //ol2
+    long overhang_origin_; //oh1
+    long overhang_target_; //oh2
+    long extension_len_origin_; //el1
+    long extension_len_target_; //el2
+    long overlap_len_origin_; //ol1
+    long overlap_len_target_; //ol2
 
 public:
     //constructor
@@ -34,12 +34,12 @@ public:
     double GetExtensionScore();
     double GetSequenceIdentity();
     long GetOverlapLength();
-    long GetOverhangStart();
-    long GetOverhangEnd();
-    long GetExtensonLenStart();
-    long GetExtensonLenEnd();
-    long GetOverlapLenStart();
-    long GetOverlapLenEnd();
+    long GetOverhangOrigin();
+    long GetOverhangTarget();
+    long GetExtensonLenOrigin();
+    long GetExtensonLenTarget();
+    long GetOverlapLenOrigin();
+    long GetOverlapLenTarget();
 };
 
 

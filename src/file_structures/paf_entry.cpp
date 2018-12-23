@@ -5,7 +5,7 @@
 #include <algorithm>
 #include "paf_entry.h"
 
-PafEntry::PafEntry(std::vector<std::string> paf_parts) {
+PafEntry::PafEntry(std::vector<std::string>& paf_parts) {
   std::string id1 = paf_parts.at(0);
   long len1 = stol(paf_parts.at(1));
   long s1 = stol(paf_parts.at(2));
@@ -20,12 +20,12 @@ PafEntry::PafEntry(std::vector<std::string> paf_parts) {
   map_quality_ = stoi(paf_parts.at(11));
   sam_data_ = paf_parts.at(12);
 
-  order_ = determine_order(id1, id2, len1, len2, s1, e1, s2, e2);
-  calculate_scores();
+  order_ = DetermineOrder(id1, id2, len1, len2, s1, e1, s2, e2);
+  CalculateScores();
 
 }
 
-bool PafEntry::determine_order(std::string id1, std::string id2, long len1, long len2, long s1,
+bool PafEntry::DetermineOrder(std::string& id1, std::string& id2, long len1, long len2, long s1,
                                long e1, long s2, long e2) {
 
   long l1 = s1;
@@ -36,14 +36,14 @@ bool PafEntry::determine_order(std::string id1, std::string id2, long len1, long
   long r2 = len2 - e2;
 
   if (l1 + r2 > l2 + r1) {
-    store(id1, id2, len1, len2, l1, ol1, r1, l2, ol2, r2);
+    Store(id1, id2, len1, len2, l1, ol1, r1, l2, ol2, r2);
     return true;
   }
-  store(id2, id1, len2, len1, l2, ol2, r2, l1, ol1, r1);
+  Store(id2, id1, len2, len1, l2, ol2, r2, l1, ol1, r1);
   return false;
 }
 
-void PafEntry::store(std::string id1, std::string id2, long len1, long len2, long el1, long ol1, long oh1, long oh2,
+void PafEntry::Store(std::string& id1, std::string& id2, long len1, long len2, long el1, long ol1, long oh1, long oh2,
                      long ol2, long el2) {
   this->origin_id_ = id1;
   this->target_id_ = id2;
@@ -56,7 +56,7 @@ void PafEntry::store(std::string id1, std::string id2, long len1, long len2, lon
   this->ol_2_ = ol2;
   this->el_2_ = el2;
 }
-void PafEntry::calculate_scores() {
+void PafEntry::CalculateScores() {
   sequence_identity_ = num_matches_ /
       (double) std::min(origin_length_, target_length_);
   overlap_score_ = sequence_identity_ * (ol_1_ + ol_2_) / 2.;
@@ -64,33 +64,6 @@ void PafEntry::calculate_scores() {
   extension_score_ = overlap_score_ + el_2_ / 2. - mean_overhang;
 }
 
-long PafEntry::getTargetLen() {
-  return target_length_;
-}
-
-long PafEntry::getTargetStart() {
-  return target_start_coord_;
-}
-
-long PafEntry::getQueryEnd() {
-  return query_end_coord_;
-}
-
-long PafEntry::getQueryLen() {
-  return origin_length_;
-}
-
-long PafEntry::getQueryStart() {
-  return query_start_coord_;
-}
-
-long PafEntry::getTargetEnd() {
-  return target_end_coord_;
-}
-
-long PafEntry::getNumMatchesWithoutGaps() {
-  return num_matches_;
-}
 std::string PafEntry::GetTargetId() {
   return std::string();
 }
@@ -101,26 +74,30 @@ double PafEntry::GetOverlapScore() {
 double PafEntry::GetExtensionScore() {
   return extension_score_;
 }
-long PafEntry::GetOverlapLength() {
-  //TODO get ol
-  return 0;
-}
+
 double PafEntry::GetSequenceIdentity() {
   return sequence_identity_;
 }
-long PafEntry::GetExtensionLenStart() {
-  //TODO get es start
-  return 0;
+long PafEntry::GetOverlapLength() {
+  return num_matches_; //TODO check if here should be num_bases
 }
-long PafEntry::GetOverlapLenStart() {
-  //TODO get ol start
-  return 0;
+long PafEntry::GetOverhangLenOrigin() {
+  return oh_1_;
 }
-long PafEntry::GetExtensionLenEnd() {
-  //TODO get es end
-  return 0;
+long PafEntry::GetOverhangLenTarget() {
+  return oh_2_;
 }
-long PafEntry::GetOverlapLenEnd() {
-  //TODO get ol end
-  return 0;
+long PafEntry::GetExtensionLenOrigin() {
+  return el_1_;
 }
+long PafEntry::GetExtensionLenTarget() {
+  return el_2_;
+}
+long PafEntry::GetOverlapLenOrigin() {
+  return ol_1_;
+}
+long PafEntry::GetOverlapLenTarget() {
+  return ol_2_;
+}
+
+

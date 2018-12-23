@@ -41,42 +41,31 @@ class PafEntry {
   double extension_score_;
 
   //INITIALIZATION METHODS
-  bool determine_order(std::string id1, std::string id2, long len1, long len2, long s1,
+  bool DetermineOrder(std::string& id1, std::string& id2, long len1, long len2, long s1,
                        long e1, long s2, long e2);
-  void store(std::string id1, std::string id2, long len1, long len2, long el1, long ol1, long oh1, long oh2,
+  void Store(std::string& id1, std::string& id2, long len1, long len2, long el1, long ol1, long oh1, long oh2,
              long ol2, long el2);
-  void calculate_scores();
+  void CalculateScores();
 
  public:
 
   //CONSTRUCTORS
-  PafEntry(std::vector<std::string> paf_parts);
+  explicit PafEntry(std::vector<std::string>& paf_parts);
 
   //GETTERS
 
-  long getTargetLen();
-
-  long getTargetStart();
-
-  long getQueryEnd();
-
-  long getQueryLen();
-
-  long getQueryStart();
-
-  long getTargetEnd();
-
-  long getNumMatchesWithoutGaps();
   std::string GetTargetId();
   double GetOverlapScore();
   double GetExtensionScore();
-  long GetOverlapLength();
   double GetSequenceIdentity();
-  long GetExtensionLenStart();
-  long GetOverlapLenStart();
-  long GetExtensionLenEnd();
-  long GetOverlapLenEnd();
 
+  long GetOverlapLength();
+  long GetOverhangLenOrigin();
+  long GetOverhangLenTarget();
+  long GetExtensionLenOrigin();
+  long GetExtensionLenTarget();
+  long GetOverlapLenOrigin();
+  long GetOverlapLenTarget();
 };
 
 #endif //SCAFFOLD_PAFENTRY_H

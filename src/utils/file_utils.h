@@ -37,7 +37,7 @@ std::vector<PafEntry> loadFromPAF(std::string &file_name);
 * @param entry paf entry for which to decide if it should be filtered
 * @return true if the entry should be filtered
 */
-bool filterPafEntries(PafEntry entry);
+bool filterPafEntries(PafEntry& entry);
 };
 
 #endif //SCAFFOLD_FILE_UTILS_H
