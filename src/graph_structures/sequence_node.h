@@ -21,12 +21,12 @@ class SequenceNode {
   SequenceNode(std::string& id, long length, bool is_conting);
 
   //getters
-  std::string getId();
-  bool isConting();
-  long getLength();
-  std::vector<Edge> getEdges();
+  std::string GetId();
+  bool IsConting();
+  long GetLength();
+  std::vector<Edge> GetEdges();
 
-  void add_edge(Edge &edge);
+  void AddEdge(Edge &edge);
 };
 
 #endif //SCAFFOLD_SEQUENCE_NODE_H

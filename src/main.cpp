@@ -30,7 +30,7 @@ int main(int argc, char **argv) {
 
   //LOAD CONTING NODES FROM FASTA
   clock_t t = std::clock();
-  std::vector<FastaEntry> conting_fasta_entries = file_utils::loadFromFasta(contigs_fasta_file_name, true);
+  std::vector<FastaEntry> conting_fasta_entries = file_utils::LoadFromFasta(contigs_fasta_file_name, true);
   std::cout << "Number of conting fasta entries: " << conting_fasta_entries.size() << std::endl;
   std::unordered_map<std::string, SequenceNode>
       conting_nodes_map = project_utils::ConvertFastaToNodeMap(conting_fasta_entries);
@@ -38,7 +38,7 @@ int main(int argc, char **argv) {
 
   //LOAD READ NODES FROM FASTA
   t = std::clock();
-  std::vector<FastaEntry> read_fasta_entries = file_utils::loadFromFasta(reads_fasta_file_name, false);
+  std::vector<FastaEntry> read_fasta_entries = file_utils::LoadFromFasta(reads_fasta_file_name, false);
   std::cout << "Number of read fasta entries: " << read_fasta_entries.size() << std::endl;
   std::unordered_map<std::string, SequenceNode>
       read_nodes_map = project_utils::ConvertFastaToNodeMap(read_fasta_entries);
@@ -46,13 +46,13 @@ int main(int argc, char **argv) {
 
   //LOAD READ_CONTING OVERLAP FROM PAF
   t = std::clock();
-  std::vector<PafEntry> read_conting_paf_entries = file_utils::loadFromPAF(conting_read_overlap_file_name);
+  std::vector<PafEntry> read_conting_paf_entries = file_utils::LoadFromPAF(conting_read_overlap_file_name);
   std::cout << "Number of read conting paf entries: " << read_conting_paf_entries.size() << std::endl;
   clock_t read_conting_paf_loading_time = std::clock() - t;
 
   //LOAD READ_READ OVERLAP FROM PAF
   t = std::clock();
-  std::vector<PafEntry> read_read_paf_entries = file_utils::loadFromPAF(read_read_overlap_file_name);
+  std::vector<PafEntry> read_read_paf_entries = file_utils::LoadFromPAF(read_read_overlap_file_name);
   std::cout << "Number of read read paf entries: " << read_read_paf_entries.size() << std::endl;
   clock_t read_read_paf_loading_time = std::clock() - t;
 

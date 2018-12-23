@@ -13,9 +13,9 @@
 
 namespace project_utils {
 
-void outputStringVector(std::vector<std::string> &collection);
+void OutputStringVector(std::vector<std::string> &collection);
 
-std::vector<std::string> splitString(std::string &s, std::string &delimiter);
+std::vector<std::string> SplitString(std::string &s, std::string &delimiter);
 
 std::unordered_map<std::string, SequenceNode> ConvertFastaToNodeMap(std::vector<FastaEntry> &entries);
 }

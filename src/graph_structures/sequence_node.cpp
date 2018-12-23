@@ -10,23 +10,23 @@ SequenceNode::SequenceNode(std::string& id, long length, bool is_conting) {
   is_conting_ = is_conting;
 }
 
-long SequenceNode::getLength() {
+long SequenceNode::GetLength() {
   return length_;
 }
 
-bool SequenceNode::isConting() {
+bool SequenceNode::IsConting() {
   return is_conting_;
 }
 
-std::string SequenceNode::getId() {
+std::string SequenceNode::GetId() {
   return id_;
 }
 
-std::vector<Edge> SequenceNode::getEdges() {
+std::vector<Edge> SequenceNode::GetEdges() {
   return edges;
 }
 
-void SequenceNode::add_edge(Edge &edge) {
+void SequenceNode::AddEdge(Edge &edge) {
   edges.push_back(edge);
 }
 

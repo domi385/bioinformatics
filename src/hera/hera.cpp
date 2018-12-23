@@ -15,9 +15,9 @@ void Hera::ConstructOverlapGraph(std::vector<PafEntry> &conting_read_paf_entries
 void Hera::AddEdges(std::vector<PafEntry>& entries){
   for (int i = 0, end = entries.size(); i < end; i++) {
     Edge edge = Edge(entries.at(i));
-    std::string currEndId = edge.GetIdEnd();
-    SequenceNode pNode = GetNode(currEndId);
-    pNode.add_edge(edge);
+    std::string curr_end_id = edge.GetIdEnd();
+    SequenceNode p_node = GetNode(curr_end_id);
+    p_node.AddEdge(edge);
   }
 }
 

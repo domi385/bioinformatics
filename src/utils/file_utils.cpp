@@ -13,7 +13,7 @@
 
 namespace file_utils {
 
-std::vector<FastaEntry> loadFromFasta(std::string &filename, bool is_conting_file) {
+std::vector<FastaEntry> LoadFromFasta(std::string &filename, bool is_conting_file) {
 
   std::vector<FastaEntry> sequence_nodes;
   std::ifstream fasta_file(filename);
@@ -47,7 +47,7 @@ std::vector<FastaEntry> loadFromFasta(std::string &filename, bool is_conting_fil
   return sequence_nodes;
 }
 
-std::vector<PafEntry> loadFromPAF(std::string &file_name) {
+std::vector<PafEntry> LoadFromPAF(std::string &file_name) {
   std::vector<PafEntry> sequence_overlaps;
   std::ifstream paf_file(file_name);
   std::string paf_delimiter("\t");
@@ -62,9 +62,9 @@ std::vector<PafEntry> loadFromPAF(std::string &file_name) {
       continue;
     }
 
-    std::vector<std::string> line_parts = project_utils::splitString(line, paf_delimiter);
+    std::vector<std::string> line_parts = project_utils::SplitString(line, paf_delimiter);
     PafEntry currEntry = PafEntry(line_parts);
-    if (filterPafEntries(currEntry)) {
+    if (FilterPafEntries(currEntry)) {
       continue;
     }
     sequence_overlaps.push_back(currEntry);
@@ -72,7 +72,7 @@ std::vector<PafEntry> loadFromPAF(std::string &file_name) {
   return sequence_overlaps;
 }
 
-bool filterPafEntries(PafEntry &entry) {
+bool FilterPafEntries(PafEntry &entry) {
   return (entry.GetSequenceIdentity() < 0.5) || (entry.GetSequenceIdentity() >= 1);
 }
 

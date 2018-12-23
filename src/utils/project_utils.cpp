@@ -15,14 +15,14 @@
 
 namespace project_utils {
 
-void outputStringVector(std::vector<std::string> &collection) {
+void OutputStringVector(std::vector<std::string> &collection) {
   for (int i = 0, end = collection.size(); i < end; i++) {
     std::cout << "'" << collection.at(i) << "' ";
   }
   std::cout << std::endl;
 }
 
-std::vector<std::string> splitString(std::string &s, std::string &delimiter) {
+std::vector<std::string> SplitString(std::string &s, std::string &delimiter) {
   std::vector<std::string> string_parts;
 
   size_t last_index = 0;
@@ -42,8 +42,8 @@ std::unordered_map<std::string, SequenceNode> ConvertFastaToNodeMap(std::vector<
   for (int i = 0, end = entries.size(); i < end; i++) {
     FastaEntry curr_entry = entries.at(i);
     std::string entry_id = curr_entry.GetEntryId();
-    SequenceNode currNode = SequenceNode(entry_id, curr_entry.GetLength(), curr_entry.IsConting());
-    nodes_map.emplace(curr_entry.GetEntryId(), currNode);
+    SequenceNode curr_node = SequenceNode(entry_id, curr_entry.GetLength(), curr_entry.IsConting());
+    nodes_map.emplace(curr_entry.GetEntryId(), curr_node);
   }
   return nodes_map;
 }

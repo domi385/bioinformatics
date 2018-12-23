@@ -20,7 +20,7 @@ namespace file_utils {
  *
  * @returns unordered map that maps fasta entry id to fasta entry object
  */
-std::vector<FastaEntry> loadFromFasta(std::string &filename, bool is_conting_file);
+std::vector<FastaEntry> LoadFromFasta(std::string &filename, bool is_conting_file);
 
 /**
  * Function loads PAF file to vector of paf entries, it also filters PAF entries using filterPafEntries function.
@@ -29,14 +29,14 @@ std::vector<FastaEntry> loadFromFasta(std::string &filename, bool is_conting_fil
  *
  * @returns vector of filtered paf entries
  */
-std::vector<PafEntry> loadFromPAF(std::string &file_name);
+std::vector<PafEntry> LoadFromPAF(std::string &file_name);
 
 /**
 * Function decides should you filter given paf entry.
 * @param entry paf entry for which to decide if it should be filtered
 * @return true if the entry should be filtered
 */
-bool filterPafEntries(PafEntry &entry);
+bool FilterPafEntries(PafEntry &entry);
 };
 
 #endif //SCAFFOLD_FILE_UTILS_H
