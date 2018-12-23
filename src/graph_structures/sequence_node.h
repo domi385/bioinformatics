@@ -19,7 +19,7 @@ private:
 
 public:
     //constructor
-    SequenceNode(std::string id, long length, bool is_conting);    
+    SequenceNode(std::string& id, long length, bool is_conting);
     
     //getters
     std::string getId();
@@ -27,7 +27,7 @@ public:
     long getLength();
     std::vector<Edge> getEdges();
 
-    void add_edge(Edge edge);
+    void add_edge(Edge& edge);
 };
 
 

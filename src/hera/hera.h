@@ -19,7 +19,7 @@ class Hera {
  public:
   Hera();
 
-  void ConstructOverlapGraph(std::vector<PafEntry> paf_entries);
+  void ConstructOverlapGraph(std::vector<PafEntry>& paf_entries);
   std::vector<Path> GeneratePaths();
 };
 
