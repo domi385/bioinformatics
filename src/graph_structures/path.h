@@ -17,10 +17,11 @@ class Path {
   bool finalized_;
 
  public:
-  explicit Path(SequenceNode &start_node, Edge &start_edge);
-  void add(SequenceNode &node, Edge &edge);
-  void finalize();
-  long getLength();
+  explicit Path(SequenceNode &start_node);
+  void Add(SequenceNode &node, Edge &edge);
+  void Finalize();
+  long GetLength();
+  bool operator< (const Path &other) const;
 };
 
 #endif //SCAFFOLD_PATH_H

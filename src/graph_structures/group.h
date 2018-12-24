@@ -17,9 +17,11 @@ class Group {
 
   std::vector<int> frequencies_;
   void CalculateFrequencies();
+
  public:
   explicit Group(std::vector<Path> &paths);
   void FilterGroup();
+  int GetMaxFrequency();
 };
 
 #endif //SCAFFOLD_GROUP_H

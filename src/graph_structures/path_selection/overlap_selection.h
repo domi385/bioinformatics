@@ -11,7 +11,8 @@
 #define SCAFFOLD_OVERLAP_SELECTION_H
 
 class OverlapSelection : public NodeSelection {
-  Edge SelectEdge(std::vector<Edge> &edges, std::unordered_set<SequenceNode> &used_nodes);
+  public:
+    Edge* SelectEdge(std::vector<Edge> &edges, std::unordered_set<std::string> &used_nodes);
 };
 
 #endif //SCAFFOLD_OVERLAP_SELECTION_H

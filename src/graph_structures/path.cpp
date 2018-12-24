@@ -4,26 +4,29 @@
 
 #include "path.h"
 
-Path::Path(SequenceNode &start_node, Edge &start_edge) {
+Path::Path(SequenceNode &start_node) {
   this->path_.push_back(start_node);
-  this->edges_.push_back(start_edge);
   this->finalized_ = false;
 }
 
-void Path::add(SequenceNode &node, Edge &edge) {
+void Path::Add(SequenceNode &node, Edge &edge) {
   this->path_.push_back(node);
   this->edges_.push_back(edge);
 
 }
 
-void Path::finalize() {
+void Path::Finalize() {
   //TODO add finalization, calculate path length
   finalized_ = true;
 }
 
-long Path::getLength() {
+long Path::GetLength() {
   if (!finalized_) {
     throw "Path is not finalized";
   }
   return length_;
+}
+
+bool Path::operator< (const Path &other) const {
+  return length_ < other.length_;
 }

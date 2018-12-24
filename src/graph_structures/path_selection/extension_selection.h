@@ -9,8 +9,9 @@
 #ifndef SCAFFOLD_EXTENSION_SELECTION_H
 #define SCAFFOLD_EXTENSION_SELECTION_H
 
-class ExtensionSelection {
-  Edge SelectEdge(std::vector<Edge> &edges, std::unordered_set<SequenceNode> &used_nodes);
+class ExtensionSelection : public NodeSelection {
+  public:
+    Edge* SelectEdge(std::vector<Edge> &edges, std::unordered_set<std::string> &used_nodes);
 };
 
 #endif //SCAFFOLD_EXTENSION_SELECTION_H
