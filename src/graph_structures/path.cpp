@@ -17,6 +17,7 @@ void Path::Add(SequenceNode &node, Edge &edge) {
 
 void Path::Finalize() {
   //TODO add finalization, calculate path length
+  //TODO add _end_node_id
   finalized_ = true;
 }
 
@@ -29,4 +30,10 @@ long Path::GetLength() {
 
 bool Path::operator< (const Path &other) const {
   return length_ < other.length_;
+}
+std::string Path::GetEndId() {
+  if (!finalized_) {
+    throw "Path is not finalized";
+  }
+  return end_node_id_;
 }

@@ -34,5 +34,9 @@ void Group::CalculateFrequencies() {
     int index = paths_.at(i).GetLength() - min_length_;
     frequencies_.at(index)++;
   }
+
+
   max_frequency_ = *std::max_element(std::begin(frequencies_), std::end(frequencies_));
+  //TODO save max frequency length
+
 }

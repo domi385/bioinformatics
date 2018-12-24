@@ -14,6 +14,7 @@ class Path {
   std::vector<SequenceNode> path_;
   long length_;
   std::vector<Edge> edges_;
+  std::string end_node_id_;
   bool finalized_;
 
  public:
@@ -22,6 +23,7 @@ class Path {
   void Finalize();
   long GetLength();
   bool operator< (const Path &other) const;
+  std::string GetEndId();
 };
 
 #endif //SCAFFOLD_PATH_H
