@@ -88,7 +88,7 @@ Path *Hera::GeneratePath(Path &path, SequenceNode &conting_node, Edge &edge, Nod
     }
     Edge next_edge = *p_next_edge;
     edge_count++;
-    if (edge_count > 400) { //TODO definirati konstantu
+    if (edge_count > 240) { //TODO definirati konstantu
      // std::cout << "exit because length"<<std::endl;
       return NULL;
     }
@@ -97,37 +97,39 @@ Path *Hera::GeneratePath(Path &path, SequenceNode &conting_node, Edge &edge, Nod
     path.Add(*n, next_edge);
     traversed_nodes.insert(node_id);
     if (n->IsConting()) {
-      std::cout << "exit because conting"<<std::endl;
+    //  std::cout << "exit because conting"<<std::endl;
       return &path;
     }
     prev_edge = next_edge;
   }
 }
 
-Group Hera::GenerateConsenzusSequence(std::vector<Path*> &paths) {
-  std::sort(paths.begin(), paths.end());
-  std::vector<Group> groups = GroupPaths(paths);
+bool comparePaths(Path* a, Path* b) { return (*a < *b); }
+
+Group* Hera::GenerateConsenzusSequence(std::vector<Path*> &paths) {
+  std::sort(paths.begin(), paths.end(), comparePaths);
+  std::vector<Group*> groups = GroupPaths(paths);
 
   for (int i = 0, end = groups.size(); i < end; i++) {
-    Group group = groups[i];
-    group.FilterGroup();
+    Group* group = groups.at(i);
+    group->FilterGroup();
   }
 
   if (groups.size() == 1) {
-    return groups[0];
+    return groups.at(0);
   }
 
   if (groups.size() == 2) {
-    return groups[1];
+    return groups.at(1);
   }
 
   int max_index = MaxFrequencyIndex(groups);
-  Group selected_group = groups[max_index];
-  int max_frequency = selected_group.GetMaxFrequency();
+  Group* selected_group = groups.at(max_index);
+  int max_frequency = selected_group->GetMaxFrequency();
 
   for (int i = max_index + 1, end = groups.size(); i < end; i++) {
-    Group current_group = groups[i];
-    int curr_frequency = current_group.GetMaxFrequency();
+    Group* current_group = groups.at(i);
+    int curr_frequency = current_group->GetMaxFrequency();
     if (curr_frequency < 0.5 * max_frequency) {
       break;
     }
@@ -138,12 +140,12 @@ Group Hera::GenerateConsenzusSequence(std::vector<Path*> &paths) {
   return selected_group;
 }
 
-int Hera::MaxFrequencyIndex(std::vector<Group> &groups) {
-  int max_frequency = groups[0].GetMaxFrequency();
+int Hera::MaxFrequencyIndex(std::vector<Group*> &groups) {
+  int max_frequency = groups.at(0)->GetMaxFrequency();
   int max_index = 0;
 
   for (int i = 1, end = groups.size(); i < end; i++) {
-    int frequency = groups[i].GetMaxFrequency();
+    int frequency = groups.at(i)->GetMaxFrequency();
     if (frequency > max_frequency) {
       max_frequency = frequency;
       max_index = i;
@@ -152,14 +154,14 @@ int Hera::MaxFrequencyIndex(std::vector<Group> &groups) {
   return max_index;
 }
 
-std::vector<Group> Hera::GenerateConsenzusSequencesForNode(std::vector<Path*> &paths) {
-  std::vector<Group> consensusGroups;
-  std::unordered_map<std::string, std::vector<Path>> target_paths_map;
+std::vector<Group*> Hera::GenerateConsenzusSequencesForNode(std::vector<Path*> &paths) {
+  std::vector<Group*> consensusGroups;
+  std::unordered_map<std::string, std::vector<Path*>> target_paths_map;
 
   //GROUP PATHS BY TARGET
   for (int i = 0, end = paths.size(); i < end; i++) {
-    Path curr_path = paths.at(i);
-    std::string target_id = curr_path.GetEndId();
+    Path* curr_path = paths.at(i);
+    std::string target_id = curr_path->GetEndId();
     target_paths_map[target_id].push_back(curr_path);
   }
 
@@ -167,7 +169,7 @@ std::vector<Group> Hera::GenerateConsenzusSequencesForNode(std::vector<Path*> &p
   for (auto iter = target_paths_map.begin();
        iter != target_paths_map.end(); ++iter) {
     std::string target_id = iter->first;
-    std::vector<Path> target_paths = iter->second;
+    std::vector<Path*> target_paths = iter->second;
     consensusGroups.push_back(GenerateConsenzusSequence(target_paths));
   }
 
@@ -175,45 +177,44 @@ std::vector<Group> Hera::GenerateConsenzusSequencesForNode(std::vector<Path*> &p
 
 }
 
-std::unordered_map<std::string, std::vector<Group>> Hera::GenerateConsenzusSequences(
-    std::unordered_map<std::string, std::vector<Path>> &paths) {
+std::unordered_map<std::string, std::vector<Group*>> Hera::GenerateConsenzusSequences(
+    std::unordered_map<std::string, std::vector<Path*>> &paths) {
 
-  std::unordered_map<std::string, std::vector<Group>> consensus_sequences;
+  std::unordered_map<std::string, std::vector<Group*>> consensus_sequences;
   for (auto iter = paths.begin(); iter != paths.end(); ++iter) {
     std::string origin_id = iter->first;
-    std::vector<Path> curr_paths = iter->second;
-    consensus_sequences.emplace(origin_id, GenerateConsenzusSequencesForNode(curr_paths));
+    consensus_sequences.emplace(origin_id, GenerateConsenzusSequencesForNode(iter->second));
   }
 
   return consensus_sequences;
 }
 
-std::vector<Group> Hera::GroupPaths(std::vector<Path> &paths) {
-  long max_len = paths.back().GetLength();
-  long min_len = paths.front().GetLength();
+std::vector<Group*> Hera::GroupPaths(std::vector<Path*> &paths) {
+  long max_len = paths.back()->GetLength();
+  long min_len = paths.front()->GetLength();
 
-  std::vector<Group> path_groups;
+  std::vector<Group*> path_groups;
 
   if (max_len - min_len < 10000) {
-    Group curr_group = Group(paths);
+    Group* curr_group = new Group(paths);
     path_groups.push_back(curr_group);
     return path_groups;
   }
 
-  std::vector<Path> curr_paths;
+  std::vector<Path*> curr_paths;
   long curr_stat_len = min_len;
   for (int i = 0, end = paths.size(); i < end; i++) {
-    Path curr_path = paths.at(i);
-    if (curr_path.GetLength() <= curr_stat_len + 1000) {
+    Path* curr_path = paths.at(i);
+    if (curr_path->GetLength() <= curr_stat_len + 1000) {
       curr_paths.push_back(curr_path);
     } else {
-      path_groups.push_back(Group(curr_paths));
-      curr_paths = std::vector<Path>();
+      path_groups.push_back(new Group(curr_paths));
+      curr_paths = std::vector<Path*>();
       curr_paths.push_back(curr_path);
-      curr_stat_len = curr_path.GetLength();
+      curr_stat_len = curr_path->GetLength();
     }
   }
-  path_groups.push_back(Group(curr_paths));
+  path_groups.push_back(new Group(curr_paths));
 
   //TODO join widnow groups
 

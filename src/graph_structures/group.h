@@ -10,7 +10,7 @@
 
 class Group {
  private:
-  std::vector<Path> paths_;
+  std::vector<Path*> paths_;
   long min_length_;
   long max_length_;
   int max_frequency_;
@@ -19,7 +19,7 @@ class Group {
   void CalculateFrequencies();
 
  public:
-  explicit Group(std::vector<Path> &paths);
+  explicit Group(std::vector<Path*> &paths);
   void FilterGroup();
   int GetMaxFrequency();
 };
