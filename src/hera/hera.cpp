@@ -18,82 +18,93 @@ void Hera::ConstructOverlapGraph(std::vector<PafEntry> &conting_read_paf_entries
 }
 void Hera::AddEdges(std::vector<PafEntry> &entries) {
   for (int i = 0, end = entries.size(); i < end; i++) {
-    Edge edge = Edge(entries.at(i));
-    std::string curr_start_id = edge.GetStartId();
-    SequenceNode p_node = GetNode(curr_start_id);
-    p_node.AddEdge(edge);
+    Edge* edge = new Edge(entries.at(i));
+    std::string curr_start_id = edge->GetStartId();
+    SequenceNode* p_node = GetNode(curr_start_id);
+    p_node->AddEdge(*edge);
   }
 }
 
-SequenceNode Hera::GetNode(std::string &node_id) {
+SequenceNode* Hera::GetNode(std::string &node_id) {
   if (conting_nodes_.find(node_id) != conting_nodes_.end()) {
-    return conting_nodes_.at(node_id);
+    return &conting_nodes_.find(node_id)->second;
   }
   if (read_nodes_.find(node_id) != read_nodes_.end()) {
-    return read_nodes_.at(node_id);
+    return &read_nodes_.find(node_id)->second;
   }
   throw "Should never happen! Thrown if a node id is not in conting and read maps.";
 }
 
-std::vector<Path> Hera::GeneratePaths(SequenceNode &conting_node) {
-  std::vector<Edge> edges = conting_node.GetEdges();
-  std::vector<Path> paths;
-  std::vector<NodeSelection> selections;
-  selections.push_back(ExtensionSelection());
-  selections.push_back(OverlapSelection()); //TODO add monte carlo
+std::vector<Path*> Hera::GeneratePaths(std::string &conting_id) {
+  SequenceNode* conting_node = GetNode(conting_id);
+  std::vector<Edge> edges = conting_node->GetEdges();
+  std::vector<Path*> paths;
+  std::vector<NodeSelection*> selections;
+  selections.push_back(new ExtensionSelection());
+  selections.push_back(new OverlapSelection()); //TODO add monte carlo
 
   for (int j = 0, j_end = selections.size(); j < j_end; j++) {
-    NodeSelection *selection = &selections[j];
+    NodeSelection *selection = selections[j];
 
     for (int i = 0, end = edges.size(); i < end; i++) {
       Edge edge = edges[i];
-      Path p = Path(conting_node);
-      std::cout << "generate path " << conting_node.GetId() << ", selection" << j << std::endl;
-      Path *p_curr = GeneratePath(p, conting_node, edge, *selection);
+      Path *p = new Path(*conting_node);
+      Path *p_curr = GeneratePath(*p, *conting_node, edge, selection);
+
 
       if (p_curr != NULL) {
-        (*p_curr).Finalize();
-        paths.push_back(*p_curr);
+        p_curr->Finalize();
+        paths.push_back(p_curr);
+      }else{
+        delete p;
+        delete p_curr;
       }
     }
   }
+  selections.clear();
   return paths;
 }
 
-Path *Hera::GeneratePath(Path &path, SequenceNode &conting_node, Edge &edge, NodeSelection &selection) {
+Path *Hera::GeneratePath(Path &path, SequenceNode &conting_node, Edge &edge, NodeSelection* selection) {
   std::unordered_set<std::string> traversed_nodes;
   traversed_nodes.insert(conting_node.GetId());
   int edge_count = 1;
+  Edge prev_edge = edge;
 
-  std::string node_id = edge.GetIdEnd();
-  SequenceNode n = GetNode(node_id);
-  path.Add(n, edge);
+  std::string node_id = prev_edge.GetIdEnd();
+  SequenceNode* n = GetNode(node_id);
+  path.Add(*n, prev_edge);
 
   while (true) {
-    std::vector<Edge> edges = n.GetEdges();
-    Edge *p_next_edge = selection.SelectEdge(edges, traversed_nodes);
+    std::vector<Edge> edges = n->GetEdges();
+    //std::cout<<"Edges size " <<conting_node.GetId()<<" "<< edges.size() <<std::endl;
+    Edge *p_next_edge = selection->SelectEdge(edges, traversed_nodes);
     if (p_next_edge == NULL) {
-      std::cout << "exit because dead end";
+      if (traversed_nodes.size() != -1) {
+      //std::cout << traversed_nodes.size() << std::endl;
+    }
+      //std::cout << "exit because dead end";
       return NULL; //TODO povratak na prethodni cvor
     }
     Edge next_edge = *p_next_edge;
     edge_count++;
-    if (edge_count > 10000) { //TODO definirati konstantu
-      std::cout << "exit because length";
+    if (edge_count > 400) { //TODO definirati konstantu
+     // std::cout << "exit because length"<<std::endl;
       return NULL;
     }
-    std::string node_id = edge.GetIdEnd();
-    n = GetNode(node_id);
-    path.Add(n, next_edge);
+    std::string node_id = prev_edge.GetIdEnd();
+    n = GetNode(node_id); //TODO
+    path.Add(*n, next_edge);
     traversed_nodes.insert(node_id);
-    if (n.IsConting()) {
-      std::cout << "exit because conting";
+    if (n->IsConting()) {
+      std::cout << "exit because conting"<<std::endl;
       return &path;
     }
+    prev_edge = next_edge;
   }
 }
 
-Group Hera::GenerateConsenzusSequence(std::vector<Path> &paths) {
+Group Hera::GenerateConsenzusSequence(std::vector<Path*> &paths) {
   std::sort(paths.begin(), paths.end());
   std::vector<Group> groups = GroupPaths(paths);
 
@@ -141,7 +152,7 @@ int Hera::MaxFrequencyIndex(std::vector<Group> &groups) {
   return max_index;
 }
 
-std::vector<Group> Hera::GenerateConsenzusSequencesForNode(std::vector<Path> &paths) {
+std::vector<Group> Hera::GenerateConsenzusSequencesForNode(std::vector<Path*> &paths) {
   std::vector<Group> consensusGroups;
   std::unordered_map<std::string, std::vector<Path>> target_paths_map;
 
@@ -166,8 +177,8 @@ std::vector<Group> Hera::GenerateConsenzusSequencesForNode(std::vector<Path> &pa
 
 std::unordered_map<std::string, std::vector<Group>> Hera::GenerateConsenzusSequences(
     std::unordered_map<std::string, std::vector<Path>> &paths) {
-  std::unordered_map<std::string, std::vector<Group>> consensus_sequences;
 
+  std::unordered_map<std::string, std::vector<Group>> consensus_sequences;
   for (auto iter = paths.begin(); iter != paths.end(); ++iter) {
     std::string origin_id = iter->first;
     std::vector<Path> curr_paths = iter->second;
@@ -207,4 +218,7 @@ std::vector<Group> Hera::GroupPaths(std::vector<Path> &paths) {
   //TODO join widnow groups
 
   return path_groups;
+}
+std::unordered_map<std::string, SequenceNode> Hera::GetContingNodesMap() {
+  return conting_nodes_;
 }

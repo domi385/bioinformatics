@@ -18,8 +18,7 @@ class SequenceNode {
   std::vector<Edge> edges_;
 
  public:
-  SequenceNode(const SequenceNode&) = delete;
-  //constructor
+   //constructor
   SequenceNode(std::string &id, long length, bool is_conting);
 
   //getters

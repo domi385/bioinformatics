@@ -39,8 +39,8 @@ std::unordered_map<std::string, SequenceNode> ConvertFastaToNodeMap(std::vector<
   for (int i = 0, end = entries.size(); i < end; i++) {
     FastaEntry curr_entry = entries.at(i);
     std::string entry_id = curr_entry.GetEntryId();
-    SequenceNode curr_node = SequenceNode(entry_id, curr_entry.GetLength(), curr_entry.IsConting());
-    nodes_map.emplace(curr_entry.GetEntryId(), curr_node);
+    SequenceNode* curr_node = new SequenceNode(entry_id, curr_entry.GetLength(), curr_entry.IsConting());
+    nodes_map.emplace(curr_entry.GetEntryId(), *curr_node);
   }
   return nodes_map;
 }

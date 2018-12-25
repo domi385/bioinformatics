@@ -19,6 +19,7 @@ class Path {
 
  public:
   explicit Path(SequenceNode &start_node);
+  ~Path();
   void Add(SequenceNode &node, Edge &edge);
   void Finalize();
   long GetLength();

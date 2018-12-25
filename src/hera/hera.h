@@ -15,8 +15,8 @@ class Hera {
   std::unordered_map<std::string, SequenceNode> conting_nodes_;
   std::unordered_map<std::string, SequenceNode> read_nodes_;
 
-  Path *GeneratePath(Path &path, SequenceNode &conting_node, Edge &edge, NodeSelection &selection);
-  SequenceNode GetNode(std::string &node_id);
+  Path *GeneratePath(Path &path, SequenceNode &conting_node, Edge &edge, NodeSelection* selection);
+  SequenceNode* GetNode(std::string &node_id);
   void AddEdges(std::vector<PafEntry> &entries);
   int MaxFrequencyIndex(std::vector<Group> &groups);
   Group GenerateConsenzusSequence(std::vector<Path> &paths);
@@ -28,11 +28,12 @@ class Hera {
 
   void ConstructOverlapGraph(std::vector<PafEntry> &conting_read_paf_entries,
                              std::vector<PafEntry> &read_read_paf_entries);
-  std::vector<Path> GeneratePaths(SequenceNode &conting_node);
-  std::vector<Group> GroupPaths(std::vector<Path> &paths);
+  std::vector<Path*> GeneratePaths(std::string &conting_id);
+  std::vector<Group> GroupPaths(std::vector<Path*> &paths);
   std::unordered_map<std::string, std::vector<Group>> GenerateConsenzusSequences(
-      std::unordered_map<std::string, std::vector<Path>> &paths);
+      std::unordered_map<std::string, std::vector<Path*>> &paths);
 
+  std::unordered_map<std::string, SequenceNode> GetContingNodesMap();
 };
 
 #endif //SCAFFOLD_HERA

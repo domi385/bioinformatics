@@ -53,3 +53,8 @@ std::string Path::GetEndId() {
   }
   return end_node_id_;
 }
+Path::~Path(){
+  path_.clear();
+  path_.shrink_to_fit();
+
+  }
