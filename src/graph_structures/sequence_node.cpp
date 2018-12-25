@@ -4,8 +4,8 @@
 
 #include "sequence_node.h"
 
-SequenceNode::SequenceNode(std::string& id, long length, bool is_conting) {
-  id_=id;
+SequenceNode::SequenceNode(std::string &id, long length, bool is_conting) {
+  id_ = id;
   length_ = length;
   is_conting_ = is_conting;
 }

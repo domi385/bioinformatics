@@ -64,7 +64,7 @@ int main(int argc, char **argv) {
   clock_t overlap_graph_construction_time = std::clock() - t;
 
   //GENERATE PATHS
-  t=std::clock();
+  t = std::clock();
   std::unordered_map<std::string, std::vector<Path>> conting_paths_map;
   for (auto iter = conting_nodes_map.begin();
        iter != conting_nodes_map.end(); ++iter) {
@@ -72,15 +72,15 @@ int main(int argc, char **argv) {
     SequenceNode conting_node = iter->second;
     std::vector<Path> currPaths = hera.GeneratePaths(conting_node);
     conting_paths_map.emplace(conting_id, currPaths);
-    std::cout << "\tConting " << conting_id <<", number of paths: "<<currPaths.size()<<std::endl;
+    std::cout << "\tConting " << conting_id << ", number of paths: " << currPaths.size() << std::endl;
   }
-  clock_t path_generation_time = std::clock()-t;
+  clock_t path_generation_time = std::clock() - t;
 
   //GENERATE CONSENSUS SEQUENCES
   t = std::clock();
   std::unordered_map<std::string, std::vector<Group>>
       conting_consensus_sequences = hera.GenerateConsenzusSequences(conting_paths_map);
-  clock_t consensus_generation_time = std::clock()-t;
+  clock_t consensus_generation_time = std::clock() - t;
 
 
   //CONSTRUCT CONNECTION GRAPH
@@ -94,7 +94,7 @@ int main(int argc, char **argv) {
   std::cout << "Time for loading read read overlaps: " << read_read_paf_loading_time << " miliseconds" << std::endl;
   std::cout << "Time for constructing overlap graph: " << overlap_graph_construction_time << " miliseconds"
             << std::endl;
-  std::cout << "Time for generating paths: "<<path_generation_time<<" miliseconds" << std::endl;
+  std::cout << "Time for generating paths: " << path_generation_time << " miliseconds" << std::endl;
   std::cout << "Time for generating consensus sequences: " << consensus_generation_time << " miliseconds" << std::endl;
 
   return 0;

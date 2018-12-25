@@ -4,6 +4,6 @@
 
 #include "node_selection.h"
 
-Edge* NodeSelection::SelectEdge(std::vector<Edge> &edges, std::unordered_set<std::string> &used_nodes){
+Edge *NodeSelection::SelectEdge(std::vector<Edge> &edges, std::unordered_set<std::string> &used_nodes) {
   return NULL;
 }

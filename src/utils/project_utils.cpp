@@ -5,13 +5,10 @@
 
 #include <vector>
 #include <unordered_map>
-#include <string>
 
 #include <iostream>
 
 #include "project_utils.h"
-#include "../graph_structures/sequence_node.h"
-#include "../file_structures/fasta_entry.h"
 
 namespace project_utils {
 

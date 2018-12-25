@@ -4,8 +4,8 @@
 #include "../graph_structures/path_selection/extension_selection.h"
 #include "../graph_structures/path_selection/overlap_selection.h"
 
-Hera::Hera(std::unordered_map<std::string, SequenceNode> conting_nodes,
-           std::unordered_map<std::string, SequenceNode> read_nodes) {
+Hera::Hera(std::unordered_map<std::string, SequenceNode> &conting_nodes,
+           std::unordered_map<std::string, SequenceNode> &read_nodes) {
   conting_nodes_ = conting_nodes;
   read_nodes_ = read_nodes;
 }
@@ -35,10 +35,8 @@ SequenceNode Hera::GetNode(std::string &node_id) {
   throw "Should never happen! Thrown if a node id is not in conting and read maps.";
 }
 
-std::vector<Path> Hera::GeneratePaths(SequenceNode conting_node) {
-  std::cout << "generate path for " << conting_node.GetId()<<std::endl;
+std::vector<Path> Hera::GeneratePaths(SequenceNode &conting_node) {
   std::vector<Edge> edges = conting_node.GetEdges();
-  std::cout<<"edges suze: "<<edges.size()<<std::endl;
   std::vector<Path> paths;
   std::vector<NodeSelection> selections;
   selections.push_back(ExtensionSelection());
@@ -50,7 +48,7 @@ std::vector<Path> Hera::GeneratePaths(SequenceNode conting_node) {
     for (int i = 0, end = edges.size(); i < end; i++) {
       Edge edge = edges[i];
       Path p = Path(conting_node);
-      std::cout<<"generate path "<<conting_node.GetId() << ", selection"<<j<<std::endl;
+      std::cout << "generate path " << conting_node.GetId() << ", selection" << j << std::endl;
       Path *p_curr = GeneratePath(p, conting_node, edge, *selection);
 
       if (p_curr != NULL) {
@@ -81,7 +79,7 @@ Path *Hera::GeneratePath(Path &path, SequenceNode &conting_node, Edge &edge, Nod
     Edge next_edge = *p_next_edge;
     edge_count++;
     if (edge_count > 10000) { //TODO definirati konstantu
-      std:: cout<<"exit because length";
+      std::cout << "exit because length";
       return NULL;
     }
     std::string node_id = edge.GetIdEnd();
@@ -95,7 +93,7 @@ Path *Hera::GeneratePath(Path &path, SequenceNode &conting_node, Edge &edge, Nod
   }
 }
 
-Group Hera::GenerateConsenzusSequence(std::vector<Path> paths) {
+Group Hera::GenerateConsenzusSequence(std::vector<Path> &paths) {
   std::sort(paths.begin(), paths.end());
   std::vector<Group> groups = GroupPaths(paths);
 
@@ -129,7 +127,7 @@ Group Hera::GenerateConsenzusSequence(std::vector<Path> paths) {
   return selected_group;
 }
 
-int Hera::MaxFrequencyIndex(std::vector<Group> groups) {
+int Hera::MaxFrequencyIndex(std::vector<Group> &groups) {
   int max_frequency = groups[0].GetMaxFrequency();
   int max_index = 0;
 
@@ -143,7 +141,7 @@ int Hera::MaxFrequencyIndex(std::vector<Group> groups) {
   return max_index;
 }
 
-std::vector<Group> Hera::GenerateConsenzusSequencesForNode(std::vector<Path> paths) {
+std::vector<Group> Hera::GenerateConsenzusSequencesForNode(std::vector<Path> &paths) {
   std::vector<Group> consensusGroups;
   std::unordered_map<std::string, std::vector<Path>> target_paths_map;
 
@@ -167,7 +165,7 @@ std::vector<Group> Hera::GenerateConsenzusSequencesForNode(std::vector<Path> pat
 }
 
 std::unordered_map<std::string, std::vector<Group>> Hera::GenerateConsenzusSequences(
-    std::unordered_map<std::string, std::vector<Path>> paths) {
+    std::unordered_map<std::string, std::vector<Path>> &paths) {
   std::unordered_map<std::string, std::vector<Group>> consensus_sequences;
 
   for (auto iter = paths.begin(); iter != paths.end(); ++iter) {
@@ -179,13 +177,13 @@ std::unordered_map<std::string, std::vector<Group>> Hera::GenerateConsenzusSeque
   return consensus_sequences;
 }
 
-std::vector<Group> Hera::GroupPaths(std::vector<Path> paths) {
+std::vector<Group> Hera::GroupPaths(std::vector<Path> &paths) {
   long max_len = paths.back().GetLength();
   long min_len = paths.front().GetLength();
 
   std::vector<Group> path_groups;
 
-  if (max_len-min_len<10000){
+  if (max_len - min_len < 10000) {
     Group curr_group = Group(paths);
     path_groups.push_back(curr_group);
     return path_groups;
@@ -193,11 +191,11 @@ std::vector<Group> Hera::GroupPaths(std::vector<Path> paths) {
 
   std::vector<Path> curr_paths;
   long curr_stat_len = min_len;
-  for (int i=0, end = paths.size(); i<end; i++){
+  for (int i = 0, end = paths.size(); i < end; i++) {
     Path curr_path = paths.at(i);
-    if (curr_path.GetLength() <= curr_stat_len+1000){
+    if (curr_path.GetLength() <= curr_stat_len + 1000) {
       curr_paths.push_back(curr_path);
-    }else{
+    } else {
       path_groups.push_back(Group(curr_paths));
       curr_paths = std::vector<Path>();
       curr_paths.push_back(curr_path);

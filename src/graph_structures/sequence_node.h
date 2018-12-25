@@ -11,14 +11,16 @@
 
 class SequenceNode {
  private:
+
   std::string id_;
   bool is_conting_;
   long length_;
   std::vector<Edge> edges_;
 
  public:
+  SequenceNode(const SequenceNode&) = delete;
   //constructor
-  SequenceNode(std::string& id, long length, bool is_conting);
+  SequenceNode(std::string &id, long length, bool is_conting);
 
   //getters
   std::string GetId();

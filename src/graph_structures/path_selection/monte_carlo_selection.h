@@ -12,7 +12,7 @@
 
 class MonteCarloSelection : public NodeSelection {
 
-  Edge* SelectEdge(std::vector<Edge> &edges, std::unordered_set<std::string> &used_nodes)override;
+  Edge *SelectEdge(std::vector<Edge> &edges, std::unordered_set<std::string> &used_nodes) override;
 
 };
 

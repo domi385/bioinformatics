@@ -8,7 +8,7 @@ Group::Group(std::vector<Path> &paths) {
   this->paths_ = paths;
 }
 
-int Group::GetMaxFrequency(){
+int Group::GetMaxFrequency() {
   return max_frequency_;
 }
 
@@ -16,10 +16,10 @@ void Group::FilterGroup() {
   CalculateFrequencies();
   std::vector<Path> filtered_paths;
 
-  for(int i=0, end = paths_.size(); i < end; i++){
+  for (int i = 0, end = paths_.size(); i < end; i++) {
     int index = paths_[i].GetLength() - min_length_;
     int frequency = frequencies_[index];
-    if(frequency >= 0.5 * max_frequency_){
+    if (frequency >= 0.5 * max_frequency_) {
       filtered_paths.push_back(paths_[i]);
     }
   }
@@ -34,7 +34,6 @@ void Group::CalculateFrequencies() {
     int index = paths_.at(i).GetLength() - min_length_;
     frequencies_.at(index)++;
   }
-
 
   max_frequency_ = *std::max_element(std::begin(frequencies_), std::end(frequencies_));
   //TODO save max frequency length
