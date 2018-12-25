@@ -18,13 +18,21 @@ void Path::Add(SequenceNode &node, Edge &edge) {
 void Path::Finalize() {
   end_node_id_ = path_.back().GetId();
 
-  long sum = 0;
-  for (int i=0, end=edges_.size(); i<end; i++){
-    Edge currEdge = edges_.at(i);
-    sum+=currEdge.GetExtensonLenTarget();
-    //TODO calc lenght
-  }
+  Edge first_edge = edges_[0];
+  long length = first_edge.GetExtensonLenOrigin() + first_edge.GetOverlapLength();
 
+  Edge previus_edge = first_edge;
+  for (int i=1, end=edges_.size(); i<end; i++){
+    Edge curr_edge = edges_[i];
+    long begining_index = previus_edge.GetOverhangTarget() + previus_edge.GetOverlapLenTarget();
+    long end_index = curr_edge.GetExtensonLenOrigin() + curr_edge.GetOverlapLenOrigin();
+    length += end_index - begining_index;    
+    previus_edge = curr_edge;
+  }
+  Edge last_edge = edges_.back();
+  length += last_edge.GetExtensonLenTarget();
+
+  length_ = length;
   finalized_ = true;
 }
 
@@ -32,7 +40,6 @@ long Path::GetLength() {
   if (!finalized_) {
     throw "Path is not finalized";
   }
-
 
   return length_;
 }
