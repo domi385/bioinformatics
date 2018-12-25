@@ -23,7 +23,7 @@ class Path {
   void Add(SequenceNode &node, Edge &edge);
   void Finalize();
   long GetLength();
-  bool operator< (const Path &other) const;
+  bool operator<(const Path &other) const;
   std::string GetEndId();
 };
 

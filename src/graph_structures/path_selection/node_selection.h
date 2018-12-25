@@ -11,7 +11,7 @@
 
 class NodeSelection {
  public:
-  virtual Edge *SelectEdge(std::vector<Edge> &edges, std::unordered_set<std::string> &used_nodes)=0;
+  virtual Edge *SelectEdge(std::vector<Edge> &edges, std::unordered_set<std::string> &used_nodes) = 0;
 };
 
 #endif //SCAFFOLD_NODESELECTION_H

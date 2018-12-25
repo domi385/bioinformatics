@@ -66,11 +66,11 @@ int main(int argc, char **argv) {
 
   //GENERATE PATHS
   t = std::clock();
-  std::unordered_map<std::string, std::vector<Path*>> conting_paths_map;
+  std::unordered_map<std::string, std::vector<Path *>> conting_paths_map;
   for (auto iter = conting_nodes_map.begin();
        iter != conting_nodes_map.end(); ++iter) {
     std::string conting_id = iter->first;
-    std::vector<Path*> currPaths = hera.GeneratePaths(conting_id);
+    std::vector<Path *> currPaths = hera.GeneratePaths(conting_id);
     conting_paths_map.emplace(conting_id, currPaths);
     std::cout << "\tConting " << conting_id << ", number of paths: " << currPaths.size() << std::endl;
   }
@@ -78,9 +78,9 @@ int main(int argc, char **argv) {
 
 
   //GENERATE CONSENSUS SEQUENCES
-  std::cout<<"Generate consensus sequence"<<std::endl;
+  std::cout << "Generate consensus sequence" << std::endl;
   t = std::clock();
-  std::unordered_map<std::string, std::vector<Group*>>
+  std::unordered_map<std::string, std::vector<Group *>>
       conting_consensus_sequences = hera.GenerateConsenzusSequences(conting_paths_map);
   clock_t consensus_generation_time = std::clock() - t;
 

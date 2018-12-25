@@ -22,11 +22,11 @@ void Path::Finalize() {
   long length = first_edge.GetExtensonLenOrigin() + first_edge.GetOverlapLength();
 
   Edge previus_edge = first_edge;
-  for (int i=1, end=edges_.size(); i<end; i++){
+  for (int i = 1, end = edges_.size(); i < end; i++) {
     Edge curr_edge = edges_[i];
     long begining_index = previus_edge.GetOverhangTarget() + previus_edge.GetOverlapLenTarget();
     long end_index = curr_edge.GetExtensonLenOrigin() + curr_edge.GetOverlapLenOrigin();
-    length += end_index - begining_index;    
+    length += end_index - begining_index;
     previus_edge = curr_edge;
   }
   Edge last_edge = edges_.back();
@@ -44,7 +44,7 @@ long Path::GetLength() {
   return length_;
 }
 
-bool Path::operator< (const Path &other) const {
+bool Path::operator<(const Path &other) const {
   return length_ < other.length_;
 }
 std::string Path::GetEndId() {
@@ -53,8 +53,8 @@ std::string Path::GetEndId() {
   }
   return end_node_id_;
 }
-Path::~Path(){
+Path::~Path() {
   path_.clear();
   path_.shrink_to_fit();
 
-  }
+}
