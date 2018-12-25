@@ -99,5 +99,8 @@ long PafEntry::GetOverlapLenOrigin() {
 long PafEntry::GetOverlapLenTarget() {
   return ol_2_;
 }
+std::string PafEntry::GetOriginId() {
+  return origin_id_;
+}
 
 

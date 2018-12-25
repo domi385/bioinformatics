@@ -43,8 +43,12 @@ class PafEntry {
   //INITIALIZATION METHODS
   bool DetermineOrder(std::string &id1, std::string &id2, long len1, long len2, long s1,
                       long e1, long s2, long e2);
+
   void Store(std::string &id1, std::string &id2, long len1, long len2, long el1, long ol1, long oh1, long oh2,
              long ol2, long el2);
+  /**
+   * Method calculate scores between two sequences: overlap_score, extension_score and sequence_identity.
+   */
   void CalculateScores();
 
  public:
@@ -66,6 +70,7 @@ class PafEntry {
   long GetExtensionLenTarget();
   long GetOverlapLenOrigin();
   long GetOverlapLenTarget();
+  std::string GetOriginId();
 };
 
 #endif //SCAFFOLD_PAFENTRY_H

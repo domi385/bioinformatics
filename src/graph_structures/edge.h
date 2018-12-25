@@ -10,6 +10,7 @@
 
 class Edge {
  private:
+  std::string id_start_;
   std::string id_end_;
   double overlap_score_;
   double extension_score_;
@@ -39,6 +40,7 @@ class Edge {
   long GetExtensonLenTarget();
   long GetOverlapLenOrigin();
   long GetOverlapLenTarget();
+  std::string GetStartId();
 };
 
 #endif //SCAFFOLD_EDGE_H

@@ -23,11 +23,11 @@ std::string SequenceNode::GetId() {
 }
 
 std::vector<Edge> SequenceNode::GetEdges() {
-  return edges;
+  return edges_;
 }
 
 void SequenceNode::AddEdge(Edge &edge) {
-  edges.push_back(edge);
+  edges_.push_back(edge);
 }
 
 

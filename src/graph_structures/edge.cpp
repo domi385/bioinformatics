@@ -5,6 +5,7 @@
 #include "edge.h"
 
 Edge::Edge(PafEntry entry) {
+  id_start_ = entry.GetOriginId();
   id_end_ = entry.GetTargetId();
   overlap_score_ = entry.GetOverlapScore();
   extension_score_ = entry.GetExtensionScore();
@@ -61,4 +62,7 @@ long Edge::GetOverlapLenOrigin() {
 
 long Edge::GetOverlapLenTarget() {
   return overlap_len_target_;
+}
+std::string Edge::GetStartId() {
+  return id_start_;
 }

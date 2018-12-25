@@ -1,4 +1,4 @@
-
+#include <iostream>
 #include <algorithm>
 #include "hera.h"
 #include "../graph_structures/path_selection/extension_selection.h"
@@ -19,8 +19,8 @@ void Hera::ConstructOverlapGraph(std::vector<PafEntry> &conting_read_paf_entries
 void Hera::AddEdges(std::vector<PafEntry> &entries) {
   for (int i = 0, end = entries.size(); i < end; i++) {
     Edge edge = Edge(entries.at(i));
-    std::string curr_end_id = edge.GetIdEnd();
-    SequenceNode p_node = GetNode(curr_end_id);
+    std::string curr_start_id = edge.GetStartId();
+    SequenceNode p_node = GetNode(curr_start_id);
     p_node.AddEdge(edge);
   }
 }
@@ -36,7 +36,9 @@ SequenceNode Hera::GetNode(std::string &node_id) {
 }
 
 std::vector<Path> Hera::GeneratePaths(SequenceNode conting_node) {
+  std::cout << "generate path for " << conting_node.GetId()<<std::endl;
   std::vector<Edge> edges = conting_node.GetEdges();
+  std::cout<<"edges suze: "<<edges.size()<<std::endl;
   std::vector<Path> paths;
   std::vector<NodeSelection> selections;
   selections.push_back(ExtensionSelection());
@@ -48,6 +50,7 @@ std::vector<Path> Hera::GeneratePaths(SequenceNode conting_node) {
     for (int i = 0, end = edges.size(); i < end; i++) {
       Edge edge = edges[i];
       Path p = Path(conting_node);
+      std::cout<<"generate path "<<conting_node.GetId() << ", selection"<<j<<std::endl;
       Path *p_curr = GeneratePath(p, conting_node, edge, *selection);
 
       if (p_curr != NULL) {
@@ -72,11 +75,13 @@ Path *Hera::GeneratePath(Path &path, SequenceNode &conting_node, Edge &edge, Nod
     std::vector<Edge> edges = n.GetEdges();
     Edge *p_next_edge = selection.SelectEdge(edges, traversed_nodes);
     if (p_next_edge == NULL) {
+      std::cout << "exit because dead end";
       return NULL; //TODO povratak na prethodni cvor
     }
     Edge next_edge = *p_next_edge;
     edge_count++;
-    if (edge_count > 1000) { //TODO definirati konstantu
+    if (edge_count > 10000) { //TODO definirati konstantu
+      std:: cout<<"exit because length";
       return NULL;
     }
     std::string node_id = edge.GetIdEnd();
@@ -84,6 +89,7 @@ Path *Hera::GeneratePath(Path &path, SequenceNode &conting_node, Edge &edge, Nod
     path.Add(n, next_edge);
     traversed_nodes.insert(node_id);
     if (n.IsConting()) {
+      std::cout << "exit because conting";
       return &path;
     }
   }

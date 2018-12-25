@@ -70,7 +70,9 @@ int main(int argc, char **argv) {
        iter != conting_nodes_map.end(); ++iter) {
     std::string conting_id = iter->first;
     SequenceNode conting_node = iter->second;
-    conting_paths_map.emplace(conting_id, hera.GeneratePaths(conting_node));
+    std::vector<Path> currPaths = hera.GeneratePaths(conting_node);
+    conting_paths_map.emplace(conting_id, currPaths);
+    std::cout << "\tConting " << conting_id <<", number of paths: "<<currPaths.size()<<std::endl;
   }
   clock_t path_generation_time = std::clock()-t;
 
