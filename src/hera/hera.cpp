@@ -87,7 +87,7 @@ Path *Hera::GeneratePath(Path &path, SequenceNode &conting_node, Edge &edge, Nod
     }
     Edge next_edge = *p_next_edge;
     edge_count++;
-    if (edge_count > 240) { //TODO definirati konstantu
+    if (edge_count > 2000) { //TODO definirati konstantu
       // std::cout << "exit because length"<<std::endl;
       return NULL;
     }

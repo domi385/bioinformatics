@@ -7,6 +7,8 @@
 #include <unordered_map>
 
 #include <iostream>
+#include "../graph_structures/sequence_node.h"
+#include "../file_structures/fasta_entry.h"
 
 #include "project_utils.h"
 
