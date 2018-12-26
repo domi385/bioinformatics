@@ -91,7 +91,7 @@ Path *Hera::GeneratePath(Path &path, SequenceNode &conting_node, Edge &edge, Nod
       // std::cout << "exit because length"<<std::endl;
       return NULL;
     }
-    std::string node_id = prev_edge.GetIdEnd();
+    node_id = prev_edge.GetIdEnd();
     n = GetNode(node_id); //TODO
     path.Add(*n, next_edge);
     traversed_nodes.insert(node_id);
@@ -167,7 +167,6 @@ std::vector<Group *> Hera::GenerateConsenzusSequencesForNode(std::vector<Path *>
   //GENERATE CONSENSUS SEQUENCES
   for (auto iter = target_paths_map.begin();
        iter != target_paths_map.end(); ++iter) {
-    std::string target_id = iter->first;
     std::vector<Path *> target_paths = iter->second;
     consensusGroups.push_back(GenerateConsenzusSequence(target_paths));
   }

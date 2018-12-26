@@ -26,7 +26,7 @@ class Edge {
 
  public:
   //constructor
-  Edge(PafEntry entry);
+  explicit Edge(PafEntry entry);
 
   //getters
   std::string GetIdEnd();

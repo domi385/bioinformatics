@@ -14,13 +14,9 @@ class PafEntry {
   //FILE ATTRIBUTES
   std::string origin_id_;
   long origin_length_;
-  long query_start_coord_;
-  long query_end_coord_;
   bool same_strand_;
   std::string target_id_;
   long target_length_;
-  long target_start_coord_;
-  long target_end_coord_;
   long num_matches_;
   long num_bases_;
   int map_quality_;
