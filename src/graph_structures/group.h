@@ -15,14 +15,18 @@ class Group {
   long max_length_;
   int max_frequency_;
   long max_frequency_length_;
+  std::string target_id_;
+
 
   std::vector<int> frequencies_;
   void CalculateFrequencies();
 
  public:
-  explicit Group(std::vector<Path *> &paths);
+  Group(std::vector<Path *> &paths, std::string & target_id );
   void FilterGroup();
   int GetMaxFrequency();
+  Path *GetConsensusPath();
+  std::string GetTargetId();
 };
 
 #endif //SCAFFOLD_GROUP_H

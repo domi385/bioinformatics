@@ -86,6 +86,8 @@ int main(int argc, char **argv) {
 
 
   //CONSTRUCT CONNECTION GRAPH
+  std::vector<ConnectionNode*> connection_graph = hera.ConstructConnectionGraph(conting_consensus_sequences);
+  std::cout<<"Connection graph "<<connection_graph.size()<<std::endl;
 
   //SAVE OUTPUT FILE
 

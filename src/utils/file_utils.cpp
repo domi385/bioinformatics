@@ -8,8 +8,9 @@
 #include <iostream>
 #include "../file_structures/fasta_entry.h"
 #include "../file_structures/paf_entry.h"
-#include "file_utils.h"
 #include "project_utils.h"
+#include "file_utils.h"
+
 
 namespace file_utils {
 

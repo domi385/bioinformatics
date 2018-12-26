@@ -6,6 +6,7 @@
 #include <string>
 #include "../file_structures/fasta_entry.h"
 #include "../file_structures/paf_entry.h"
+#include "project_utils.h"
 
 #ifndef SCAFFOLD_FILE_UTILS_H
 #define SCAFFOLD_FILE_UTILS_H

@@ -97,7 +97,7 @@ Path *Hera::GeneratePath(Path &path, SequenceNode &conting_node, Edge &edge, Nod
     traversed_nodes.insert(node_id);
     if (n->IsConting()) {
       //  std::cout << "exit because conting"<<std::endl;
-      if (n->GetId()==conting_node.GetId()){
+      if (n->GetId() == conting_node.GetId()) {
         return NULL; // conting trying to connect to itself
       }
       return &path;
@@ -108,9 +108,9 @@ Path *Hera::GeneratePath(Path &path, SequenceNode &conting_node, Edge &edge, Nod
 
 bool comparePaths(Path *a, Path *b) { return (*a < *b); }
 
-Group *Hera::GenerateConsenzusSequence(std::vector<Path *> &paths) {
+Group *Hera::GenerateConsenzusSequence(std::vector<Path *> &paths, std::string &target_id) {
   std::sort(paths.begin(), paths.end(), comparePaths);
-  std::vector<Group *> groups = GroupPaths(paths);
+  std::vector<Group *> groups = GroupPaths(paths, target_id);
 
   for (int i = 0, end = groups.size(); i < end; i++) {
     Group *group = groups.at(i);
@@ -171,7 +171,8 @@ std::vector<Group *> Hera::GenerateConsenzusSequencesForNode(std::vector<Path *>
   for (auto iter = target_paths_map.begin();
        iter != target_paths_map.end(); ++iter) {
     std::vector<Path *> target_paths = iter->second;
-    consensusGroups.push_back(GenerateConsenzusSequence(target_paths));
+    std::string target_id = iter->first;
+    consensusGroups.push_back(GenerateConsenzusSequence(target_paths, target_id));
   }
 
   return consensusGroups;
@@ -190,14 +191,14 @@ std::unordered_map<std::string, std::vector<Group *>> Hera::GenerateConsenzusSeq
   return consensus_sequences;
 }
 
-std::vector<Group *> Hera::GroupPaths(std::vector<Path *> &paths) {
+std::vector<Group *> Hera::GroupPaths(std::vector<Path *> &paths, std::string &target_id) {
   long max_len = paths.back()->GetLength();
   long min_len = paths.front()->GetLength();
 
   std::vector<Group *> path_groups;
 
   if (max_len - min_len < 10000) {
-    Group *curr_group = new Group(paths);
+    Group *curr_group = new Group(paths, target_id);
     path_groups.push_back(curr_group);
     return path_groups;
   }
@@ -209,13 +210,13 @@ std::vector<Group *> Hera::GroupPaths(std::vector<Path *> &paths) {
     if (curr_path->GetLength() <= curr_stat_len + 1000) {
       curr_paths.push_back(curr_path);
     } else {
-      path_groups.push_back(new Group(curr_paths));
+      path_groups.push_back(new Group(curr_paths, target_id));
       curr_paths = std::vector<Path *>();
       curr_paths.push_back(curr_path);
       curr_stat_len = curr_path->GetLength();
     }
   }
-  path_groups.push_back(new Group(curr_paths));
+  path_groups.push_back(new Group(curr_paths, target_id));
 
   //TODO join widnow groups
 
@@ -223,4 +224,102 @@ std::vector<Group *> Hera::GroupPaths(std::vector<Path *> &paths) {
 }
 std::unordered_map<std::string, SequenceNode> Hera::GetContingNodesMap() {
   return conting_nodes_;
+}
+
+std::vector<ConsensusSequence *> Hera::CreateConsensusSequenceFromGroups(std::vector<Group *> &groups,
+                                                                         SequenceNode *origin) {
+  std::vector<ConsensusSequence *> consensus_sequences;
+  for (int i = 0, end = groups.size(); i < end; i++) {
+    std::string target_id = groups.at(i)->GetTargetId();
+    SequenceNode *target_node = GetNode(target_id);
+    ConsensusSequence *new_sequence = new ConsensusSequence(groups.at(i), origin, target_node);
+    consensus_sequences.push_back(new_sequence);
+  }
+  //TODO check if groups are cleared somewhere, if not it should be done
+  return consensus_sequences;
+}
+
+std::vector<ConnectionNode *> Hera::CreateConnectionNodes(std::unordered_map<std::string,
+                                                                             std::vector<Group *>> &conting_consensus_sequences) {
+  std::vector<ConnectionNode *> connection_nodes;
+
+  for (auto it = conting_consensus_sequences.begin(); it != conting_consensus_sequences.end(); ++it) {
+    std::string origin_id = it->first;
+    SequenceNode *origin_node = GetNode(origin_id);
+    std::vector<Group *> currGroup = it->second;
+
+    std::vector<ConsensusSequence *> consensus_sequences = CreateConsensusSequenceFromGroups(currGroup, origin_node);
+
+    ConnectionNode *curr_node = new ConnectionNode(origin_node, consensus_sequences);
+    connection_nodes.push_back(curr_node);
+  }
+  return connection_nodes;
+}
+
+std::vector<ConnectionNode *> Hera::ConstructConnectionGraph(std::unordered_map<std::string,
+                                                                                std::vector<Group *>> &conting_consensus_sequences) {
+  std::vector<ConnectionNode *> origins = CreateConnectionNodes(conting_consensus_sequences);
+  std::unordered_set<ConnectionNode *> targets;
+
+  for (int i = 0, end = origins.size(); i < end; i++) {
+    targets.emplace(origins.at(i));
+  }
+
+  bool connection_made = true;
+
+  while (connection_made) {
+
+    std::unordered_set<ConnectionNode *> removed_nodes;
+
+    connection_made = false;
+    for (int i = 0, end = origins.size(); i < end; i++) {
+      ConnectionNode *curr_node = origins.at(i);
+      double conflict_index = curr_node->GetConflictIndex();
+      if (conflict_index > 0.5) {
+        continue;
+      }
+
+      ConnectionNode *target = ConnectNode(curr_node, targets);
+      if (target != NULL) {
+        connection_made = true;
+        targets.erase(target);
+        removed_nodes.emplace(target);
+      }
+
+    }
+
+    std::vector<ConnectionNode *> new_origins;
+    for (int i = 0, end = origins.size(); i < end; i++) {
+      if (removed_nodes.find(origins.at(i)) == removed_nodes.end()) {
+        new_origins.push_back(origins.at(i));
+      }
+    }
+    origins.clear();
+    origins = new_origins;
+
+    if (connection_made) {
+      for (int i = 0, end = origins.size(); i < end; i++) {
+        origins.at(i)->RecalculateConflictIndex(targets);
+      }
+    }
+
+  }
+
+}
+
+ConnectionNode *Hera::ConnectNode(ConnectionNode *origin, std::unordered_set<ConnectionNode *> targets) {
+
+  SequenceNode *desired_target = origin->GetTarget();
+
+  std::unordered_set<SequenceNode *> target_nodes;
+  for (auto it = targets.begin(); it != targets.end(); ++it) {
+    ConnectionNode *curr_target_node = *it;
+    SequenceNode *available_target = curr_target_node->GetOriginNode();
+    if (available_target == desired_target) {
+      origin->ConnectNodes(curr_target_node);
+      return curr_target_node;
+    }
+  }
+  return NULL;
+
 }
