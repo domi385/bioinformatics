@@ -34,7 +34,7 @@ void Group::FilterGroup() {
     int frequency = frequencies_[index];
     if (frequency >= 0.5 * max_frequency_) {
       filtered_paths.push_back(paths_.at(i));
-    }else{
+    } else {
       delete paths_.at(i);
     }
   }

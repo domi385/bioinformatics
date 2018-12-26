@@ -87,7 +87,7 @@ Path *Hera::GeneratePath(Path &path, SequenceNode &conting_node, Edge &edge, Nod
     }
     Edge next_edge = *p_next_edge;
     edge_count++;
-    if (edge_count > 2000) { //TODO definirati konstantu
+    if (edge_count > 500) { //TODO definirati konstantu
       // std::cout << "exit because length"<<std::endl;
       return NULL;
     }
@@ -97,6 +97,9 @@ Path *Hera::GeneratePath(Path &path, SequenceNode &conting_node, Edge &edge, Nod
     traversed_nodes.insert(node_id);
     if (n->IsConting()) {
       //  std::cout << "exit because conting"<<std::endl;
+      if (n->GetId()==conting_node.GetId()){
+        return NULL; // conting trying to connect to itself
+      }
       return &path;
     }
     prev_edge = next_edge;
