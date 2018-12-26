@@ -14,6 +14,7 @@ class Group {
   long min_length_;
   long max_length_;
   int max_frequency_;
+  long max_frequency_length_;
 
   std::vector<int> frequencies_;
   void CalculateFrequencies();

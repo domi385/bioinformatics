@@ -33,7 +33,9 @@ void Group::FilterGroup() {
     int index = paths_[i]->GetLength() - min_length_;
     int frequency = frequencies_[index];
     if (frequency >= 0.5 * max_frequency_) {
-      filtered_paths.push_back(paths_[i]);
+      filtered_paths.push_back(paths_.at(i));
+    }else{
+      delete paths_.at(i);
     }
   }
   paths_ = filtered_paths;
@@ -55,5 +57,5 @@ void Group::CalculateFrequencies() {
       max_frequency_ = frequencies_.at(i);
     }
   }
-  max_length_ = min_length_ + max_freq_index;
+  max_frequency_length_ = min_length_ + max_freq_index;
 }
