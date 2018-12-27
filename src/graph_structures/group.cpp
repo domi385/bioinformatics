@@ -67,7 +67,7 @@ Path *Group::GetConsensusPath() {
       return paths_.at(i);
     }
   }
-  return NULL; //hopefully this should never happen
+  return NULL;  // hopefully this should never happen
 }
 
 std::string Group::GetTargetId() {

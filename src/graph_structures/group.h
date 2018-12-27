@@ -30,4 +30,4 @@ class Group {
   std::string GetTargetId();
 };
 
-#endif //SCAFFOLD_GROUP_H
+#endif  // SCAFFOLD_GROUP_H

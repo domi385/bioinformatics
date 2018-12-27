@@ -17,7 +17,7 @@ class ConnectionNode {
  private:
   std::vector<SequenceNode *> contained_nodes_;
   std::vector<ConsensusSequence *> sequences_;
-  std::vector<Path *> connecting_paths_; 
+  std::vector<Path *> connecting_paths_;
   double conflict_index_;
 
  public:
@@ -36,4 +36,4 @@ class ConnectionNode {
   std::vector<Path *> GetConnectingPaths();
 };
 
-#endif //BIOINFORMATICS_CONNECTION_NODE_H
+#endif  // BIOINFORMATICS_CONNECTION_NODE_H

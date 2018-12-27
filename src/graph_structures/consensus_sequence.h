@@ -15,14 +15,13 @@ class ConsensusSequence {
   SequenceNode *target_;
   Path *path_;
   int path_number_;
- public:
 
+ public:
   ConsensusSequence(Group *group, SequenceNode *origin, SequenceNode *target);
   SequenceNode *GetOrigin();
   SequenceNode *GetTarget();
   Path *GetPath();
   int GetPathNumber();
-
 };
 
-#endif //BIOINFORMATICS_CONSENSUSSEQUENCE_H
+#endif  // BIOINFORMATICS_CONSENSUSSEQUENCE_H
