@@ -2,6 +2,7 @@
 #include <vector>
 #include <unordered_map>
 #include <unordered_set>
+
 #include "../file_structures/paf_entry.h"
 #include "../graph_structures/sequence_node.h"
 #include "../graph_structures/path.h"

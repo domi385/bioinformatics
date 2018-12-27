@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <unordered_set>
 #include <vector>
+#include <tuple>
 
 #include "connection_node.h"
 
@@ -69,7 +70,7 @@ void ConnectionNode::RecalculateConflictIndex(std::unordered_set<ConnectionNode 
   CalculateConflictIndex();
 }
 
-void ConnectionNode::ConnectNodes(ConnectionNode *connection_node) {
+void ConnectionNode::ConnectNodes(ConnectionNode *connection_node, Path *connection) {
 
   //ADD ALL CURR CONNECTIONS
   std::vector<SequenceNode *> target_nodes = connection_node->contained_nodes_;
@@ -93,6 +94,13 @@ void ConnectionNode::ConnectNodes(ConnectionNode *connection_node) {
     }
   }
 
+  //Add all paths to other nodes
+  connecting_paths_.push_back(connection);
+  std::vector<Path *> target_connecting_paths;
+  for(int i=0, end = target_connecting_paths.size(); i<end; i++){
+    connecting_paths_.push_back(target_connecting_paths.at(i));
+  }
+
 }
 
 double ConnectionNode::GetConflictIndex() {
@@ -102,10 +110,10 @@ double ConnectionNode::GetConflictIndex() {
 SequenceNode *ConnectionNode::GetOriginNode() {
   return contained_nodes_.front();
 }
-SequenceNode *ConnectionNode::GetTarget() {
+std::tuple<SequenceNode *, Path *> ConnectionNode::GetTarget() {
 
   if (sequences_.empty()) {
-    return NULL;
+    return std::make_tuple<SequenceNode *, Path *>(NULL, NULL);
   }
 
   ConsensusSequence *max_target = sequences_.at(0);
@@ -118,9 +126,13 @@ SequenceNode *ConnectionNode::GetTarget() {
       max_target = curr_target;
     }
   }
-  return max_target->GetTarget();
+  return std::make_tuple<SequenceNode *, Path *>(max_target->GetTarget(), max_target->GetPath());
 }
 
 std::vector<SequenceNode*> ConnectionNode::GetNodes(){
  return contained_nodes_;
+}
+
+std::vector<Path *> ConnectionNode::GetConnectingPaths(){
+  return connecting_paths_;
 }

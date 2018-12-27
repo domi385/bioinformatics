@@ -3,6 +3,7 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <vector>
+#include <tuple>
 
 #include "hera.h"
 #include "../graph_structures/path_selection/extension_selection.h"
@@ -330,14 +331,16 @@ std::vector<ConnectionNode *> Hera::ConstructConnectionGraph(std::unordered_map<
 ConnectionNode *Hera::ConnectNode(ConnectionNode *origin,
                                   std::unordered_set<ConnectionNode *> targets) {
 
-  SequenceNode *desired_target = origin->GetTarget();
+  std::tuple<SequenceNode *, Path *> desired_target_info = origin->GetTarget();
+  SequenceNode *desired_target = std::get < 0 > (desired_target_info);
+  Path *path_to_desired_target = std::get < 1 > (desired_target_info);
 
   std::unordered_set<SequenceNode *> target_nodes;
   for (auto it = targets.begin(); it != targets.end(); ++it) {
     ConnectionNode *curr_target_node = *it;
     SequenceNode *available_target = curr_target_node->GetOriginNode();
     if (available_target == desired_target) {
-      origin->ConnectNodes(curr_target_node);
+      origin->ConnectNodes(curr_target_node, path_to_desired_target);
       return curr_target_node;
     }
   }
