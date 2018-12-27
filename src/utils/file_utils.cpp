@@ -98,20 +98,30 @@ void SaveFastaFile(std::string & file_name, std::vector<ConnectionNode *> &conne
     ConnectionNode *curr_conn = connection_graph.at(i);
     std::vector<Path *> paths = curr_conn->GetConnectingPaths();
 
+    Path *start_path = paths.at(0);
+    std::vector<Edge *> contained_edges = start_path->GetEdges();
+    Edge* first_edge = contained_edges.front();
+    output_file<<EdgeBeginningToString(first_edge, fasta_map);
+
+    Edge * prev_edge = first_edge;
     for(int j=0, end_j = paths.size(); j < end_j; j++){
       Path *current_path = paths.at(j);
       std::vector<Edge *> contained_edges = current_path->GetEdges();
 
-      for(int edge=0, max_edge = contained_edges.size() - 1; edge < max_edge; edge++){
+      for(int edge=0, max_edge = contained_edges.size(); edge < max_edge; edge++){
+        if(j == 0 && edge == 0){
+          continue;
+        }
         Edge *current_edge = contained_edges.at(edge);
-        std::string edge_string = EdgeBeginningToString(current_edge, fasta_map);
+        std::string edge_string = EdgeToString(prev_edge, current_edge, fasta_map);
         output_file<<edge_string;
+        prev_edge = current_edge;
       }
       
     }
     std::vector<Edge *> last_edges = paths.at(paths.size() - 1)->GetEdges();
     Edge *last_edge = last_edges.at(last_edges.size() - 1);
-    std::string edge_string = EdgeToString(last_edge, fasta_map);
+    std::string edge_string = EdgeEndToString(last_edge, fasta_map);
     output_file<<edge_string;
 
     output_file<<std::endl;
