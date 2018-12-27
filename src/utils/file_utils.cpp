@@ -85,7 +85,7 @@ bool FilterPafEntries(PafEntry &entry) {
       || (entry.GetSequenceIdentity() >= 1);
 }
 
-void SaveFastaFile(std::string & file_name, std::vector<ConnectionNode *> &connection_graph){
+void SaveFastaFile(std::string & file_name, std::vector<ConnectionNode *> &connection_graph, std::unordered_map<std::string, FastaEntry*> fasta_map){
 
   std::ofstream output_file(file_name);
   if (!output_file.is_open()){
@@ -104,19 +104,57 @@ void SaveFastaFile(std::string & file_name, std::vector<ConnectionNode *> &conne
 
       for(int edge=0, max_edge = contained_edges.size() - 1; edge < max_edge; edge++){
         Edge *current_edge = contained_edges.at(edge);
-        std::string edge_string = EdgeBeginningToString(current_edge);
+        std::string edge_string = EdgeBeginningToString(current_edge, fasta_map);
         output_file<<edge_string;
       }
       
     }
     std::vector<Edge *> last_edges = paths.at(paths.size() - 1)->GetEdges();
     Edge *last_edge = last_edges.at(last_edges.size() - 1);
-    std::string edge_string = EdgeToString(last_edge);
+    std::string edge_string = EdgeToString(last_edge, fasta_map);
     output_file<<edge_string;
 
     output_file<<std::endl;
   }
     output_file.close();
 }
+
+std::string EdgeToString(Edge* prevEdge, Edge* edge, std::unordered_map<std::string, FastaEntry*> fasta_map){
+  std::string start_id = edge->GetStartId();
+
+  FastaEntry* origin_entry = fasta_map.at(start_id);
+  std::string origin_value = origin_entry->GetValue();
+
+  long beginning_index = prevEdge->GetOverhangTarget()+prevEdge->GetOverlapLenTarget();
+  long end_index = edge->GetExtensonLenOrigin()+edge->GetOverlapLenOrigin();
+
+  if (end_index-beginning_index <0){
+    return "";
+  }
+
+  return origin_value.substr(beginning_index, end_index);
+}
+std::string EdgeBeginningToString(Edge* edge, std::unordered_map<std::string, FastaEntry*> fasta_map){
+std::string start_id = edge->GetStartId();
+
+  FastaEntry* origin_entry = fasta_map.at(start_id);
+  std::string origin_value = origin_entry->GetValue();
+
+  long index = edge->GetExtensonLenOrigin()+edge->GetOverlapLenOrigin();
+
+  return origin_value.substr(0, index);
+}
+
+std::string EdgeEndToString(Edge* edge, std::unordered_map<std::string, FastaEntry*> fasta_map){
+  std::string end_id = edge->GetIdEnd();
+
+  FastaEntry* target_entry = fasta_map.at(end_id);
+  std::string target_value = target_entry->GetValue();
+
+  long index = edge->GetOverhangTarget()+edge->GetOverlapLenTarget();
+
+  return target_value.substr( index, target_value.size());
+}
+
 
 }

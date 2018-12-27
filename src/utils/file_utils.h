@@ -41,8 +41,11 @@ std::vector<PafEntry> LoadFromPAF(std::string &file_name);
 */
 bool FilterPafEntries(PafEntry &entry);
 
-void SaveFastaFile(std::string& file_name,std::vector<ConnectionNode *>& connection_graph);
+void SaveFastaFile(std::string& file_name,std::vector<ConnectionNode *>& connection_graph, std::unordered_map<std::string, FastaEntry*> fasta_map);
 
+std::string EdgeToString(Edge* prevEdge, Edge* edge, std::unordered_map<std::string, FastaEntry*> fasta_map);
+std::string EdgeEndToString(Edge* edge, std::unordered_map<std::string, FastaEntry*> fasta_map);
+std::string EdgeBeginningToString(Edge* edge, std::unordered_map<std::string, FastaEntry*> fasta_map);
 };
 
 #endif //SCAFFOLD_FILE_UTILS_H

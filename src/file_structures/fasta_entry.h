@@ -29,6 +29,7 @@ class FastaEntry {
   std::string GetEntryId();
   long GetLength();
   bool IsConting();
+  std::string GetValue();
 };
 
 #endif //SCAFFOLD_FASTA_ENTRY_H

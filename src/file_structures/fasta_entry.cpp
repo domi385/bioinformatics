@@ -25,3 +25,7 @@ long FastaEntry::GetLength() {
 bool FastaEntry::IsConting() {
   return is_conting_;
 }
+
+std::string FastaEntry::GetValue(){
+  return value_;
+}

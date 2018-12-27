@@ -4,8 +4,12 @@
 #include <algorithm>
 #include <unordered_set>
 #include <vector>
+#include <tuple>
 
 #include "connection_node.h"
+#include "consensus_sequence.h"
+#include "sequence_node.h"
+#include "path.h"
 
 ConnectionNode::ConnectionNode(SequenceNode *origin,
                                std::vector<ConsensusSequence *> origin_sequences) {

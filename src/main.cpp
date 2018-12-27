@@ -122,7 +122,7 @@ int main(int argc, char **argv) {
   std::cout << "Connection graph " << connection_graph.size() << std::endl;
 
   // SAVE OUTPUT FILE
-  file_utils::SaveFastaFile(output_file_name, connection_graph);
+  file_utils::SaveFastaFile(output_file_name, connection_graph, fasta_p_map);
 
 
   std::cout << "Time for loading anchorn nodes: " << conting_nodes_loading_time
