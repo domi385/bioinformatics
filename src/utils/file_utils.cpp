@@ -101,11 +101,17 @@ void SaveFastaFile(std::string & file_name, std::vector<ConnectionNode *> &conne
     for(int j=0, end_j = paths.size(); j < end_j; j++){
       Path *current_path = paths.at(j);
       std::vector<SequenceNode *> contained_nodes = current_path->GetNodes();
-      for(int node=0, max_node = contained_nodes.size(); node < max_node; node++){
+
+      for(int node=0, max_node = contained_nodes.size() - 1; node < max_node; node++){
         SequenceNode *current_node = contained_nodes.at(node);
         output_file<<current_node->GetId()<<" ";
       }
+      
     }
+    std::vector<SequenceNode *> last_nodes = paths.at(paths.size() - 1)->GetNodes();
+    SequenceNode *last_node = last_nodes.at(last_nodes.size() - 1);
+    output_file<<last_node->GetId();
+
     output_file<<std::endl;
   }
     output_file.close();
