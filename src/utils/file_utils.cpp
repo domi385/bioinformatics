@@ -91,22 +91,21 @@ void SaveFastaFile(std::string & file_name, std::vector<ConnectionNode *> &conne
   }
 
   for (int i=0, end = connection_graph.size(); i<end; i++) {
-    output_file << "scaffold" << i << std::endl;
+    output_file << ">scaffold" << i << std::endl;
     ConnectionNode *curr_conn = connection_graph.at(i);
-    std::vector<SequenceNode *> nodes = curr_conn->GetNodes();
+    std::vector<Path *> paths = curr_conn->GetConnectingPaths();
 
-    for (int j = 0, end_j = nodes.size(); j < end_j; j++) {
-      SequenceNode* curr_node = nodes.at(j);
-      output_file<<"'"<<curr_node->GetId()<<"'"<<" ";
+    for(int j=0, end_j = paths.size(); j < end_j; j++){
+      Path *current_path = paths.at(i);
+      std::vector<SequenceNode *> contained_nodes = current_path->GetNodes();
+      for(int node=0, max_node = contained_nodes.size(); node < max_node; node++){
+        SequenceNode *current_node = contained_nodes.at(node);
+        output_file<<current_node->GetId()<<" ";
+      }
     }
+    output_file<<std::endl;
   }
     output_file.close();
-
-
-
-
-
-
 }
 
 }
