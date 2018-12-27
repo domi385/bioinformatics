@@ -2,9 +2,12 @@
 // Created by dplus on 26.12.2018..
 //
 
+#include "group.h"
 #include "consensus_sequence.h"
 
-ConsensusSequence::ConsensusSequence(Group *group, SequenceNode *origin, SequenceNode *target) {
+ConsensusSequence::ConsensusSequence(Group *group,
+                                     SequenceNode *origin,
+                                     SequenceNode *target) {
   path_ = group->GetConsensusPath();
   path_number_ = group->GetMaxFrequency();
   origin_ = origin;

@@ -2,6 +2,8 @@
 // Created by dplus on 22.12.2018..
 //
 
+#include <string>
+
 #include "edge.h"
 
 Edge::Edge(PafEntry entry) {

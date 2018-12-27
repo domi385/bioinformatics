@@ -5,7 +5,6 @@
 
 #include <vector>
 #include <unordered_map>
-
 #include <iostream>
 #include "../graph_structures/sequence_node.h"
 #include "../file_structures/fasta_entry.h"
@@ -36,12 +35,15 @@ std::vector<std::string> SplitString(std::string &s, std::string &delimiter) {
   return string_parts;
 }
 
-std::unordered_map<std::string, SequenceNode> ConvertFastaToNodeMap(std::vector<FastaEntry> &entries) {
+std::unordered_map<std::string, SequenceNode> ConvertFastaToNodeMap(std::vector<
+    FastaEntry> &entries) {
   std::unordered_map<std::string, SequenceNode> nodes_map;
   for (int i = 0, end = entries.size(); i < end; i++) {
     FastaEntry curr_entry = entries.at(i);
     std::string entry_id = curr_entry.GetEntryId();
-    SequenceNode *curr_node = new SequenceNode(entry_id, curr_entry.GetLength(), curr_entry.IsConting());
+    SequenceNode *curr_node = new SequenceNode(entry_id,
+                                               curr_entry.GetLength(),
+                                               curr_entry.IsConting());
     nodes_map.emplace(curr_entry.GetEntryId(), *curr_node);
   }
   return nodes_map;

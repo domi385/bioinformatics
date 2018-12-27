@@ -3,9 +3,11 @@
 //
 #include <algorithm>
 #include <iostream>
+#include <vector>
+#include "path.h"
 #include "group.h"
 
-Group::Group(std::vector<Path *> &paths, std::string & target_id) {
+Group::Group(std::vector<Path *> &paths, std::string &target_id) {
   this->paths_ = paths;
   this->target_id_ = target_id;
   min_length_ = paths.at(0)->GetLength();
@@ -60,14 +62,14 @@ void Group::CalculateFrequencies() {
   max_frequency_length_ = min_length_ + max_freq_index;
 }
 Path *Group::GetConsensusPath() {
-  for (int i=0, end = paths_.size(); i<end; i++){
-    if (paths_.at(i)->GetLength() == max_frequency_length_){
+  for (int i = 0, end = paths_.size(); i < end; i++) {
+    if (paths_.at(i)->GetLength() == max_frequency_length_) {
       return paths_.at(i);
     }
   }
   return NULL; //hopefully this should never happen
 }
 
-std::string Group::GetTargetId(){
+std::string Group::GetTargetId() {
   return target_id_;
 }

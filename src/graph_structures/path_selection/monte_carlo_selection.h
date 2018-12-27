@@ -3,6 +3,8 @@
 //
 
 #include <vector>
+#include <string>
+#include <unordered_set>
 #include "../edge.h"
 #include "../sequence_node.h"
 #include "node_selection.h"
@@ -12,7 +14,8 @@
 
 class MonteCarloSelection : public NodeSelection {
 
-  Edge *SelectEdge(std::vector<Edge> &edges, std::unordered_set<std::string> &used_nodes) override;
+  Edge *SelectEdge(std::vector<Edge*> &edges,
+                   std::unordered_set<std::string> &used_nodes) override;
 
 };
 

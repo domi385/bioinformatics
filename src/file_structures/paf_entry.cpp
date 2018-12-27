@@ -2,7 +2,9 @@
 // Created by dplus on 20.12.2018..
 //
 #include <string>
+#include <vector>
 #include <algorithm>
+
 #include "paf_entry.h"
 
 PafEntry::PafEntry(std::vector<std::string> &paf_parts) {
@@ -10,7 +12,8 @@ PafEntry::PafEntry(std::vector<std::string> &paf_parts) {
   long len1 = stol(paf_parts.at(1));
   long s1 = stol(paf_parts.at(2));
   long e1 = stol(paf_parts.at(3));
-  same_strand_ = paf_parts.at(4) == "+"; //TODO handle same_strand depented on sequence order
+  same_strand_ = paf_parts.at(4)
+      == "+"; //TODO handle same_strand depented on sequence order
   std::string id2 = paf_parts.at(5);
   long len2 = stol(paf_parts.at(6));
   long s2 = stol(paf_parts.at(7));
@@ -25,8 +28,14 @@ PafEntry::PafEntry(std::vector<std::string> &paf_parts) {
 
 }
 
-bool PafEntry::DetermineOrder(std::string &id1, std::string &id2, long len1, long len2, long s1,
-                              long e1, long s2, long e2) {
+bool PafEntry::DetermineOrder(std::string &id1,
+                              std::string &id2,
+                              long len1,
+                              long len2,
+                              long s1,
+                              long e1,
+                              long s2,
+                              long e2) {
 
   long l1 = s1;
   long ol1 = e1 - s1;
@@ -43,8 +52,16 @@ bool PafEntry::DetermineOrder(std::string &id1, std::string &id2, long len1, lon
   return false;
 }
 
-void PafEntry::Store(std::string &id1, std::string &id2, long len1, long len2, long el1, long ol1, long oh1, long oh2,
-                     long ol2, long el2) {
+void PafEntry::Store(std::string &id1,
+                     std::string &id2,
+                     long len1,
+                     long len2,
+                     long el1,
+                     long ol1,
+                     long oh1,
+                     long oh2,
+                     long ol2,
+                     long el2) {
   this->origin_id_ = id1;
   this->target_id_ = id2;
   this->origin_length_ = len1;
@@ -56,6 +73,7 @@ void PafEntry::Store(std::string &id1, std::string &id2, long len1, long len2, l
   this->ol_2_ = ol2;
   this->el_2_ = el2;
 }
+
 void PafEntry::CalculateScores() {
   sequence_identity_ = num_matches_ /
       (double) std::min(origin_length_, target_length_);
@@ -102,5 +120,3 @@ long PafEntry::GetOverlapLenTarget() {
 std::string PafEntry::GetOriginId() {
   return origin_id_;
 }
-
-

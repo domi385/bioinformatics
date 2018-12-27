@@ -15,7 +15,7 @@ class SequenceNode {
   std::string id_;
   bool is_conting_;
   long length_;
-  std::vector<Edge> edges_;
+  std::vector<Edge*> edges_;
 
  public:
   //constructor
@@ -25,9 +25,9 @@ class SequenceNode {
   std::string GetId();
   bool IsConting();
   long GetLength();
-  std::vector<Edge> GetEdges();
+  std::vector<Edge*> GetEdges();
 
-  void AddEdge(Edge &edge);
+  void AddEdge(Edge* edge);
 };
 
 #endif //SCAFFOLD_SEQUENCE_NODE_H

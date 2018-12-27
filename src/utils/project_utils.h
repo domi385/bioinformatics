@@ -17,7 +17,8 @@ void OutputStringVector(std::vector<std::string> &collection);
 
 std::vector<std::string> SplitString(std::string &s, std::string &delimiter);
 
-std::unordered_map<std::string, SequenceNode> ConvertFastaToNodeMap(std::vector<FastaEntry> &entries);
+std::unordered_map<std::string, SequenceNode> ConvertFastaToNodeMap(std::vector<
+    FastaEntry> &entries);
 }
 
 #endif //SCAFFOLD_PROJECT_UTILS_H

@@ -1,5 +1,9 @@
 #include <iostream>
 #include <algorithm>
+#include <unordered_map>
+#include <unordered_set>
+#include <vector>
+
 #include "hera.h"
 #include "../graph_structures/path_selection/extension_selection.h"
 #include "../graph_structures/path_selection/overlap_selection.h"
@@ -21,7 +25,7 @@ void Hera::AddEdges(std::vector<PafEntry> &entries) {
     Edge *edge = new Edge(entries.at(i));
     std::string curr_start_id = edge->GetStartId();
     SequenceNode *p_node = GetNode(curr_start_id);
-    p_node->AddEdge(*edge);
+    p_node->AddEdge(edge);
   }
 }
 
@@ -37,7 +41,7 @@ SequenceNode *Hera::GetNode(std::string &node_id) {
 
 std::vector<Path *> Hera::GeneratePaths(std::string &conting_id) {
   SequenceNode *conting_node = GetNode(conting_id);
-  std::vector<Edge> edges = conting_node->GetEdges();
+  std::vector<Edge*> edges = conting_node->GetEdges();
   std::vector<Path *> paths;
   std::vector<NodeSelection *> selections;
   selections.push_back(new ExtensionSelection());
@@ -47,9 +51,9 @@ std::vector<Path *> Hera::GeneratePaths(std::string &conting_id) {
     NodeSelection *selection = selections[j];
 
     for (int i = 0, end = edges.size(); i < end; i++) {
-      Edge edge = edges[i];
-      Path *p = new Path(*conting_node);
-      Path *p_curr = GeneratePath(*p, *conting_node, edge, selection);
+      Edge* edge = edges[i];
+      Path *p = new Path(conting_node);
+      Path *p_curr = GeneratePath(p, *conting_node, edge, selection);
 
       if (p_curr != NULL) {
         p_curr->Finalize();
@@ -64,18 +68,21 @@ std::vector<Path *> Hera::GeneratePaths(std::string &conting_id) {
   return paths;
 }
 
-Path *Hera::GeneratePath(Path &path, SequenceNode &conting_node, Edge &edge, NodeSelection *selection) {
+Path *Hera::GeneratePath(Path* path,
+                         SequenceNode &conting_node,
+                         Edge* edge,
+                         NodeSelection *selection) {
   std::unordered_set<std::string> traversed_nodes;
   traversed_nodes.insert(conting_node.GetId());
   int edge_count = 1;
-  Edge prev_edge = edge;
+  Edge* prev_edge = edge;
 
-  std::string node_id = prev_edge.GetIdEnd();
+  std::string node_id = prev_edge->GetIdEnd();
   SequenceNode *n = GetNode(node_id);
-  path.Add(*n, prev_edge);
+  path->Add(n, prev_edge);
 
   while (true) {
-    std::vector<Edge> edges = n->GetEdges();
+    std::vector<Edge*> edges = n->GetEdges();
     //std::cout<<"Edges size " <<conting_node.GetId()<<" "<< edges.size() <<std::endl;
     Edge *p_next_edge = selection->SelectEdge(edges, traversed_nodes);
     if (p_next_edge == NULL) {
@@ -85,22 +92,22 @@ Path *Hera::GeneratePath(Path &path, SequenceNode &conting_node, Edge &edge, Nod
       //std::cout << "exit because dead end";
       return NULL; //TODO povratak na prethodni cvor
     }
-    Edge next_edge = *p_next_edge;
+    Edge* next_edge = p_next_edge;
     edge_count++;
-    if (edge_count > 500) { //TODO definirati konstantu
+    if (edge_count > 1000) { //TODO definirati konstantu
       // std::cout << "exit because length"<<std::endl;
       return NULL;
     }
-    node_id = prev_edge.GetIdEnd();
+    node_id = prev_edge->GetIdEnd();
     n = GetNode(node_id); //TODO
-    path.Add(*n, next_edge);
+    path->Add(n, next_edge);
     traversed_nodes.insert(node_id);
     if (n->IsConting()) {
       //  std::cout << "exit because conting"<<std::endl;
       if (n->GetId() == conting_node.GetId()) {
         return NULL; // conting trying to connect to itself
       }
-      return &path;
+      return path;
     }
     prev_edge = next_edge;
   }
@@ -108,7 +115,8 @@ Path *Hera::GeneratePath(Path &path, SequenceNode &conting_node, Edge &edge, Nod
 
 bool comparePaths(Path *a, Path *b) { return (*a < *b); }
 
-Group *Hera::GenerateConsenzusSequence(std::vector<Path *> &paths, std::string &target_id) {
+Group *Hera::GenerateConsenzusSequence(std::vector<Path *> &paths,
+                                       std::string &target_id) {
   std::sort(paths.begin(), paths.end(), comparePaths);
   std::vector<Group *> groups = GroupPaths(paths, target_id);
 
@@ -172,26 +180,30 @@ std::vector<Group *> Hera::GenerateConsenzusSequencesForNode(std::vector<Path *>
        iter != target_paths_map.end(); ++iter) {
     std::vector<Path *> target_paths = iter->second;
     std::string target_id = iter->first;
-    consensusGroups.push_back(GenerateConsenzusSequence(target_paths, target_id));
+    consensusGroups.push_back(GenerateConsenzusSequence(target_paths,
+                                                        target_id));
   }
 
   return consensusGroups;
 
 }
 
-std::unordered_map<std::string, std::vector<Group *>> Hera::GenerateConsenzusSequences(
+std::unordered_map<std::string,
+                   std::vector<Group *>> Hera::GenerateConsenzusSequences(
     std::unordered_map<std::string, std::vector<Path *>> &paths) {
 
   std::unordered_map<std::string, std::vector<Group *>> consensus_sequences;
   for (auto iter = paths.begin(); iter != paths.end(); ++iter) {
     std::string origin_id = iter->first;
-    consensus_sequences.emplace(origin_id, GenerateConsenzusSequencesForNode(iter->second));
+    consensus_sequences.emplace(origin_id,
+                                GenerateConsenzusSequencesForNode(iter->second));
   }
 
   return consensus_sequences;
 }
 
-std::vector<Group *> Hera::GroupPaths(std::vector<Path *> &paths, std::string &target_id) {
+std::vector<Group *> Hera::GroupPaths(std::vector<Path *> &paths,
+                                      std::string &target_id) {
   long max_len = paths.back()->GetLength();
   long min_len = paths.front()->GetLength();
 
@@ -226,13 +238,15 @@ std::unordered_map<std::string, SequenceNode> Hera::GetContingNodesMap() {
   return conting_nodes_;
 }
 
-std::vector<ConsensusSequence *> Hera::CreateConsensusSequenceFromGroups(std::vector<Group *> &groups,
+std::vector<ConsensusSequence *> Hera::CreateConsensusSequenceFromGroups(std::vector<
+    Group *> &groups,
                                                                          SequenceNode *origin) {
   std::vector<ConsensusSequence *> consensus_sequences;
   for (int i = 0, end = groups.size(); i < end; i++) {
     std::string target_id = groups.at(i)->GetTargetId();
     SequenceNode *target_node = GetNode(target_id);
-    ConsensusSequence *new_sequence = new ConsensusSequence(groups.at(i), origin, target_node);
+    ConsensusSequence *new_sequence =
+        new ConsensusSequence(groups.at(i), origin, target_node);
     consensus_sequences.push_back(new_sequence);
   }
   //TODO check if groups are cleared somewhere, if not it should be done
@@ -240,25 +254,31 @@ std::vector<ConsensusSequence *> Hera::CreateConsensusSequenceFromGroups(std::ve
 }
 
 std::vector<ConnectionNode *> Hera::CreateConnectionNodes(std::unordered_map<std::string,
-                                                                             std::vector<Group *>> &conting_consensus_sequences) {
+                                                                             std::vector<
+                                                                                 Group *>> &conting_consensus_sequences) {
   std::vector<ConnectionNode *> connection_nodes;
 
-  for (auto it = conting_consensus_sequences.begin(); it != conting_consensus_sequences.end(); ++it) {
+  for (auto it = conting_consensus_sequences.begin();
+       it != conting_consensus_sequences.end(); ++it) {
     std::string origin_id = it->first;
     SequenceNode *origin_node = GetNode(origin_id);
     std::vector<Group *> currGroup = it->second;
 
-    std::vector<ConsensusSequence *> consensus_sequences = CreateConsensusSequenceFromGroups(currGroup, origin_node);
+    std::vector<ConsensusSequence *> consensus_sequences =
+        CreateConsensusSequenceFromGroups(currGroup, origin_node);
 
-    ConnectionNode *curr_node = new ConnectionNode(origin_node, consensus_sequences);
+    ConnectionNode
+        *curr_node = new ConnectionNode(origin_node, consensus_sequences);
     connection_nodes.push_back(curr_node);
   }
   return connection_nodes;
 }
 
-std::vector<ConnectionNode *> Hera::ConstructConnectionGraph(std::unordered_map<std::string,
-                                                                                std::vector<Group *>> &conting_consensus_sequences) {
-  std::vector<ConnectionNode *> origins = CreateConnectionNodes(conting_consensus_sequences);
+std::vector<ConnectionNode *> Hera::ConstructConnectionGraph(std::unordered_map<
+    std::string,
+    std::vector<Group *>> &conting_consensus_sequences) {
+  std::vector<ConnectionNode *>
+      origins = CreateConnectionNodes(conting_consensus_sequences);
   std::unordered_set<ConnectionNode *> targets;
 
   for (int i = 0, end = origins.size(); i < end; i++) {
@@ -304,10 +324,11 @@ std::vector<ConnectionNode *> Hera::ConstructConnectionGraph(std::unordered_map<
     }
 
   }
-
+  return origins;
 }
 
-ConnectionNode *Hera::ConnectNode(ConnectionNode *origin, std::unordered_set<ConnectionNode *> targets) {
+ConnectionNode *Hera::ConnectNode(ConnectionNode *origin,
+                                  std::unordered_set<ConnectionNode *> targets) {
 
   SequenceNode *desired_target = origin->GetTarget();
 

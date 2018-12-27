@@ -11,7 +11,7 @@
 class PafEntry {
  private:
 
-  //FILE ATTRIBUTES
+  // FILE ATTRIBUTES
   std::string origin_id_;
   long origin_length_;
   bool same_strand_;
@@ -22,7 +22,7 @@ class PafEntry {
   int map_quality_;
   std::string sam_data_;
 
-  //OVERLAP ATTRIBUTES
+  // OVERLAP ATTRIBUTES
   long el_1_;
   long ol_1_;
   long oh_1_;
@@ -31,17 +31,31 @@ class PafEntry {
   long el_2_;
   bool order_; //true if the original order is satisfied, false otherwise
 
-  //OVERLAP SCORES
+  // OVERLAP SCORES
   double sequence_identity_;
   double overlap_score_;
   double extension_score_;
 
-  //INITIALIZATION METHODS
-  bool DetermineOrder(std::string &id1, std::string &id2, long len1, long len2, long s1,
-                      long e1, long s2, long e2);
+  // INITIALIZATION METHODS
+  bool DetermineOrder(std::string &id1,
+                      std::string &id2,
+                      long len1,
+                      long len2,
+                      long s1,
+                      long e1,
+                      long s2,
+                      long e2);
 
-  void Store(std::string &id1, std::string &id2, long len1, long len2, long el1, long ol1, long oh1, long oh2,
-             long ol2, long el2);
+  void Store(std::string &id1,
+             std::string &id2,
+             long len1,
+             long len2,
+             long el1,
+             long ol1,
+             long oh1,
+             long oh2,
+             long ol2,
+             long el2);
   /**
    * Method calculate scores between two sequences: overlap_score, extension_score and sequence_identity.
    */
@@ -49,10 +63,10 @@ class PafEntry {
 
  public:
 
-  //CONSTRUCTORS
+  // CONSTRUCTORS
   explicit PafEntry(std::vector<std::string> &paf_parts);
 
-  //GETTERS
+  // GETTERS
 
   std::string GetTargetId();
   double GetOverlapScore();
@@ -69,4 +83,4 @@ class PafEntry {
   std::string GetOriginId();
 };
 
-#endif //SCAFFOLD_PAFENTRY_H
+#endif // SCAFFOLD_PAFENTRY_H

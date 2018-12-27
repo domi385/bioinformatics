@@ -3,6 +3,8 @@
 //
 
 #include <vector>
+#include <string>
+
 #include "path.h"
 
 #ifndef SCAFFOLD_GROUP_H
@@ -17,12 +19,11 @@ class Group {
   long max_frequency_length_;
   std::string target_id_;
 
-
   std::vector<int> frequencies_;
   void CalculateFrequencies();
 
  public:
-  Group(std::vector<Path *> &paths, std::string & target_id );
+  Group(std::vector<Path *> &paths, std::string &target_id);
   void FilterGroup();
   int GetMaxFrequency();
   Path *GetConsensusPath();

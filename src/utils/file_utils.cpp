@@ -10,11 +10,12 @@
 #include "../file_structures/paf_entry.h"
 #include "project_utils.h"
 #include "file_utils.h"
-
+#include "../graph_structures/connection_node.h"
 
 namespace file_utils {
 
-std::vector<FastaEntry> LoadFromFasta(std::string &filename, bool is_conting_file) {
+std::vector<FastaEntry> LoadFromFasta(std::string &filename,
+                                      bool is_conting_file) {
 
   std::vector<FastaEntry> sequence_nodes;
   std::ifstream fasta_file(filename);
@@ -31,7 +32,9 @@ std::vector<FastaEntry> LoadFromFasta(std::string &filename, bool is_conting_fil
     }
     if (line.rfind('>') == 0) {
       if (!node_id.empty()) {
-        sequence_nodes.push_back(FastaEntry(node_id, node_value, is_conting_file));
+        sequence_nodes.push_back(FastaEntry(node_id,
+                                            node_value,
+                                            is_conting_file));
         node_id.clear();
         node_value.clear();
       }
@@ -63,7 +66,8 @@ std::vector<PafEntry> LoadFromPAF(std::string &file_name) {
       continue;
     }
 
-    std::vector<std::string> line_parts = project_utils::SplitString(line, paf_delimiter);
+    std::vector<std::string>
+        line_parts = project_utils::SplitString(line, paf_delimiter);
     PafEntry currEntry = PafEntry(line_parts);
     if (FilterPafEntries(currEntry)) {
       continue;
@@ -74,7 +78,35 @@ std::vector<PafEntry> LoadFromPAF(std::string &file_name) {
 }
 
 bool FilterPafEntries(PafEntry &entry) {
-  return (entry.GetSequenceIdentity() < 0.5) || (entry.GetSequenceIdentity() >= 1);
+  return (entry.GetSequenceIdentity() < 0.5)
+      || (entry.GetSequenceIdentity() >= 1);
+}
+
+void SaveFastaFile(std::string & file_name, std::vector<ConnectionNode *> &connection_graph){
+
+  std::ofstream output_file(file_name);
+  if (!output_file.is_open()){
+    std::cout << "Unable to open file " + file_name;
+    exit(-1);
+  }
+
+  for (int i=0, end = connection_graph.size(); i<end; i++) {
+    output_file << "scaffold" << i << std::endl;
+    ConnectionNode *curr_conn = connection_graph.at(i);
+    std::vector<SequenceNode *> nodes = curr_conn->GetNodes();
+
+    for (int j = 0, end_j = nodes.size(); j < end_j; j++) {
+      SequenceNode* curr_node = nodes.at(j);
+      output_file<<"'"<<curr_node->GetId()<<"'"<<" ";
+    }
+  }
+    output_file.close();
+
+
+
+
+
+
 }
 
 }

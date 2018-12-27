@@ -1,7 +1,9 @@
 //
 // Created by dplus on 22.12.2018..
 //
-
+#include <string>
+#include <vector>
+#include "edge.h"
 #include "sequence_node.h"
 
 SequenceNode::SequenceNode(std::string &id, long length, bool is_conting) {
@@ -22,12 +24,10 @@ std::string SequenceNode::GetId() {
   return id_;
 }
 
-std::vector<Edge> SequenceNode::GetEdges() {
+std::vector<Edge*> SequenceNode::GetEdges() {
   return edges_;
 }
 
-void SequenceNode::AddEdge(Edge &edge) {
+void SequenceNode::AddEdge(Edge* edge) {
   edges_.push_back(edge);
 }
-
-

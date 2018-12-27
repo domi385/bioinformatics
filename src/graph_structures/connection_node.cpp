@@ -3,9 +3,12 @@
 //
 #include <algorithm>
 #include <unordered_set>
+#include <vector>
+
 #include "connection_node.h"
 
-ConnectionNode::ConnectionNode(SequenceNode *origin, std::vector<ConsensusSequence *> origin_sequences) {
+ConnectionNode::ConnectionNode(SequenceNode *origin,
+                               std::vector<ConsensusSequence *> origin_sequences) {
   contained_nodes_.push_back(origin);
   sequences_ = origin_sequences;
 
@@ -75,11 +78,14 @@ void ConnectionNode::ConnectNodes(ConnectionNode *connection_node) {
   }
 
   //CALC CURRENT CONSENSUS SEQUENCES
-  std::vector<ConsensusSequence *> target_sequences = connection_node->sequences_;
+  std::vector<ConsensusSequence *>
+      target_sequences = connection_node->sequences_;
   sequences_.clear();
   for (int i = 0, end = target_sequences.size(); i < end; i++) {
     ConsensusSequence *curr_consensus = target_sequences.at(i);
-    if (std::find(contained_nodes_.begin(), contained_nodes_.end(), curr_consensus->GetTarget())
+    if (std::find(contained_nodes_.begin(),
+                  contained_nodes_.end(),
+                  curr_consensus->GetTarget())
         == contained_nodes_.end()) {
       sequences_.push_back(target_sequences.at(i));
       //TODO find can be expesive
@@ -93,24 +99,28 @@ double ConnectionNode::GetConflictIndex() {
   return conflict_index_;
 }
 
-SequenceNode* ConnectionNode::GetOriginNode(){
+SequenceNode *ConnectionNode::GetOriginNode() {
   return contained_nodes_.front();
 }
 SequenceNode *ConnectionNode::GetTarget() {
 
-  if (sequences_.empty()){
+  if (sequences_.empty()) {
     return NULL;
   }
 
-  ConsensusSequence* max_target = sequences_.at(0);
+  ConsensusSequence *max_target = sequences_.at(0);
   int max_np = max_target->GetPathNumber();
-  for (int i=1, end = sequences_.size(); i<end; i++){
-    ConsensusSequence* curr_target = sequences_.at(i);
+  for (int i = 1, end = sequences_.size(); i < end; i++) {
+    ConsensusSequence *curr_target = sequences_.at(i);
     int curr_np = curr_target->GetPathNumber();
-    if (curr_np>max_np){
+    if (curr_np > max_np) {
       max_np = curr_np;
       max_target = curr_target;
     }
   }
-  return  max_target->GetTarget();
+  return max_target->GetTarget();
+}
+
+std::vector<SequenceNode*> ConnectionNode::GetNodes(){
+ return contained_nodes_;
 }

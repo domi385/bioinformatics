@@ -11,18 +11,17 @@
 
 class ConsensusSequence {
  private:
-  SequenceNode* origin_;
-  SequenceNode* target_;
-  Path* path_;
+  SequenceNode *origin_;
+  SequenceNode *target_;
+  Path *path_;
   int path_number_;
  public:
 
-  ConsensusSequence(Group* group, SequenceNode* origin, SequenceNode* target);
-  SequenceNode* GetOrigin();
-  SequenceNode* GetTarget();
-  Path* GetPath();
+  ConsensusSequence(Group *group, SequenceNode *origin, SequenceNode *target);
+  SequenceNode *GetOrigin();
+  SequenceNode *GetTarget();
+  Path *GetPath();
   int GetPathNumber();
-
 
 };
 
