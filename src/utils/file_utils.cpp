@@ -100,17 +100,19 @@ void SaveFastaFile(std::string & file_name, std::vector<ConnectionNode *> &conne
 
     for(int j=0, end_j = paths.size(); j < end_j; j++){
       Path *current_path = paths.at(j);
-      std::vector<SequenceNode *> contained_nodes = current_path->GetNodes();
+      std::vector<Edge *> contained_edges = current_path->GetEdges();
 
-      for(int node=0, max_node = contained_nodes.size() - 1; node < max_node; node++){
-        SequenceNode *current_node = contained_nodes.at(node);
-        output_file<<current_node->GetId()<<" ";
+      for(int edge=0, max_edge = contained_edges.size() - 1; edge < max_edge; edge++){
+        Edge *current_edge = contained_edges.at(edge);
+        std::string edge_string = EdgeBeginningToString(current_edge);
+        output_file<<edge_string;
       }
       
     }
-    std::vector<SequenceNode *> last_nodes = paths.at(paths.size() - 1)->GetNodes();
-    SequenceNode *last_node = last_nodes.at(last_nodes.size() - 1);
-    output_file<<last_node->GetId();
+    std::vector<Edge *> last_edges = paths.at(paths.size() - 1)->GetEdges();
+    Edge *last_edge = last_edges.at(last_edges.size() - 1);
+    std::string edge_string = EdgeToString(last_edge);
+    output_file<<edge_string;
 
     output_file<<std::endl;
   }
