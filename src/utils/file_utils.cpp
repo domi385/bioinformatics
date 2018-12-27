@@ -6,11 +6,14 @@
 #include <vector>
 #include <fstream>
 #include <iostream>
+#include <string>
 #include "../file_structures/fasta_entry.h"
 #include "../file_structures/paf_entry.h"
 #include "project_utils.h"
 #include "file_utils.h"
+#include "../graph_structures/sequence_node.h"
 #include "../graph_structures/connection_node.h"
+#include "../graph_structures/path.h"
 
 namespace file_utils {
 
@@ -96,7 +99,7 @@ void SaveFastaFile(std::string & file_name, std::vector<ConnectionNode *> &conne
     std::vector<Path *> paths = curr_conn->GetConnectingPaths();
 
     for(int j=0, end_j = paths.size(); j < end_j; j++){
-      Path *current_path = paths.at(i);
+      Path *current_path = paths.at(j);
       std::vector<SequenceNode *> contained_nodes = current_path->GetNodes();
       for(int node=0, max_node = contained_nodes.size(); node < max_node; node++){
         SequenceNode *current_node = contained_nodes.at(node);

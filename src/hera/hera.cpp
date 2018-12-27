@@ -79,38 +79,31 @@ Path *Hera::GeneratePath(Path* path,
   Edge* prev_edge = edge;
 
   std::string node_id = prev_edge->GetIdEnd();
-  SequenceNode *n = GetNode(node_id);
-  path->Add(n, prev_edge);
+  SequenceNode *node = GetNode(node_id);
+  path->Add(node, prev_edge);
 
   while (true) {
-    std::vector<Edge*> edges = n->GetEdges();
-    //std::cout<<"Edges size " <<conting_node.GetId()<<" "<< edges.size() <<std::endl;
-    Edge *p_next_edge = selection->SelectEdge(edges, traversed_nodes);
-    if (p_next_edge == NULL) {
-      if (traversed_nodes.size() != -1) {
-        //std::cout << traversed_nodes.size() << std::endl;
-      }
-      //std::cout << "exit because dead end";
+    std::vector<Edge*> edges = node->GetEdges();
+    Edge *next_edge = selection->SelectEdge(edges, traversed_nodes);
+    if (next_edge == NULL) {
       return NULL; //TODO povratak na prethodni cvor
     }
-    Edge* next_edge = p_next_edge;
+
     edge_count++;
     if (edge_count > 1000) { //TODO definirati konstantu
-      // std::cout << "exit because length"<<std::endl;
       return NULL;
     }
-    node_id = prev_edge->GetIdEnd();
-    n = GetNode(node_id); //TODO
-    path->Add(n, next_edge);
+    node_id = next_edge->GetIdEnd();
+    node = GetNode(node_id); //TODO
+    path->Add(node, next_edge);
     traversed_nodes.insert(node_id);
-    if (n->IsConting()) {
-      //  std::cout << "exit because conting"<<std::endl;
-      if (n->GetId() == conting_node.GetId()) {
-        return NULL; // conting trying to connect to itself
+    if (node->IsConting()) {
+      if (node->GetId() == conting_node.GetId()) {
+        return NULL;
       }
       return path;
     }
-    prev_edge = next_edge;
+    //prev_edge = next_edge;
   }
 }
 

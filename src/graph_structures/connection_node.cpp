@@ -7,6 +7,9 @@
 #include <tuple>
 
 #include "connection_node.h"
+#include "consensus_sequence.h"
+#include "sequence_node.h"
+#include "path.h"
 
 ConnectionNode::ConnectionNode(SequenceNode *origin,
                                std::vector<ConsensusSequence *> origin_sequences) {
@@ -96,7 +99,7 @@ void ConnectionNode::ConnectNodes(ConnectionNode *connection_node, Path *connect
 
   //Add all paths to other nodes
   connecting_paths_.push_back(connection);
-  std::vector<Path *> target_connecting_paths;
+  std::vector<Path *> target_connecting_paths = connection_node->GetConnectingPaths();
   for(int i=0, end = target_connecting_paths.size(); i<end; i++){
     connecting_paths_.push_back(target_connecting_paths.at(i));
   }

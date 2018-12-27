@@ -29,4 +29,3 @@ Path *ConsensusSequence::GetPath() {
 int ConsensusSequence::GetPathNumber() {
   return path_number_;
 }
-
