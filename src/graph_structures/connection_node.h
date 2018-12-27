@@ -8,6 +8,7 @@
 #include <tuple>
 #include "consensus_sequence.h"
 #include "sequence_node.h"
+#include "path.h"
 
 #ifndef BIOINFORMATICS_CONNECTION_NODE_H
 #define BIOINFORMATICS_CONNECTION_NODE_H

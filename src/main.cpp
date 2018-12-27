@@ -40,17 +40,15 @@ int main(int argc, char **argv) {
   clock_t t = std::clock();
   std::vector<FastaEntry> conting_fasta_entries =
       file_utils::LoadFromFasta(contigs_fasta_file_name, true);
-
-  for (int i=0, end = conting_fasta_entries.size(); i<end; i++){
-    FastaEntry* curr_entry = &conting_fasta_entries.at(i);
-    fasta_p_map.emplace(curr_entry->GetEntryId(), curr_entry);
-  }
-
   std::cout << "Number of conting fasta entries: "
             << conting_fasta_entries.size() << std::endl;
   std::unordered_map<std::string, SequenceNode>
       conting_nodes_map =
       project_utils::ConvertFastaToNodeMap(conting_fasta_entries);
+  for (int i=0, end = conting_fasta_entries.size(); i<end; i++){
+    FastaEntry* curr_entry = &conting_fasta_entries.at(i);
+    fasta_p_map.emplace(curr_entry->GetEntryId(), curr_entry);
+  }
   double conting_nodes_loading_time = (std::clock() - t)/(double)CLOCKS_PER_SEC;
 
   // LOAD READ NODES FROM FASTA
@@ -61,12 +59,13 @@ int main(int argc, char **argv) {
             << std::endl;
   std::unordered_map<std::string, SequenceNode>
       read_nodes_map = project_utils::ConvertFastaToNodeMap(read_fasta_entries);
-  double read_nodes_loading_time = (std::clock() - t)/(double)CLOCKS_PER_SEC;
 
   for (int i=0, end = read_fasta_entries.size(); i<end; i++){
     FastaEntry* curr_entry = &read_fasta_entries.at(i);
     fasta_p_map.emplace(curr_entry->GetEntryId(), curr_entry);
   }
+  double read_nodes_loading_time = (std::clock() - t)/(double)CLOCKS_PER_SEC;
+
 
   // LOAD READ_CONTING OVERLAP FROM PAF
   t = std::clock();
