@@ -67,3 +67,7 @@ Path::~Path() {
 std::vector<SequenceNode*> Path::GetNodes(){
   return path_;
 }
+
+std::vector<Edge *> Path::GetEdges(){
+  return edges_;
+}

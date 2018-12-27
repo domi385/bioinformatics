@@ -28,6 +28,7 @@ class Path {
   bool operator<(const Path& other) const;
   std::string GetEndId();
   std::vector<SequenceNode*> GetNodes();
+  std::vector<Edge *> GetEdges();
 };
 
 #endif // SCAFFOLD_PATH_H
