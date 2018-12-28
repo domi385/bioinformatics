@@ -29,10 +29,28 @@
 #define SRC_UTILS_PROJECT_UTILS_H_
 
 namespace project_utils {
+/**
+ * Function outputs vector of strings to standard output in following form
+ * 'member1' 'member2' 'member3' ...
+ * @param collection vector of strings that needs to be printed
+ */
 void OutputStringVector(std::vector<std::string> &collection);
 
+/**
+ * Function for splitting strings by a given delimiter into a vector.
+ * 'aba' splitted by 'a' -> ['', 'b', '']
+ * 'aba' splitted by 'b' -> ['a','a']
+ * @param s string that needs to be splitted
+ * @param delimiter delimiter for splitting
+ * @return vector of string parts
+ */
 std::vector<std::string> SplitString(std::string &s, std::string &delimiter);
 
+/**
+ * Function for converting fasta entry map to map of sequence nodes.
+ * @param entries map that maps fasta entry id to fasta entry
+ * @return map that maps fasta entry id to sequence node
+ */
 std::unordered_map<std::string, SequenceNode> ConvertFastaToNodeMap(std::vector<
     FastaEntry> &entries);
 }  // namespace project_utils
