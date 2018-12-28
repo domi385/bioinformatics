@@ -1,4 +1,5 @@
 /* Copyright 2018 Dunja Vesinger, Domagoj Pluščec
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
@@ -26,7 +27,7 @@
 class FastaEntry {
  private:
   /**
-   * Sequence id.
+   * Fasta sequence id.
    */
   std::string entry_id_;
   /**
@@ -45,9 +46,25 @@ class FastaEntry {
  public:
   FastaEntry(std::string &node_id, std::string &value, bool is_conting);
 
+  /**
+   * Getter method for obtaining fasta entry id.
+   * @return entry id string
+   */
   std::string GetEntryId();
+  /**
+   * Getter method for obtaining current entry length.
+   * @return entry length
+   */
   long GetLength();
+  /**
+   * Method checks if the current fasta entry represents conting.
+   * @return true if the entry is conting, false otherwise
+   */
   bool IsConting();
+  /**
+   * Getter method for sequence value.
+   * @return method returns currenty entry value
+   */
   std::string GetValue();
 };
 
