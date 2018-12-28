@@ -1,22 +1,19 @@
-//
-// Created by dplus on 22.12.2018..
-//
+// Copyright 2018 Dunja Vesinger, Domagoj Pluščec
 
 #include <vector>
 #include <string>
 #include <unordered_set>
-#include "../edge.h"
-#include "../sequence_node.h"
-#include "node_selection.h"
 
-#ifndef SCAFFOLD_MONTE_CARLO_SELECTION_H
-#define SCAFFOLD_MONTE_CARLO_SELECTION_H
+#include "graph_structures/path_selection/node_selection.h"
+#include "graph_structures/edge.h"
+#include "graph_structures/sequence_node.h"
+
+#ifndef SRC_GRAPH_STRUCTURES_PATH_SELECTION_MONTE_CARLO_SELECTION_H_
+#define SRC_GRAPH_STRUCTURES_PATH_SELECTION_MONTE_CARLO_SELECTION_H_
+
 
 class MonteCarloSelection : public NodeSelection {
-
   Edge *SelectEdge(std::vector<Edge*> &edges,
                    std::unordered_set<std::string> &used_nodes) override;
-
 };
-
-#endif //SCAFFOLD_MONTE_CARLO_SELECTION_H
+#endif  // SRC_GRAPH_STRUCTURES_PATH_SELECTION_MONTE_CARLO_SELECTION_H_

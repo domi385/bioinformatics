@@ -1,16 +1,16 @@
-//
-// Created by dplus on 22.12.2018..
-//
+// Copyright 2018 Dunja Vesinger, Domagoj Pluščec
+
+#include "graph_structures/path_selection/extension_selection.h"
 
 #include <string>
 #include <vector>
 #include <unordered_set>
-#include "../edge.h"
-#include "extension_selection.h"
 
-Edge *ExtensionSelection::SelectEdge(std::vector<Edge*> &edges,
-                                     std::unordered_set<std::string> &used_nodes) {
+#include "graph_structures/edge.h"
 
+Edge *ExtensionSelection::SelectEdge(
+      std::vector<Edge*> &edges,
+      std::unordered_set<std::string> &used_nodes) {
   double max_extension_score = 0;
   Edge *max_edge = NULL;
 

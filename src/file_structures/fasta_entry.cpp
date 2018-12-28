@@ -1,9 +1,8 @@
-//
-// Created by dplus on 18.12.2018..
-//
+// Copyright 2018 Dunja Vesinger, Domagoj Pluščec
+
+#include "file_structures/fasta_entry.h"
 
 #include <string>
-#include "fasta_entry.h"
 
 FastaEntry::FastaEntry(std::string &node_id,
                        std::string &value,
@@ -26,6 +25,6 @@ bool FastaEntry::IsConting() {
   return is_conting_;
 }
 
-std::string FastaEntry::GetValue(){
+std::string FastaEntry::GetValue() {
   return value_;
 }

@@ -1,16 +1,13 @@
-//
-// Created by dplus on 20.12.2018..
-//
+// Copyright 2018 Dunja Vesinger, Domagoj Pluščec
 
 #include <string>
 #include <vector>
 
-#ifndef SCAFFOLD_PAFENTRY_H
-#define SCAFFOLD_PAFENTRY_H
+#ifndef SRC_FILE_STRUCTURES_PAF_ENTRY_H_
+#define SRC_FILE_STRUCTURES_PAF_ENTRY_H_
 
 class PafEntry {
  private:
-
   // FILE ATTRIBUTES
   std::string origin_id_;
   long origin_length_;
@@ -29,7 +26,7 @@ class PafEntry {
   long oh_2_;
   long ol_2_;
   long el_2_;
-  bool order_; //true if the original order is satisfied, false otherwise
+  bool order_;  // true if the original order is satisfied, false otherwise
 
   // OVERLAP SCORES
   double sequence_identity_;
@@ -62,12 +59,10 @@ class PafEntry {
   void CalculateScores();
 
  public:
-
   // CONSTRUCTORS
   explicit PafEntry(std::vector<std::string> &paf_parts);
 
   // GETTERS
-
   std::string GetTargetId();
   double GetOverlapScore();
   double GetExtensionScore();
@@ -83,4 +78,4 @@ class PafEntry {
   std::string GetOriginId();
 };
 
-#endif // SCAFFOLD_PAFENTRY_H
+#endif  // SRC_FILE_STRUCTURES_PAF_ENTRY_H_

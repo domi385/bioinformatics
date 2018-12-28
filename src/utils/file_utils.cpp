@@ -1,30 +1,23 @@
-//
-// Created by dplus on 22.12.2018..
-//
+// Copyright 2018 Dunja Vesinger, Domagoj Pluščec
 
+#include "utils/file_utils.h"
 
 #include <vector>
 #include <fstream>
 #include <iostream>
 #include <string>
 
-#include "../file_structures/fasta_entry.h"
-#include "../file_structures/paf_entry.h"
-
-#include "../graph_structures/edge.h"
-#include "../graph_structures/sequence_node.h"
-#include "../graph_structures/connection_node.h"
-#include "../graph_structures/path.h"
-
-#include "project_utils.h"
-#include "file_utils.h"
-
+#include "file_structures/fasta_entry.h"
+#include "file_structures/paf_entry.h"
+#include "graph_structures/edge.h"
+#include "graph_structures/sequence_node.h"
+#include "graph_structures/connection_node.h"
+#include "graph_structures/path.h"
+#include "utils/project_utils.h"
 
 namespace file_utils {
-
 std::vector<FastaEntry> LoadFromFasta(std::string &filename,
                                       bool is_conting_file) {
-
   std::vector<FastaEntry> sequence_nodes;
   std::ifstream fasta_file(filename);
 
@@ -38,10 +31,10 @@ std::vector<FastaEntry> LoadFromFasta(std::string &filename,
     if (line.empty()) {
       continue;
     }
-    if (line.find('>') == 0 or line.find('@')==0) {
+    if (line.find('>') == 0 or line.find('@') == 0) {
       if (!node_id.empty()) {
-        if (node_id.find(' ') != 0){
-          node_id = node_id.substr(0 ,node_id.find(' '));
+        if (node_id.find(' ') != 0) {
+          node_id = node_id.substr(0, node_id.find(' '));
         }
 
         sequence_nodes.push_back(FastaEntry(node_id,
@@ -57,8 +50,8 @@ std::vector<FastaEntry> LoadFromFasta(std::string &filename,
   }
 
   if (!node_id.empty()) {
-    if (node_id.find(' ') != 0){
-      node_id = node_id.substr(0 ,node_id.find(' '));
+    if (node_id.find(' ') != 0) {
+      node_id = node_id.substr(0, node_id.find(' '));
     }
     sequence_nodes.push_back(FastaEntry(node_id, node_value, is_conting_file));
   }
@@ -97,77 +90,86 @@ bool FilterPafEntries(PafEntry &entry) {
       || (entry.GetSequenceIdentity() >= 1);
 }
 
-void SaveFastaFile(std::string & file_name, std::vector<ConnectionNode *> &connection_graph, std::unordered_map<std::string, FastaEntry*> fasta_map){
-
+void SaveFastaFile(
+    std::string & file_name, std::vector<ConnectionNode *> &connection_graph,
+    std::unordered_map<std::string, FastaEntry*> fasta_map) {
   std::ofstream output_file(file_name);
-  if (!output_file.is_open()){
+  if (!output_file.is_open()) {
     std::cout << "Unable to open file " + file_name;
     exit(-1);
   }
 
-  for (int i=0, end = connection_graph.size(); i<end; i++) {
+  for (int i=0, end = connection_graph.size(); i < end; i++) {
     output_file << ">scaffold" << i << std::endl;
     ConnectionNode *curr_conn = connection_graph.at(i);
     std::vector<Path *> paths = curr_conn->GetConnectingPaths();
 
-    if (paths.empty()){
-      //paths is empty when there is only one conting in connection node
+    if (paths.empty()) {
+      // paths is empty when there is only one conting in connection node
       std::vector<SequenceNode*> curr_contings = curr_conn->GetNodes();
       SequenceNode* curr_conting = curr_contings.at(0);
       FastaEntry* origin_entry = fasta_map.at(curr_conting->GetId());
       std::string origin_value = origin_entry->GetValue();
-      output_file<<origin_value<<std::endl;
+      output_file << origin_value << std::endl;
       continue;
     }
 
     Path *start_path = paths.at(0);
     std::vector<Edge *> contained_edges = start_path->GetEdges();
     Edge* first_edge = contained_edges.front();
-    output_file<<EdgeBeginningToString(first_edge, fasta_map);
+    output_file << EdgeBeginningToString(first_edge, fasta_map);
 
     Edge * prev_edge = first_edge;
-    for(int j=0, end_j = paths.size(); j < end_j; j++){
+    for (int j = 0, end_j = paths.size(); j < end_j; j++) {
       Path *current_path = paths.at(j);
       std::vector<Edge *> contained_edges = current_path->GetEdges();
 
-      for(int edge=0, max_edge = contained_edges.size(); edge < max_edge; edge++){
-        if(j == 0 && edge == 0){
+      for (int edge = 0, max_edge = contained_edges.size();
+          edge < max_edge; edge++) {
+        if (j == 0 && edge == 0) {
           continue;
         }
         Edge *current_edge = contained_edges.at(edge);
-        std::string edge_string = EdgeToString(prev_edge, current_edge, fasta_map);
-        output_file<<edge_string;
+        std::string edge_string = EdgeToString(
+            prev_edge, current_edge, fasta_map);
+        output_file << edge_string;
         prev_edge = current_edge;
       }
-      
     }
+
     std::vector<Edge *> last_edges = paths.at(paths.size() - 1)->GetEdges();
     Edge *last_edge = last_edges.at(last_edges.size() - 1);
     std::string edge_string = EdgeEndToString(last_edge, fasta_map);
-    output_file<<edge_string;
+    output_file << edge_string;
 
-    output_file<<std::endl;
+    output_file << std::endl;
   }
     output_file.close();
 }
 
-std::string EdgeToString(Edge* prevEdge, Edge* edge, std::unordered_map<std::string, FastaEntry*> fasta_map){
+std::string EdgeToString(
+    Edge* prevEdge,
+    Edge* edge,
+    std::unordered_map<std::string, FastaEntry*> fasta_map) {
   std::string start_id = edge->GetStartId();
 
   FastaEntry* origin_entry = fasta_map.at(start_id);
   std::string origin_value = origin_entry->GetValue();
 
-  long beginning_index = prevEdge->GetOverhangTarget()+prevEdge->GetOverlapLenTarget();
+  long beginning_index = prevEdge->GetOverhangTarget()
+      +prevEdge->GetOverlapLenTarget();
   long end_index = edge->GetExtensonLenOrigin()+edge->GetOverlapLenOrigin();
 
-  if (end_index-beginning_index <0){
+  if (end_index-beginning_index <0) {
     return "";
   }
 
   return origin_value.substr(beginning_index, end_index);
 }
-std::string EdgeBeginningToString(Edge* edge, std::unordered_map<std::string, FastaEntry*> fasta_map){
-std::string start_id = edge->GetStartId();
+std::string EdgeBeginningToString(
+    Edge* edge,
+    std::unordered_map<std::string, FastaEntry*> fasta_map) {
+  std::string start_id = edge->GetStartId();
 
   FastaEntry* origin_entry = fasta_map.at(start_id);
   std::string origin_value = origin_entry->GetValue();
@@ -177,7 +179,9 @@ std::string start_id = edge->GetStartId();
   return origin_value.substr(0, index);
 }
 
-std::string EdgeEndToString(Edge* edge, std::unordered_map<std::string, FastaEntry*> fasta_map){
+std::string EdgeEndToString(
+    Edge* edge,
+    std::unordered_map<std::string, FastaEntry*> fasta_map) {
   std::string end_id = edge->GetIdEnd();
 
   FastaEntry* target_entry = fasta_map.at(end_id);
@@ -187,6 +191,4 @@ std::string EdgeEndToString(Edge* edge, std::unordered_map<std::string, FastaEnt
 
   return target_value.substr( index, target_value.size());
 }
-
-
-}
+}  // namespace file_utils

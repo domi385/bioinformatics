@@ -1,10 +1,10 @@
-//
-// Created by dplus on 22.12.2018..
-//
+// Copyright 2018 Dunja Vesinger, Domagoj Pluščec
+
+#include "graph_structures/edge.h"
 
 #include <string>
 
-#include "edge.h"
+#include "file_structures/paf_entry.h"
 
 Edge::Edge(PafEntry entry) {
   id_start_ = entry.GetOriginId();

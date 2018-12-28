@@ -1,12 +1,10 @@
-//
-// Created by dplus on 22.12.2018..
-//
+// Copyright 2018 Dunja Vesinger, Domagoj Pluščec
 
 #include <string>
-#include "../file_structures/paf_entry.h"
+#include "file_structures/paf_entry.h"
 
-#ifndef SCAFFOLD_EDGE_H
-#define SCAFFOLD_EDGE_H
+#ifndef SRC_GRAPH_STRUCTURES_EDGE_H_
+#define SRC_GRAPH_STRUCTURES_EDGE_H_
 
 class Edge {
  private:
@@ -43,4 +41,4 @@ class Edge {
   std::string GetStartId();
 };
 
-#endif  // SCAFFOLD_EDGE_H
+#endif  // SRC_GRAPH_STRUCTURES_EDGE_H_

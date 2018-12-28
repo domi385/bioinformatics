@@ -1,18 +1,15 @@
-//
-// Created by dplus on 22.12.2018..
-//
+// Copyright 2018 Dunja Vesinger, Domagoj Pluščec
 
+#include "utils/project_utils.h"
 
 #include <vector>
 #include <unordered_map>
 #include <iostream>
-#include "../graph_structures/sequence_node.h"
-#include "../file_structures/fasta_entry.h"
 
-#include "project_utils.h"
+#include "graph_structures/sequence_node.h"
+#include "file_structures/fasta_entry.h"
 
 namespace project_utils {
-
 void OutputStringVector(std::vector<std::string> &collection) {
   for (int i = 0, end = collection.size(); i < end; i++) {
     std::cout << "'" << collection.at(i) << "' ";
@@ -22,7 +19,6 @@ void OutputStringVector(std::vector<std::string> &collection) {
 
 std::vector<std::string> SplitString(std::string &s, std::string &delimiter) {
   std::vector<std::string> string_parts;
-
   size_t last_index = 0;
   size_t index = 0;
   while ((index = s.find(delimiter, last_index)) != std::string::npos) {
@@ -48,5 +44,4 @@ std::unordered_map<std::string, SequenceNode> ConvertFastaToNodeMap(std::vector<
   }
   return nodes_map;
 }
-
-}
+}  // namespace project_utils

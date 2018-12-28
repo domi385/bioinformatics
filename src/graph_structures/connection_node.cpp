@@ -1,18 +1,19 @@
-//
-// Created by dplus on 26.12.2018..
-//
+// Copyright 2018 Dunja Vesinger, Domagoj Pluščec
+
+#include "graph_structures/connection_node.h"
+
 #include <algorithm>
 #include <unordered_set>
 #include <vector>
 #include <tuple>
 
-#include "connection_node.h"
-#include "consensus_sequence.h"
-#include "sequence_node.h"
-#include "path.h"
+#include "graph_structures/consensus_sequence.h"
+#include "graph_structures/sequence_node.h"
+#include "graph_structures/path.h"
 
-ConnectionNode::ConnectionNode(SequenceNode *origin,
-                               std::vector<ConsensusSequence *> origin_sequences) {
+ConnectionNode::ConnectionNode(
+      SequenceNode *origin,
+      std::vector<ConsensusSequence *> origin_sequences) {
   contained_nodes_.push_back(origin);
   sequences_ = origin_sequences;
 
@@ -73,7 +74,6 @@ void ConnectionNode::RecalculateConflictIndex(
 
 void ConnectionNode::ConnectNodes(ConnectionNode *connection_node,
                                   Path *connection) {
-
   // ADD ALL CURR CONNECTIONS
   std::vector<SequenceNode *> target_nodes = connection_node->contained_nodes_;
   for (int i = 0, end = target_nodes.size(); i < end; i++) {

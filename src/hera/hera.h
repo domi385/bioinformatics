@@ -1,14 +1,16 @@
+// Copyright 2018 Dunja Vesinger, Domagoj Pluščec
+
 #include <string>
 #include <vector>
 #include <unordered_map>
 #include <unordered_set>
 
-#include "../file_structures/paf_entry.h"
-#include "../graph_structures/sequence_node.h"
-#include "../graph_structures/path.h"
-#include "../graph_structures/group.h"
-#include "../graph_structures/path_selection/node_selection.h"
-#include "../graph_structures/connection_node.h"
+#include "file_structures/paf_entry.h"
+#include "graph_structures/sequence_node.h"
+#include "graph_structures/path.h"
+#include "graph_structures/group.h"
+#include "graph_structures/path_selection/node_selection.h"
+#include "graph_structures/connection_node.h"
 
 #ifndef SCAFFOLD_HERA
 #define SCAFFOLD_HERA
@@ -27,13 +29,14 @@ class Hera {
   int MaxFrequencyIndex(std::vector<Group *> &groups);
   Group *GenerateConsenzusSequence(std::vector<Path *> &paths,
                                    std::string &target_id);
-  std::vector<Group *> GenerateConsenzusSequencesForNode(std::vector<Path *> &paths);
+  std::vector<Group *> GenerateConsenzusSequencesForNode(
+      std::vector<Path *> &paths);
 
-  std::vector<ConnectionNode *> CreateConnectionNodes(std::unordered_map<std::string,
-                                                                         std::vector<
-                                                                             Group *>> &conting_consensus_sequences);
-  std::vector<ConsensusSequence *> CreateConsensusSequenceFromGroups(std::vector<
-      Group *> &groups, SequenceNode *origin);
+  std::vector<ConnectionNode *> CreateConnectionNodes(
+      std::unordered_map<std::string,
+        std::vector<Group *>> &conting_consensus_sequences);
+  std::vector<ConsensusSequence *> CreateConsensusSequenceFromGroups(
+      std::vector<Group *> &groups, SequenceNode *origin);
 
  public:
   Hera(std::unordered_map<std::string, SequenceNode> &conting_nodes,
@@ -50,13 +53,12 @@ class Hera {
 
   std::unordered_map<std::string, SequenceNode> GetContingNodesMap();
 
-  std::vector<ConnectionNode *> ConstructConnectionGraph(std::unordered_map<std::string,
-                                                                            std::vector<
-                                                                                Group *>> &conting_consensus_sequences);
+  std::vector<ConnectionNode *> ConstructConnectionGraph(
+      std::unordered_map<std::string,
+        std::vector<Group *>> &conting_consensus_sequences);
 
   ConnectionNode *ConnectNode(ConnectionNode *origin,
                               std::unordered_set<ConnectionNode *> targets);
-
 };
 
-#endif //SCAFFOLD_HERA
+#endif  // SCAFFOLD_HERA

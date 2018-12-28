@@ -1,11 +1,10 @@
-//
-// Created by dplus on 20.12.2018..
-//
+// Copyright 2018 Dunja Vesinger, Domagoj Pluščec
+
+#include "file_structures/paf_entry.h"
+
 #include <string>
 #include <vector>
 #include <algorithm>
-
-#include "paf_entry.h"
 
 PafEntry::PafEntry(std::vector<std::string> &paf_parts) {
   std::string id1 = paf_parts.at(0);
@@ -13,7 +12,7 @@ PafEntry::PafEntry(std::vector<std::string> &paf_parts) {
   long s1 = stol(paf_parts.at(2));
   long e1 = stol(paf_parts.at(3));
   same_strand_ = paf_parts.at(4)
-      == "+"; //TODO handle same_strand depented on sequence order
+      == "+";  // TODO handle same_strand depented on sequence order
   std::string id2 = paf_parts.at(5);
   long len2 = stol(paf_parts.at(6));
   long s2 = stol(paf_parts.at(7));
@@ -25,7 +24,6 @@ PafEntry::PafEntry(std::vector<std::string> &paf_parts) {
 
   order_ = DetermineOrder(id1, id2, len1, len2, s1, e1, s2, e2);
   CalculateScores();
-
 }
 
 bool PafEntry::DetermineOrder(std::string &id1,
@@ -36,7 +34,6 @@ bool PafEntry::DetermineOrder(std::string &id1,
                               long e1,
                               long s2,
                               long e2) {
-
   long l1 = s1;
   long ol1 = e1 - s1;
   long r1 = len1 - e1;
@@ -97,7 +94,7 @@ double PafEntry::GetSequenceIdentity() {
   return sequence_identity_;
 }
 long PafEntry::GetOverlapLength() {
-  return num_matches_; //TODO check if here should be num_bases
+  return num_matches_;  //TODO check if here should be num_bases
 }
 long PafEntry::GetOverhangLenOrigin() {
   return oh_1_;

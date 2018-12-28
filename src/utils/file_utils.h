@@ -1,16 +1,15 @@
-//
-// Created by dplus on 22.12.2018..
-//
+// Copyright 2018 Dunja Vesinger, Domagoj Pluščec
 
 #include <vector>
 #include <string>
-#include "../file_structures/fasta_entry.h"
-#include "../file_structures/paf_entry.h"
-#include "project_utils.h"
-#include "../graph_structures/connection_node.h"
 
-#ifndef SCAFFOLD_FILE_UTILS_H
-#define SCAFFOLD_FILE_UTILS_H
+#include "file_structures/fasta_entry.h"
+#include "file_structures/paf_entry.h"
+#include "graph_structures/connection_node.h"
+#include "utils/project_utils.h"
+
+#ifndef SRC_UTILS_FILE_UTILS_H_H_
+#define SRC_UTILS_FILE_UTILS_H_H_
 
 namespace file_utils {
 
@@ -41,11 +40,19 @@ std::vector<PafEntry> LoadFromPAF(std::string &file_name);
 */
 bool FilterPafEntries(PafEntry &entry);
 
-void SaveFastaFile(std::string& file_name,std::vector<ConnectionNode *>& connection_graph, std::unordered_map<std::string, FastaEntry*> fasta_map);
+void SaveFastaFile(
+    std::string& file_name, std::vector<ConnectionNode *>& connection_graph,
+    std::unordered_map<std::string, FastaEntry*> fasta_map);
 
-std::string EdgeToString(Edge* prevEdge, Edge* edge, std::unordered_map<std::string, FastaEntry*> fasta_map);
-std::string EdgeEndToString(Edge* edge, std::unordered_map<std::string, FastaEntry*> fasta_map);
-std::string EdgeBeginningToString(Edge* edge, std::unordered_map<std::string, FastaEntry*> fasta_map);
-};
+std::string EdgeToString(
+    Edge* prevEdge,
+    Edge* edge, std::unordered_map<std::string, FastaEntry*> fasta_map);
+std::string EdgeEndToString(
+    Edge* edge,
+    std::unordered_map<std::string, FastaEntry*> fasta_map);
+std::string EdgeBeginningToString(
+    Edge* edge,
+    std::unordered_map<std::string, FastaEntry*> fasta_map);
+};  // namespace file_utils
 
-#endif //SCAFFOLD_FILE_UTILS_H
+#endif  // SRC_UTILS_FILE_UTILS_H_H_

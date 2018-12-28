@@ -1,17 +1,15 @@
-//
-// Created by dplus on 22.12.2018..
-//
+// Copyright 2018 Dunja Vesinger, Domagoj Pluščec
 
 #include <vector>
 #include <string>
-#include "edge.h"
-#include "sequence_node.h"
 
-#ifndef SCAFFOLD_PATH_H
-#define SCAFFOLD_PATH_H
+#include "graph_structures/edge.h"
+#include "graph_structures/sequence_node.h"
+
+#ifndef SRC_GRAPH_STRUCTURES_PATH_H_
+#define SRC_GRAPH_STRUCTURES_PATH_H_
 
 class Path {
-
  private:
   std::vector<SequenceNode*> path_;
   long length_;
@@ -32,4 +30,4 @@ class Path {
   std::vector<SequenceNode*> GetNodes();
 };
 
-#endif // SCAFFOLD_PATH_H
+#endif  // SRC_GRAPH_STRUCTURES_PATH_H_

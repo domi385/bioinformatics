@@ -1,3 +1,5 @@
+// Copyright 2018 Dunja Vesinger, Domagoj Pluščec
+
 #include <ctime>
 
 #include <iostream>
@@ -45,7 +47,7 @@ int main(int argc, char **argv) {
   std::unordered_map<std::string, SequenceNode>
       conting_nodes_map =
       project_utils::ConvertFastaToNodeMap(conting_fasta_entries);
-  for (int i=0, end = conting_fasta_entries.size(); i<end; i++){
+  for (int i=0, end = conting_fasta_entries.size(); i < end; i++) {
     FastaEntry* curr_entry = &conting_fasta_entries.at(i);
     fasta_p_map.emplace(curr_entry->GetEntryId(), curr_entry);
   }
@@ -60,7 +62,7 @@ int main(int argc, char **argv) {
   std::unordered_map<std::string, SequenceNode>
       read_nodes_map = project_utils::ConvertFastaToNodeMap(read_fasta_entries);
 
-  for (int i=0, end = read_fasta_entries.size(); i<end; i++){
+  for (int i=0, end = read_fasta_entries.size(); i < end; i++) {
     FastaEntry* curr_entry = &read_fasta_entries.at(i);
     fasta_p_map.emplace(curr_entry->GetEntryId(), curr_entry);
   }
@@ -73,7 +75,8 @@ int main(int argc, char **argv) {
       file_utils::LoadFromPAF(conting_read_overlap_file_name);
   std::cout << "Number of read conting paf entries: "
             << read_conting_paf_entries.size() << std::endl;
-  double read_conting_paf_loading_time = (std::clock() - t)/(double)CLOCKS_PER_SEC;
+  double read_conting_paf_loading_time = (std::clock() - t)/
+      (double)CLOCKS_PER_SEC;
 
   // LOAD READ_READ OVERLAP FROM PAF
   t = std::clock();
@@ -87,7 +90,8 @@ int main(int argc, char **argv) {
   t = std::clock();
   Hera hera = Hera(conting_nodes_map, read_nodes_map);
   hera.ConstructOverlapGraph(read_conting_paf_entries, read_read_paf_entries);
-  double overlap_graph_construction_time = (std::clock() - t)/(double)CLOCKS_PER_SEC;
+  double overlap_graph_construction_time = (std::clock() - t)/(double)
+                                                              CLOCKS_PER_SEC;
 
   // GENERATE PATHS
   t = std::clock();
@@ -114,11 +118,12 @@ int main(int argc, char **argv) {
             << conting_consensus_sequences.size() << std::endl;
 
   // CONSTRUCT CONNECTION GRAPH
-  std::cout <<"Generate connection graph"<<std::endl;
+  std::cout << "Generate connection graph" << std::endl;
   t = std::clock();
   std::vector<ConnectionNode *> connection_graph =
       hera.ConstructConnectionGraph(conting_consensus_sequences);
-  double connection_graph_construction_time = (std::clock() - t)/(double)CLOCKS_PER_SEC;
+  double connection_graph_construction_time = (std::clock() - t)/(double)
+      CLOCKS_PER_SEC;
   std::cout << "Connection graph " << connection_graph.size() << std::endl;
 
   // SAVE OUTPUT FILE
@@ -141,9 +146,11 @@ int main(int argc, char **argv) {
             << " seconds" << std::endl;
   std::cout << "Time for generating consensus sequences: "
             << consensus_generation_time << " seconds" << std::endl;
-  std::cout << "Time for connecting graph construction: "<<connection_graph_construction_time<<" seconds"<<std::endl;
+  std::cout << "Time for connecting graph construction: "
+            << connection_graph_construction_time << " seconds" << std::endl;
   double program_time = (std::clock()-start_t)/(double) CLOCKS_PER_SEC;
-  std::cout << "Time for program run: "<<program_time<<" seconds"<<std::endl;
+  std::cout << "Time for program run: " << program_time << " seconds"
+            << std::endl;
 
   return 0;
 }

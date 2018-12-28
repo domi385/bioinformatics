@@ -1,17 +1,15 @@
-//
-// Created by dplus on 26.12.2018..
-//
-
+// Copyright 2018 Dunja Vesinger, Domagoj Pluščec
 
 #include <unordered_set>
 #include <vector>
 #include <tuple>
-#include "consensus_sequence.h"
-#include "sequence_node.h"
-#include "path.h"
 
-#ifndef BIOINFORMATICS_CONNECTION_NODE_H
-#define BIOINFORMATICS_CONNECTION_NODE_H
+#include "graph_structures/consensus_sequence.h"
+#include "graph_structures/sequence_node.h"
+#include "graph_structures/path.h"
+
+#ifndef SRC_GRAPH_STRUCTURES_CONNECTION_NODE_H_
+#define SRC_GRAPH_STRUCTURES_CONNECTION_NODE_H_
 
 class ConnectionNode {
  private:
@@ -36,4 +34,4 @@ class ConnectionNode {
   std::vector<Path *> GetConnectingPaths();
 };
 
-#endif  // BIOINFORMATICS_CONNECTION_NODE_H
+#endif  // SRC_GRAPH_STRUCTURES_CONNECTION_NODE_H_

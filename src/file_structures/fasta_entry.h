@@ -1,10 +1,11 @@
+// Copyright 2018 Dunja Vesinger, Domagoj Pluščec
+
 #include <string>
 
-#ifndef SCAFFOLD_FASTA_ENTRY_H
-#define SCAFFOLD_FASTA_ENTRY_H
+#ifndef SRC_FILE_STRUCTURES_FASTA_ENTRY_H_
+#define SRC_FILE_STRUCTURES_FASTA_ENTRY_H_
 
 class FastaEntry {
-
  private:
   /**
    * Sequence id.
@@ -32,4 +33,4 @@ class FastaEntry {
   std::string GetValue();
 };
 
-#endif //SCAFFOLD_FASTA_ENTRY_H
+#endif  // SRC_FILE_STRUCTURES_FASTA_ENTRY_H_

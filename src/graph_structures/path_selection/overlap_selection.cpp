@@ -1,16 +1,16 @@
-//
-// Created by dplus on 22.12.2018..
-//
+// Copyright 2018 Dunja Vesinger, Domagoj Pluščec
+
+#include "graph_structures/path_selection/overlap_selection.h"
 
 #include <vector>
 #include <string>
 #include <unordered_set>
-#include "../edge.h"
-#include "overlap_selection.h"
 
-Edge *OverlapSelection::SelectEdge(std::vector<Edge*> &edges,
-                                   std::unordered_set<std::string> &used_nodes) {
+#include "graph_structures/edge.h"
 
+Edge *OverlapSelection::SelectEdge(
+      std::vector<Edge*> &edges,
+      std::unordered_set<std::string> &used_nodes) {
   double max_overlap_score = 0;
   Edge *max_edge = NULL;
 

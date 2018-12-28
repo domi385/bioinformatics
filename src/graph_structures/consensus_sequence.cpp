@@ -1,9 +1,7 @@
-//
-// Created by dplus on 26.12.2018..
-//
+// Copyright 2018 Dunja Vesinger, Domagoj Pluščec
 
-#include "group.h"
-#include "consensus_sequence.h"
+#include "graph_structures/group.h"
+#include "graph_structures/consensus_sequence.h"
 
 ConsensusSequence::ConsensusSequence(Group *group,
                                      SequenceNode *origin,

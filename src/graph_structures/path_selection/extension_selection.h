@@ -1,14 +1,14 @@
-//
-// Created by dplus on 22.12.2018..
-//
+// Copyright 2018 Dunja Vesinger, Domagoj Pluščec
+
 #include <vector>
 #include <string>
 #include <unordered_set>
-#include "../edge.h"
-#include "node_selection.h"
 
-#ifndef SCAFFOLD_EXTENSION_SELECTION_H
-#define SCAFFOLD_EXTENSION_SELECTION_H
+#include "graph_structures/path_selection/node_selection.h"
+#include "graph_structures/edge.h"
+
+#ifndef SRC_GRAPH_STRUCTURES_PATH_SELECTION_EXTENSION_SELECTION_H_
+#define SRC_GRAPH_STRUCTURES_PATH_SELECTION_EXTENSION_SELECTION_H_
 
 class ExtensionSelection : public NodeSelection {
  public:
@@ -16,4 +16,4 @@ class ExtensionSelection : public NodeSelection {
                    std::unordered_set<std::string> &used_nodes) override;
 };
 
-#endif //SCAFFOLD_EXTENSION_SELECTION_H
+#endif  // SRC_GRAPH_STRUCTURES_PATH_SELECTION_EXTENSION_SELECTION_H_

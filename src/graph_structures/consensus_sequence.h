@@ -1,13 +1,11 @@
-//
-// Created by dplus on 26.12.2018..
-//
+// Copyright 2018 Dunja Vesinger, Domagoj Pluščec
 
-#include "sequence_node.h"
-#include "path.h"
-#include "group.h"
+#include "graph_structures/sequence_node.h"
+#include "graph_structures/path.h"
+#include "graph_structures/group.h"
 
-#ifndef BIOINFORMATICS_CONSENSUSSEQUENCE_H
-#define BIOINFORMATICS_CONSENSUSSEQUENCE_H
+#ifndef SRC_GRAPH_STRUCTURES_CONSENSUS_SEQUENCE_H_
+#define SRC_GRAPH_STRUCTURES_CONSENSUS_SEQUENCE_H_
 
 class ConsensusSequence {
  private:
@@ -24,4 +22,4 @@ class ConsensusSequence {
   int GetPathNumber();
 };
 
-#endif  // BIOINFORMATICS_CONSENSUSSEQUENCE_H
+#endif  // SRC_GRAPH_STRUCTURES_CONSENSUS_SEQUENCE_H_

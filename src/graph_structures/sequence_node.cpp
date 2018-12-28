@@ -1,10 +1,11 @@
-//
-// Created by dplus on 22.12.2018..
-//
+// Copyright 2018 Dunja Vesinger, Domagoj Pluščec
+
+#include "graph_structures/sequence_node.h"
+
 #include <string>
 #include <vector>
-#include "edge.h"
-#include "sequence_node.h"
+
+#include "graph_structures/edge.h"
 
 SequenceNode::SequenceNode(std::string &id, long length, bool is_conting) {
   id_ = id;

@@ -1,14 +1,12 @@
-//
-// Created by dplus on 22.12.2018..
-//
+// Copyright 2018 Dunja Vesinger, Domagoj Pluščec
 
 #include <vector>
 #include <string>
 
-#include "path.h"
+#include "graph_structures/path.h"
 
-#ifndef SCAFFOLD_GROUP_H
-#define SCAFFOLD_GROUP_H
+#ifndef SRC_GRAPH_STRUCTURES_GROUP_H_
+#define SRC_GRAPH_STRUCTURES_GROUP_H_
 
 class Group {
  private:
@@ -30,4 +28,4 @@ class Group {
   std::string GetTargetId();
 };
 
-#endif  // SCAFFOLD_GROUP_H
+#endif  // SRC_GRAPH_STRUCTURES_GROUP_H_

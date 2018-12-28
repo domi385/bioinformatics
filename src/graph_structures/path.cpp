@@ -1,12 +1,12 @@
-//
-// Created by dplus on 22.12.2018..
-//
+// Copyright 2018 Dunja Vesinger, Domagoj Pluščec
+
+#include "graph_structures/path.h"
 
 #include <vector>
 #include <string>
-#include "edge.h"
-#include "sequence_node.h"
-#include "path.h"
+
+#include "graph_structures/edge.h"
+#include "graph_structures/sequence_node.h"
 
 Path::Path(SequenceNode* start_node) {
   this->path_.push_back(start_node);
@@ -16,7 +16,6 @@ Path::Path(SequenceNode* start_node) {
 void Path::Add(SequenceNode* node, Edge* edge) {
   this->path_.push_back(node);
   this->edges_.push_back(edge);
-
 }
 
 void Path::Finalize() {
@@ -63,14 +62,13 @@ std::string Path::GetEndId() {
 Path::~Path() {
   path_.clear();
   path_.shrink_to_fit();
-
 }
 
-std::vector<Edge *> Path::GetEdges(){
+std::vector<Edge *> Path::GetEdges() {
   return edges_;
 }
 
-std::vector<SequenceNode*> Path::GetNodes(){
+std::vector<SequenceNode*> Path::GetNodes() {
   return path_;
 }
 
