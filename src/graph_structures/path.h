@@ -30,9 +30,15 @@
 class Path {
  private:
   std::vector<SequenceNode*> path_;
+  /**
+   * Path length.
+   */
   long length_;
   std::vector<Edge*> edges_;
   std::string end_node_id_;
+  /**
+   * Finalized flag that is true if the path is finalized, false otherwise.
+   */
   bool finalized_;
 
  public:

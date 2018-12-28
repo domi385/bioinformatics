@@ -26,23 +26,62 @@
 #ifndef SRC_GRAPH_STRUCTURES_SEQUENCE_NODE_H_
 #define SRC_GRAPH_STRUCTURES_SEQUENCE_NODE_H_
 
+/**
+ * Sequence node representing read or conting in overlap graph.
+ */
 class SequenceNode {
  private:
+  /**
+   * Sequence id.
+   */
   std::string id_;
+  /**
+   * Conting flag that is true if the sequence is conting and false otherwise.
+   */
   bool is_conting_;
+  /**
+   * Sequence length.
+   */
   long length_;
+  /**
+   * Collection of edges that represent directed connections to other nodes.
+   */
   std::vector<Edge*> edges_;
 
  public:
-  // constructor
+  /**
+   * Constructor that constructs sequence node.
+   * @param id sequence id
+   * @param length sequence length
+   * @param is_conting conting flag that is true if the sequence is conting and
+   * false otherwise
+   */
   SequenceNode(std::string &id, long length, bool is_conting);
 
-  // getters
+  /**
+   * Getter method for obtaining node id.
+   * @return sequence node id
+   */
   std::string GetId();
+  /**
+   * Method checks if the current node is conting.
+   * @return true if the sequence is conting, false otherwise
+   */
   bool IsConting();
+  /**
+   * Getter method for obtaining sequence length.
+   * @return sequence length
+   */
   long GetLength();
+  /**
+   * Method for obtaining edges that current sequence node has.
+   * @return connection edges from current node
+   */
   std::vector<Edge*> GetEdges();
-
+  /**
+   * Method adds given edge to sequence node collection of edges.
+   * @param edge sequence node connection
+   */
   void AddEdge(Edge* edge);
 };
 
