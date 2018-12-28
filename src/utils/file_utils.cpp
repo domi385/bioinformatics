@@ -7,13 +7,18 @@
 #include <fstream>
 #include <iostream>
 #include <string>
+
 #include "../file_structures/fasta_entry.h"
 #include "../file_structures/paf_entry.h"
-#include "project_utils.h"
-#include "file_utils.h"
+
+#include "../graph_structures/edge.h"
 #include "../graph_structures/sequence_node.h"
 #include "../graph_structures/connection_node.h"
 #include "../graph_structures/path.h"
+
+#include "project_utils.h"
+#include "file_utils.h"
+
 
 namespace file_utils {
 
@@ -33,8 +38,12 @@ std::vector<FastaEntry> LoadFromFasta(std::string &filename,
     if (line.empty()) {
       continue;
     }
-    if (line.rfind('>') == 0) {
+    if (line.find('>') == 0 or line.find('@')==0) {
       if (!node_id.empty()) {
+        if (node_id.find(' ') != 0){
+          node_id = node_id.substr(0 ,node_id.find(' '));
+        }
+
         sequence_nodes.push_back(FastaEntry(node_id,
                                             node_value,
                                             is_conting_file));
@@ -48,6 +57,9 @@ std::vector<FastaEntry> LoadFromFasta(std::string &filename,
   }
 
   if (!node_id.empty()) {
+    if (node_id.find(' ') != 0){
+      node_id = node_id.substr(0 ,node_id.find(' '));
+    }
     sequence_nodes.push_back(FastaEntry(node_id, node_value, is_conting_file));
   }
 
@@ -97,6 +109,16 @@ void SaveFastaFile(std::string & file_name, std::vector<ConnectionNode *> &conne
     output_file << ">scaffold" << i << std::endl;
     ConnectionNode *curr_conn = connection_graph.at(i);
     std::vector<Path *> paths = curr_conn->GetConnectingPaths();
+
+    if (paths.empty()){
+      //paths is empty when there is only one conting in connection node
+      std::vector<SequenceNode*> curr_contings = curr_conn->GetNodes();
+      SequenceNode* curr_conting = curr_contings.at(0);
+      FastaEntry* origin_entry = fasta_map.at(curr_conting->GetId());
+      std::string origin_value = origin_entry->GetValue();
+      output_file<<origin_value<<std::endl;
+      continue;
+    }
 
     Path *start_path = paths.at(0);
     std::vector<Edge *> contained_edges = start_path->GetEdges();

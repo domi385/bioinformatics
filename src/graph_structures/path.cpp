@@ -3,6 +3,7 @@
 //
 
 #include <vector>
+#include <string>
 #include "edge.h"
 #include "sequence_node.h"
 #include "path.h"
@@ -64,10 +65,12 @@ Path::~Path() {
   path_.shrink_to_fit();
 
 }
-std::vector<SequenceNode*> Path::GetNodes(){
-  return path_;
-}
 
 std::vector<Edge *> Path::GetEdges(){
   return edges_;
 }
+
+std::vector<SequenceNode*> Path::GetNodes(){
+  return path_;
+}
+

@@ -289,7 +289,7 @@ std::vector<ConnectionNode *> Hera::ConstructConnectionGraph(std::unordered_map<
     for (int i = 0, end = origins.size(); i < end; i++) {
       ConnectionNode *curr_node = origins.at(i);
       double conflict_index = curr_node->GetConflictIndex();
-      if (conflict_index > 0.5) {
+      if (conflict_index > 0.7) {
         continue;
       }
 
