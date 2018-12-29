@@ -68,7 +68,7 @@ class PafEntry {
   /**
    * SAM formated data from PAF format.
    */
-  std::string sam_data_; //TODO remove variable
+  std::string sam_data_;  // TODO remove variable
 
   // OVERLAP ATTRIBUTES
   /**

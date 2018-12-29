@@ -113,7 +113,7 @@ double PafEntry::GetSequenceIdentity() {
   return sequence_identity_;
 }
 long PafEntry::GetOverlapLength() {
-  return num_matches_;  //TODO check if here should be num_bases
+  return num_matches_;  // TODO check if here should be num_bases
 }
 long PafEntry::GetOverhangLenOrigin() {
   return oh_1_;

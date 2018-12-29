@@ -27,8 +27,8 @@
 #include "graph_structures/connection_node.h"
 #include "utils/project_utils.h"
 
-#ifndef SRC_UTILS_FILE_UTILS_H_H_
-#define SRC_UTILS_FILE_UTILS_H_H_
+#ifndef SRC_UTILS_FILE_UTILS_H_
+#define SRC_UTILS_FILE_UTILS_H_
 
 namespace file_utils {
 
@@ -102,4 +102,4 @@ std::string EdgeBeginningToString(
     std::unordered_map<std::string, FastaEntry*> fasta_map);
 };  // namespace file_utils
 
-#endif  // SRC_UTILS_FILE_UTILS_H_H_
+#endif  // SRC_UTILS_FILE_UTILS_H_

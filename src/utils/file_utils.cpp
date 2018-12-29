@@ -50,7 +50,7 @@ std::vector<FastaEntry> LoadFromFasta(std::string &filename,
     if (line.empty()) {
       continue;
     }
-    if (line.find('>') == 0 or line.find('@') == 0) {
+    if (line.find('>') == 0 || line.find('@') == 0) {
       if (!node_id.empty()) {
         if (node_id.find(' ') != 0) {
           node_id = node_id.substr(0, node_id.find(' '));

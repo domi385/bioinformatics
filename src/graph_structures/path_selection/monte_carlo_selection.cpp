@@ -20,3 +20,45 @@
  */
 
 #include "graph_structures/path_selection/monte_carlo_selection.h"
+
+#include <vector>
+#include <string>
+#include <unordered_set>
+#include <random>
+
+#include "graph_structures/edge.h"
+
+Edge *SelectEdge(std::vector<Edge*> &edges,
+                 std::unordered_set<std::string> &used_nodes) {
+  std::vector<Edge*> potential_edges;
+  double extension_score_sum;
+
+  for (int i = 0, end = edges.size(); i < end; i++) {
+    Edge* edge = edges[i];
+    if (used_nodes.find(edge->GetIdEnd()) == used_nodes.end()) {
+      extension_score_sum+=edge->GetExtensionScore();
+      potential_edges.push_back(edge);
+    }
+  }
+
+  if (potential_edges.size() == 0) {
+    return NULL;
+  }
+  if (potential_edges.size() == 1) {
+    return edges.front();
+  }
+
+  std::random_device rd;
+  std::mt19937 gen(rd());
+  std::uniform_real_distribution<> dis(0., extension_score_sum);
+  double selected = dis(gen);
+
+  for (int i = 0, end = potential_edges.size(); i < end; i++) {
+    Edge* currEdge = potential_edges.at(i);
+    selected -= currEdge->GetExtensionScore();
+    if (selected < 0) {
+      return currEdge;
+    }
+  }
+  return potential_edges.back();
+}

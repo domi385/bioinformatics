@@ -31,8 +31,8 @@
 #include "graph_structures/path_selection/node_selection.h"
 #include "graph_structures/connection_node.h"
 
-#ifndef SCAFFOLD_HERA
-#define SCAFFOLD_HERA
+#ifndef SRC_HERA_HERA_H_
+#define SRC_HERA_HERA_H_
 /**
  * Class contain HERA algorithm methods.
  */
@@ -119,6 +119,7 @@ class Hera {
    */
   ConnectionNode *ConnectNode(ConnectionNode *origin,
                               std::unordered_set<ConnectionNode *> targets);
+
  public:
   /**
    * Constructor initializes HERA with conting and read nodes maps.
@@ -174,6 +175,5 @@ class Hera {
   std::vector<ConnectionNode *> ConstructConnectionGraph(
       std::unordered_map<std::string,
         std::vector<Group *>> &conting_consensus_sequences);
-
 };
-#endif  // SCAFFOLD_HERA
+#endif  // SRC_HERA_HERA_H_

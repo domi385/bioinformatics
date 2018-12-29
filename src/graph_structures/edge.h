@@ -145,7 +145,6 @@ class Edge {
    * @return edge target overlap length
    */
   long GetOverlapLenTarget();
-
 };
 
 #endif  // SRC_GRAPH_STRUCTURES_EDGE_H_
