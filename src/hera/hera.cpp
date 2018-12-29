@@ -322,6 +322,9 @@ std::vector<ConnectionNode *> Hera::ConstructConnectionGraph(
     connection_made = false;
     for (int i = 0, end = origins.size(); i < end; i++) {
       ConnectionNode *curr_node = origins.at(i);
+      if (removed_nodes.find(curr_node) != removed_nodes.end()){
+        continue;
+      }
       double conflict_index = curr_node->GetConflictIndex();
       if (conflict_index > 0.7) {
         continue;
