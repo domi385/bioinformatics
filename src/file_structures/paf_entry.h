@@ -24,7 +24,10 @@
 
 #ifndef SRC_FILE_STRUCTURES_PAF_ENTRY_H_
 #define SRC_FILE_STRUCTURES_PAF_ENTRY_H_
-
+/**
+ * Class describes PAF file entry and overlap informations between two
+ * sequences.
+ */
 class PafEntry {
  private:
   // FILE ATTRIBUTES
@@ -113,18 +116,18 @@ class PafEntry {
   double extension_score_;
 
   // INITIALIZATION METHODS
-  //TODO continue doc
   /**
    * Method determines order between two sequences in PAF format.
-   * @param id1
-   * @param id2
-   * @param len1
-   * @param len2
-   * @param s1
-   * @param e1
-   * @param s2
-   * @param e2
-   * @return
+   * @param id1 first sequence id
+   * @param id2 second sequence id
+   * @param len1 first sequence length
+   * @param len2 second sequence length
+   * @param s1 overlap start coordinate on first sequence
+   * @param e1 overlap end coordinate of first sequence
+   * @param s2 overlap start coordinate on second sequence
+   * @param e2 overlap end coordinate on second sequence
+   * @return true if the order in the PAF file is such that second sequence
+   *         extends first sequence, false otherwise
    */
   bool DetermineOrder(std::string &id1,
                       std::string &id2,
@@ -135,6 +138,20 @@ class PafEntry {
                       long s2,
                       long e2);
 
+  /**
+   * Method stores given overlap information in class variables. Order of
+   * sequences is such that second sequence extends first sequence end.
+   * @param id1 first sequence id
+   * @param id2 second sequence id
+   * @param len1 first sequence length
+   * @param len2 second sequence length
+   * @param el1 first sequence extension length
+   * @param ol1 first sequence overlap length
+   * @param oh1 first sequence overhang length
+   * @param oh2 second sequence overhang length
+   * @param ol2 second sequence overlap length
+   * @param el2 second sequence extension length
+   */
   void Store(std::string &id1,
              std::string &id2,
              long len1,
@@ -151,23 +168,71 @@ class PafEntry {
   void CalculateScores();
 
  public:
-  // CONSTRUCTORS
+  /**
+   * Constructor that initializes PAF entry.
+   * @param paf_parts row from PAF file split by tab
+   */
   explicit PafEntry(std::vector<std::string> &paf_parts);
-
-  // GETTERS
-  std::string GetTargetId();
-  double GetOverlapScore();
-  double GetExtensionScore();
-  double GetSequenceIdentity();
-
-  long GetOverlapLength();
-  long GetOverhangLenOrigin();
-  long GetOverhangLenTarget();
-  long GetExtensionLenOrigin();
-  long GetExtensionLenTarget();
-  long GetOverlapLenOrigin();
-  long GetOverlapLenTarget();
+  /**
+   * Getter method for obtaining ovrlap origin id.
+   * @return overlap origin id
+   */
   std::string GetOriginId();
+  /**
+   * Getter method for obtaining overlap target id.
+   * @return overlap target id
+   */
+  std::string GetTargetId();
+  /**
+   * Getter method for obtaining overlap score.
+   * @return overlap score
+   */
+  double GetOverlapScore();
+  /**
+   * Getter method for obtaining extension score.
+   * @return extension score
+   */
+  double GetExtensionScore();
+  /**
+   * Getter method for obtaining sequence identity.
+   * @return sequence identity
+   */
+  double GetSequenceIdentity();
+  /**
+   * Getter method for obtaining overlap length.
+   * @return overlap length
+   */
+  long GetOverlapLength();
+  /**
+   * Getter method for obtaining overhang origin length.
+   * @return overhang origin length
+   */
+  long GetOverhangLenOrigin();
+  /**
+   * Getter method for obtaining overhang target length.
+   * @return overhang target length
+   */
+  long GetOverhangLenTarget();
+  /**
+   * Getter method for obtaining extension origin length.
+   * @return extension origin length
+   */
+  long GetExtensionLenOrigin();
+  /**
+   * Getter method for obtaining extension target length.
+   * @return extension target length
+   */
+  long GetExtensionLenTarget();
+  /**
+   * Getter method for obtaining overlap origin length.
+   * @return overlap origin length
+   */
+  long GetOverlapLenOrigin();
+  /**
+   * Getter method for obtaining overlap target length.
+   * @return overlap target length
+   */
+  long GetOverlapLenTarget();
 };
 
 #endif  // SRC_FILE_STRUCTURES_PAF_ENTRY_H_

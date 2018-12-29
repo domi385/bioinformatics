@@ -1,4 +1,5 @@
 /* Copyright 2018 Dunja Vesinger, Domagoj Pluščec
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
@@ -57,17 +58,45 @@ std::vector<PafEntry> LoadFromPAF(std::string &file_name);
 * @return true if the entry should be filtered
 */
 bool FilterPafEntries(PafEntry &entry);
-
+/**
+ * Method stores connection graph to file.
+ * @param file_name result filename
+ * @param connection_graph vector of connecting nodes representing connected
+ *                         contings
+ * @param fasta_map map that maps fasta entry id to fasta entry containing
+ *                  sequences data
+ */
 void SaveFastaFile(
     std::string& file_name, std::vector<ConnectionNode *>& connection_graph,
     std::unordered_map<std::string, FastaEntry*> fasta_map);
-
+/**
+ * Method converts edge to string with calcualtion from previous edge overlap.
+ * @param prevEdge previous edge
+ * @param edge current edge
+ * @param fasta_map map that maps fasta entry id to fasta entry containing
+ *                  sequences data
+ * @return string representing current edge
+ */
 std::string EdgeToString(
     Edge* prevEdge,
     Edge* edge, std::unordered_map<std::string, FastaEntry*> fasta_map);
+/**
+ * Method converts edge to string containing edge target extension.
+ * @param edge current edge
+ * @param fasta_map map that maps fasta entry id to fasta entry containing
+ *                  sequences data
+ * @return string representing edge target extension
+ */
 std::string EdgeEndToString(
     Edge* edge,
     std::unordered_map<std::string, FastaEntry*> fasta_map);
+/**
+ * Method converts edge to string containing edge origin extension and overlap.
+ * @param edge current edge
+ * @param fasta_map map that maps fasta entry id to fasta entry containing
+ *                  sequences data
+ * @return string representing edge origin extension and overlap
+ */
 std::string EdgeBeginningToString(
     Edge* edge,
     std::unordered_map<std::string, FastaEntry*> fasta_map);

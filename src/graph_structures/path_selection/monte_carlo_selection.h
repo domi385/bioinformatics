@@ -1,4 +1,5 @@
 /* Copyright 2018 Dunja Vesinger, Domagoj Pluščec
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
@@ -29,8 +30,18 @@
 #ifndef SRC_GRAPH_STRUCTURES_PATH_SELECTION_MONTE_CARLO_SELECTION_H_
 #define SRC_GRAPH_STRUCTURES_PATH_SELECTION_MONTE_CARLO_SELECTION_H_
 
-
+/**
+ * Node selection based on monte carlo method whch chooses node proportionaly to
+ * extension score.
+ */
 class MonteCarloSelection : public NodeSelection {
+  /**
+   * Method selects randomly an edge proportionally to its extension score, edge
+   * is not already used.
+   * @param edges current node edges
+   * @param used_nodes already selected nodes
+   * @return selected edge or NULL if the edge couldn't be selected
+   */
   Edge *SelectEdge(std::vector<Edge*> &edges,
                    std::unordered_set<std::string> &used_nodes) override;
 };

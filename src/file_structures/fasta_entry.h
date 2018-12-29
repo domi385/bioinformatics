@@ -23,7 +23,9 @@
 
 #ifndef SRC_FILE_STRUCTURES_FASTA_ENTRY_H_
 #define SRC_FILE_STRUCTURES_FASTA_ENTRY_H_
-
+/**
+ * Class describes fasta file entry.
+ */
 class FastaEntry {
  private:
   /**
