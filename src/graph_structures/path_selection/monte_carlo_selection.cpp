@@ -28,7 +28,7 @@
 
 #include "graph_structures/edge.h"
 
-Edge *SelectEdge(std::vector<Edge*> &edges,
+Edge *MonteCarloSelection::SelectEdge(std::vector<Edge*> &edges,
                  std::unordered_set<std::string> &used_nodes) {
   std::vector<Edge*> potential_edges;
   double extension_score_sum;

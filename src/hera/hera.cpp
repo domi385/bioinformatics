@@ -30,6 +30,7 @@
 
 #include "graph_structures/path_selection/extension_selection.h"
 #include "graph_structures/path_selection/overlap_selection.h"
+#include "graph_structures/path_selection/monte_carlo_selection.h"
 
 Hera::Hera(std::unordered_map<std::string, SequenceNode> &conting_nodes,
            std::unordered_map<std::string, SequenceNode> &read_nodes) {
@@ -68,9 +69,15 @@ std::vector<Path *> Hera::GeneratePaths(std::string &conting_id) {
   SequenceNode *conting_node = GetNode(conting_id);
   std::vector<Edge*> edges = conting_node->GetEdges();
   std::vector<Path *> paths;
+
   std::vector<NodeSelection *> selections;
   selections.push_back(new ExtensionSelection());
-  selections.push_back(new OverlapSelection());  // TODO add monte carlo
+  selections.push_back(new OverlapSelection());
+  int monte_carlo_repetition = 1;  // TODO monte carlo parameter
+  for (int i = 0; i < monte_carlo_repetition; i++){
+    selections.push_back(new MonteCarloSelection());
+  }
+
 
   for (int j = 0, j_end = selections.size(); j < j_end; j++) {
     NodeSelection *selection = selections[j];

@@ -31,8 +31,8 @@
 #define SRC_GRAPH_STRUCTURES_PATH_SELECTION_MONTE_CARLO_SELECTION_H_
 
 /**
- * Node selection based on monte carlo method whch chooses node proportionaly to
- * extension score.
+ * Node selection based on monte carlo method which chooses node proportionally
+ * to extension score.
  */
 class MonteCarloSelection : public NodeSelection {
   /**
