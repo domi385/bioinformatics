@@ -177,7 +177,7 @@ std::string EdgeToString(
 
   long beginning_index = prevEdge->GetOverhangTarget()
       +prevEdge->GetOverlapLenTarget();
-  long end_index = edge->GetExtensonLenOrigin()+edge->GetOverlapLenOrigin();
+  long end_index = edge->GetExtensionLenOrigin()+edge->GetOverlapLenOrigin();
 
   if (end_index-beginning_index <0) {
     return "";
@@ -193,7 +193,7 @@ std::string EdgeBeginningToString(
   FastaEntry* origin_entry = fasta_map.at(start_id);
   std::string origin_value = origin_entry->GetValue();
 
-  long index = edge->GetExtensonLenOrigin()+edge->GetOverlapLenOrigin();
+  long index = edge->GetExtensionLenOrigin()+edge->GetOverlapLenOrigin();
 
   return origin_value.substr(0, index);
 }

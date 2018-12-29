@@ -33,10 +33,18 @@
 
 #ifndef SCAFFOLD_HERA
 #define SCAFFOLD_HERA
-
+/**
+ * Class contain HERA algorithm methods.
+ */
 class Hera {
  private:
+  /**
+   * Method maps conting id to conting sequence node.
+   */
   std::unordered_map<std::string, SequenceNode> conting_nodes_;
+  /**
+   * Method maps read id to read sequence node.
+   */
   std::unordered_map<std::string, SequenceNode> read_nodes_;
 
   Path *GeneratePath(Path *path,

@@ -42,7 +42,7 @@ void Path::Finalize() {
 
   Edge* first_edge = edges_[0];
   long length =
-      first_edge->GetExtensonLenOrigin() + first_edge->GetOverlapLength();
+      first_edge->GetExtensionLenOrigin() + first_edge->GetOverlapLength();
 
   Edge* previus_edge = first_edge;
   for (int i = 1, end = edges_.size(); i < end; i++) {
@@ -50,12 +50,12 @@ void Path::Finalize() {
     long begining_index =
         previus_edge->GetOverhangTarget() + previus_edge->GetOverlapLenTarget();
     long end_index =
-        curr_edge->GetExtensonLenOrigin() + curr_edge->GetOverlapLenOrigin();
+        curr_edge->GetExtensionLenOrigin() + curr_edge->GetOverlapLenOrigin();
     length += end_index - begining_index;
     previus_edge = curr_edge;
   }
   Edge* last_edge = edges_.back();
-  length += last_edge->GetExtensonLenTarget();
+  length += last_edge->GetExtensionLenTarget();
 
   length_ = length;
   finalized_ = true;

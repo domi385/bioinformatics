@@ -69,11 +69,11 @@ long Edge::GetOverhangTarget() {
   return overhang_target_;
 }
 
-long Edge::GetExtensonLenOrigin() {
+long Edge::GetExtensionLenOrigin() {
   return extension_len_origin_;
 }
 
-long Edge::GetExtensonLenTarget() {
+long Edge::GetExtensionLenTarget() {
   return extension_len_target_;
 }
 
