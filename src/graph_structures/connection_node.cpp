@@ -110,8 +110,6 @@ void ConnectionNode::ConnectNodes(ConnectionNode *connection_node,
                   curr_consensus->GetTarget())
         == contained_nodes_.end()) {
       sequences_.push_back(target_sequences.at(i));
-      // TODO find can be expesive
-      // TODO maybe doing job twice, check later
     }
   }
 

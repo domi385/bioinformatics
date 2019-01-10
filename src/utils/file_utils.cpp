@@ -78,7 +78,9 @@ std::vector<FastaEntry> LoadFromFasta(std::string &filename,
   return sequence_nodes;
 }
 
-std::vector<PafEntry> LoadFromPAF(std::string &file_name) {
+std::vector<PafEntry> LoadFromPAF(std::string &file_name,
+                                  double min_sequence_identity,
+                                  double max_sequence_identity) {
   std::vector<PafEntry> sequence_overlaps;
   std::ifstream paf_file(file_name);
   std::string paf_delimiter("\t");
@@ -96,7 +98,9 @@ std::vector<PafEntry> LoadFromPAF(std::string &file_name) {
     std::vector<std::string>
         line_parts = project_utils::SplitString(line, paf_delimiter);
     PafEntry currEntry = PafEntry(line_parts);
-    if (FilterPafEntries(currEntry)) {
+    if (FilterPafEntries(currEntry,
+        min_sequence_identity,
+        max_sequence_identity)) {
       continue;
     }
     sequence_overlaps.push_back(currEntry);
@@ -104,9 +108,10 @@ std::vector<PafEntry> LoadFromPAF(std::string &file_name) {
   return sequence_overlaps;
 }
 
-bool FilterPafEntries(PafEntry &entry) {
-  return (entry.GetSequenceIdentity() < 0.5)
-      || (entry.GetSequenceIdentity() >= 1);
+bool FilterPafEntries(PafEntry &entry, double min_sequence_identity,
+    double max_sequence_identity) {
+  return (entry.GetSequenceIdentity() < min_sequence_identity)
+      || (entry.GetSequenceIdentity() >= max_sequence_identity);
 }
 
 void SaveFastaFile(

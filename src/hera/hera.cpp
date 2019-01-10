@@ -33,9 +33,13 @@
 #include "graph_structures/path_selection/monte_carlo_selection.h"
 
 Hera::Hera(std::unordered_map<std::string, SequenceNode> &conting_nodes,
-           std::unordered_map<std::string, SequenceNode> &read_nodes) {
+           std::unordered_map<std::string, SequenceNode> &read_nodes,
+           double max_conflict_index, int max_node_count, int n_monte_carlo) {
   conting_nodes_ = conting_nodes;
   read_nodes_ = read_nodes;
+  max_conflict_index_ = max_conflict_index;
+  max_node_count_ = max_node_count;
+  n_monte_carlo_ = n_monte_carlo;
 }
 
 void Hera::ConstructOverlapGraph(
@@ -73,7 +77,7 @@ std::vector<Path *> Hera::GeneratePaths(std::string &conting_id) {
   std::vector<NodeSelection *> selections;
   selections.push_back(new ExtensionSelection());
   selections.push_back(new OverlapSelection());
-  int monte_carlo_repetition = 1;  // TODO monte carlo parameter
+  int monte_carlo_repetition = n_monte_carlo_;
   for (int i = 0; i < monte_carlo_repetition; i++){
     selections.push_back(new MonteCarloSelection());
   }
@@ -121,7 +125,7 @@ Path *Hera::GeneratePath(Path* path,
     }
 
     edge_count++;
-    if (edge_count > 1000) {  // TODO definirati konstantu
+    if (edge_count > max_node_count_) {
       return NULL;
     }
     node_id = next_edge->GetIdEnd();
@@ -170,7 +174,6 @@ Group *Hera::GenerateConsenzusSequence(std::vector<Path *> &paths,
     }
     selected_group = current_group;
     max_frequency = curr_frequency;
-    // TODO provjeriti je li ova linija potrebna
   }
 
   return selected_group;
@@ -326,7 +329,7 @@ std::vector<ConnectionNode *> Hera::ConstructConnectionGraph(
         continue;
       }
       double conflict_index = curr_node->GetConflictIndex();
-      if (conflict_index > 0.7) {
+      if (conflict_index > max_conflict_index) {
         continue;
       }
 

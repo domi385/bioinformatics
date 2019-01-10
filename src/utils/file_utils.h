@@ -44,20 +44,24 @@ std::vector<FastaEntry> LoadFromFasta(std::string &filename,
                                       bool is_conting_file);
 
 /**
- * Function loads PAF file to vector of paf entries, it also filters PAF entries using filterPafEntries function.
+ * Function loads PAF file to vector of paf entries, it also filters PAF entries
+ * using filterPafEntries function.
  *
  * @param file_name paf file name
  *
  * @returns vector of filtered paf entries
  */
-std::vector<PafEntry> LoadFromPAF(std::string &file_name);
+std::vector<PafEntry> LoadFromPAF(std::string &file_name,
+                                  double min_sequence_identity,
+                                  double max_sequence_identity);
 
 /**
 * Function decides should you filter given paf entry.
 * @param entry paf entry for which to decide if it should be filtered
 * @return true if the entry should be filtered
 */
-bool FilterPafEntries(PafEntry &entry);
+bool FilterPafEntries(PafEntry &entry, double min_sequence_identity,
+    double max_sequence_identity);
 /**
  * Method stores connection graph to file.
  * @param file_name result filename

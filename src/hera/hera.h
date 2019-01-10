@@ -47,6 +47,18 @@ class Hera {
    */
   std::unordered_map<std::string, SequenceNode> read_nodes_;
   /**
+   * Max conflict index in connection graph resolving.
+   */
+  double max_conflict_index_;
+  /**
+   * Max node count in a path.
+   */
+  int max_node_count_;
+  /**
+   * Number of monte carlo iterations.
+   */
+  int n_monte_carlo_;
+  /**
    * Method generates path to given path using given starting edge and given
    * node selection instance.
    * @param path path to which to add nodes.
@@ -127,7 +139,9 @@ class Hera {
    * @param read_nodes map mapping read ids to read sequence nodes
    */
   Hera(std::unordered_map<std::string, SequenceNode> &conting_nodes,
-       std::unordered_map<std::string, SequenceNode> &read_nodes);
+       std::unordered_map<std::string, SequenceNode> &read_nodes,
+       double max_conflict_index, int max_node_count, int n_monte_carlo
+       );
   /**
    * Method construct overlap graph.
    * @param conting_read_paf_entries PAF entries calculated with conting read

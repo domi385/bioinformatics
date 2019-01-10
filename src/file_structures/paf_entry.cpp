@@ -31,7 +31,7 @@ PafEntry::PafEntry(std::vector<std::string> &paf_parts) {
   long s1 = stol(paf_parts.at(2));
   long e1 = stol(paf_parts.at(3));
   same_strand_ = paf_parts.at(4)
-      == "+";  // TODO handle same_strand depented on sequence order
+      == "+";
   std::string id2 = paf_parts.at(5);
   long len2 = stol(paf_parts.at(6));
   long s2 = stol(paf_parts.at(7));
@@ -113,7 +113,7 @@ double PafEntry::GetSequenceIdentity() {
   return sequence_identity_;
 }
 long PafEntry::GetOverlapLength() {
-  return num_matches_;  // TODO check if here should be num_bases
+  return num_matches_;
 }
 long PafEntry::GetOverhangLenOrigin() {
   return oh_1_;

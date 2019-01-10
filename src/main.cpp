@@ -53,6 +53,12 @@ int main(int argc, char **argv) {
   std::string read_read_overlap_file_name = argv[4];
   std::string output_file_name = argv[5];
 
+  double max_conflict_index = 0.7;
+  int max_node_count = 1000;
+  int n_monte_carlo = 1;
+  double min_sequence_identity_paf = 0.5;
+  double max_sequence_identity_paf = 1;
+
 
   std::unordered_map<std::string, FastaEntry*> fasta_p_map;
 
@@ -66,7 +72,7 @@ int main(int argc, char **argv) {
   std::unordered_map<std::string, SequenceNode>
       conting_nodes_map =
       project_utils::ConvertFastaToNodeMap(conting_fasta_entries);
-  for (int i=0, end = conting_fasta_entries.size(); i < end; i++) {
+  for (unsigned int i=0, end = conting_fasta_entries.size(); i < end; i++) {
     FastaEntry* curr_entry = &conting_fasta_entries.at(i);
     fasta_p_map.emplace(curr_entry->GetEntryId(), curr_entry);
   }
@@ -81,7 +87,7 @@ int main(int argc, char **argv) {
   std::unordered_map<std::string, SequenceNode>
       read_nodes_map = project_utils::ConvertFastaToNodeMap(read_fasta_entries);
 
-  for (int i=0, end = read_fasta_entries.size(); i < end; i++) {
+  for (unsigned int i=0, end = read_fasta_entries.size(); i < end; i++) {
     FastaEntry* curr_entry = &read_fasta_entries.at(i);
     fasta_p_map.emplace(curr_entry->GetEntryId(), curr_entry);
   }
@@ -91,7 +97,8 @@ int main(int argc, char **argv) {
   // LOAD READ_CONTING OVERLAP FROM PAF
   t = std::clock();
   std::vector<PafEntry> read_conting_paf_entries =
-      file_utils::LoadFromPAF(conting_read_overlap_file_name);
+      file_utils::LoadFromPAF(conting_read_overlap_file_name,
+          min_sequence_identity_paf, max_sequence_identity_paf);
   std::cout << "Number of read conting paf entries: "
             << read_conting_paf_entries.size() << std::endl;
   double read_conting_paf_loading_time = (std::clock() - t)/
@@ -100,14 +107,16 @@ int main(int argc, char **argv) {
   // LOAD READ_READ OVERLAP FROM PAF
   t = std::clock();
   std::vector<PafEntry> read_read_paf_entries =
-      file_utils::LoadFromPAF(read_read_overlap_file_name);
+      file_utils::LoadFromPAF(read_read_overlap_file_name,
+          min_sequence_identity_paf, max_sequence_identity_paf);
   std::cout << "Number of read read paf entries: "
             << read_read_paf_entries.size() << std::endl;
   double read_read_paf_loading_time = (std::clock() - t)/(double)CLOCKS_PER_SEC;
 
   // CONSTRUCT OVERLAP GRAPH
   t = std::clock();
-  Hera hera = Hera(conting_nodes_map, read_nodes_map);
+  Hera hera = Hera(conting_nodes_map, read_nodes_map,
+      max_conflict_index, max_node_count, n_monte_carlo);
   hera.ConstructOverlapGraph(read_conting_paf_entries, read_read_paf_entries);
   double overlap_graph_construction_time = (std::clock() - t)/(double)
                                                               CLOCKS_PER_SEC;
