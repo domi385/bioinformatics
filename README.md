@@ -112,20 +112,20 @@ bioinformatics/build/bioinformatics 'resources/data/EColi - synthetic/ecoli_test
 ```
 
 ## Authors
-* Authors: Dunja Vesinger, Domagoj Pluščec
-* Project made as part of Bioinformatics course at Faculty of Electrical Engineering and Computing, University of Zagreb
-* Academic year 2018/2019
-* Course link: https://www.fer.unizg.hr/en/course/bio
+* Authors: Dunja Vesinger, Domagoj Pluščec  
+* Project made as part of Bioinformatics course at Faculty of Electrical Engineering and Computing, University of Zagreb  
+* Academic year 2018/2019  
+* Course link: https://www.fer.unizg.hr/en/course/bio  
 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
 ## List of References
-> [H. Du i C. Liang. Assembly of chromosome-scale contigs by efficiently resolving repetitive sequences with long reads, 2018.] [hera]
-> [H. Li. Minimap and miniasm: fast mapping and de novo assembly for noisy long sequences, 2017.][minimap2]
-> [H. Li. Minimap2: pairwise alignment for nucleotide sequences, 2018.][doi]
-> Mile Šikic i Mirjana Domazet-Lošo. ´ Bioinformatika. 2013.
+> [H. Du i C. Liang. Assembly of chromosome-scale contigs by efficiently resolving repetitive sequences with long reads, 2018.] [hera]  
+> [H. Li. Minimap and miniasm: fast mapping and de novo assembly for noisy long sequences, 2017.][minimap2]  
+> [H. Li. Minimap2: pairwise alignment for nucleotide sequences, 2018.][doi]  
+> Mile Šikic i Mirjana Domazet-Lošo. ´ Bioinformatika. 2013.  
 
 [doi]: https://doi.org/10.1093/bioinformatics/bty191
 [paf]: https://github.com/lh3/miniasm/blob/master/PAF.md
