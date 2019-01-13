@@ -1,7 +1,8 @@
 # Improvement of the partially assembled genome with long readings
 
 Implementation of algorithm *[HERA - Highly efficient repeat assembly ][hera]* based on paper 
-> H. Du i C. Liang. Assembly of chromosome-scale contigs by efficiently resolving repetitive sequences with long reads, 2018.
+> H. Du i C. Liang. Assembly of chromosome-scale contigs by efficiently resolving repetitive sequences with long reads, 2018.  
+
 Goal of the program is to try to connect contigs by using reads.
 
 ## Getting Started 
@@ -119,6 +120,9 @@ EColi - synthetic
 ```
 bioinformatics/build/bioinformatics 'resources/data/EColi - synthetic/ecoli_test_contigs.fasta' 'resources/data/EColi - synthetic/ecoli_test_reads.fasta' 'resources/data/EColi - synthetic/overlaps_ecol.paf' 'resources/data/EColi - synthetic/read_overlaps_ecol.paf' results/result_cjejuni.fasta
 ```
+
+### Comparing results with reference
+
 
 ## Authors
 

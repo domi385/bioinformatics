@@ -38,12 +38,38 @@
 
 int main(int argc, char **argv) {
   clock_t start_t = std::clock();
-  int expected_num_arguments = 6;
-  if (argc != expected_num_arguments) {
+  int default_expected_num_arguments = 6;
+  int extended_expected_num_arguments = 11;
+  if (argc != default_expected_num_arguments &&
+      argc != extended_expected_num_arguments) {
+
     std::cout << "Invalid number of arguments, expected "
-              << expected_num_arguments << ", given " << argc
+              << default_expected_num_arguments <<" or "
+              << extended_expected_num_arguments
+              << ", given " << argc
               << std::endl;
     exit(-1);
+  }
+
+  double min_sequence_identity_paf;
+  double max_sequence_identity_paf;
+  int n_monte_carlo;
+  int max_node_count;
+  double max_conflict_index;
+
+
+  if (argc == default_expected_num_arguments){
+    max_conflict_index = 0.7;
+    max_node_count = 1000;
+    n_monte_carlo = 1;
+    min_sequence_identity_paf = 0.5;
+    max_sequence_identity_paf = 1;
+  }else{
+    min_sequence_identity_paf = std::stod(argv[6]);
+    max_sequence_identity_paf = std::stod(argv[7]);
+    n_monte_carlo = std::stoi(argv[8]);
+    max_node_count = std::stoi(argv[9]);
+    max_conflict_index = std::stod(argv[10]);
   }
 
   // INIT ARGUMENT VARIABLES
@@ -53,12 +79,13 @@ int main(int argc, char **argv) {
   std::string read_read_overlap_file_name = argv[4];
   std::string output_file_name = argv[5];
 
-  double max_conflict_index = 0.7;
-  int max_node_count = 1000;
-  int n_monte_carlo = 1;
-  double min_sequence_identity_paf = 0.5;
-  double max_sequence_identity_paf = 1;
-
+  // output parameter values
+  std::cout << "Parameter values" << std::endl
+            << "Min SI: " << min_sequence_identity_paf << std::endl
+            << "Max SI: " << max_sequence_identity_paf << std::endl
+            << "Monte Carlo iterations: "<<n_monte_carlo << std::endl
+            << "Max number of nodes in path: " << max_node_count << std::endl
+            << "Max conflict index: " << max_conflict_index << std::endl;
 
   std::unordered_map<std::string, FastaEntry*> fasta_p_map;
 
