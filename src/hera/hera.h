@@ -137,6 +137,9 @@ class Hera {
    * Constructor initializes HERA with conting and read nodes maps.
    * @param conting_nodes map mapping conting nodes id to conting sequence nodes
    * @param read_nodes map mapping read ids to read sequence nodes
+   * @param max_conflict_index maximal conflict index in connection graph
+   * @param max_node_count maximal node count in path generation
+   * @param n_monte_carlo number of monte carlo iterations
    */
   Hera(std::unordered_map<std::string, SequenceNode> &conting_nodes,
        std::unordered_map<std::string, SequenceNode> &read_nodes,

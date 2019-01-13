@@ -48,6 +48,10 @@ std::vector<FastaEntry> LoadFromFasta(std::string &filename,
  * using filterPafEntries function.
  *
  * @param file_name paf file name
+ * @param min_sequence_identity minimal sequence identity, values below are
+ *      filtered
+ * @param max_sequence_identity max sequence identity, values above are
+ *      filtered
  *
  * @returns vector of filtered paf entries
  */
@@ -58,6 +62,10 @@ std::vector<PafEntry> LoadFromPAF(std::string &file_name,
 /**
 * Function decides should you filter given paf entry.
 * @param entry paf entry for which to decide if it should be filtered
+* @param min_sequence_identity minimal sequence identity, values below are
+*      filtered
+* @param max_sequence_identity max sequence identity, values above are
+*      filtered
 * @return true if the entry should be filtered
 */
 bool FilterPafEntries(PafEntry &entry, double min_sequence_identity,
