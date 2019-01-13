@@ -1,12 +1,16 @@
 # Improvement of the partially assembled genome with long readings
+
 Implementation of algorithm *[HERA - Highly efficient repeat assembly ][hera]* based on paper 
 > H. Du i C. Liang. Assembly of chromosome-scale contigs by efficiently resolving repetitive sequences with long reads, 2018.
 Goal of the program is to try to connect contigs by using reads.
 
 ## Getting Started 
+
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+Script containing all commands can also be found in file [install.sh](install.sh)
 
 ### Prerequisites
+
 For building this project system needs to have installed git and cmake, for unpacking downloaded data it is necessary to have unzip or similar program, for calculating overlaps system needs to have minimap2 which requires libz for building from source. 
 
 Commands to setup prerequisites.
@@ -22,9 +26,11 @@ sudo apt-get install libz-dev
 ```
 
 ### Installing
+
 Guide for setting up the project. 
 
 #### Setting up minimap2
+
 Minimap2 is used to calculate overlaps between reads and reads, reads and contigs. Minimap2 is available on [GitHub](https://github.com/lh3/minimap2) and is described in 
 > Li, H. (2018). Minimap2: pairwise alignment for nucleotide sequences.
 > Bioinformatics. [doi:10.1093/bioinformatics/bty191][doi]
@@ -55,6 +61,7 @@ cd ../../
 ```
 
 #### Downloading example data
+
 Example data contains three datasets: BGrahamii (real), CJejuni (real), E. Coli (synthetic). Every dataset contains read sequences, contig sequences and a reference sequence.
 ```
 # data setup
@@ -74,6 +81,7 @@ cd ..
 ```
 
 #### Calculate overlaps
+
 Overlaps between reads and contigs or reads and reads are calculated using minimap2 and result is written in [PAF format][paf]. 
 BGrahamii - real
 ```
@@ -98,6 +106,7 @@ minimap2/minimap2 -x ava-pb 'resources/data/EColi - synthetic/ecoli_test_reads.f
 ```
 
 ### Running examples
+
 BGrahamii - real
 ```
 bioinformatics/build/bioinformatics 'resources/data/BGrahamii - real/BGrahamii - contigs.fasta' 'resources/data/BGrahamii - real/BGrahamii - reads.fastq' 'resources/data/BGrahamii - real/overlaps_bgra.paf' 'resources/data/BGrahamii - real/read_overlaps_bgra.paf' results/result_bgrahamii.fasta
@@ -112,6 +121,7 @@ bioinformatics/build/bioinformatics 'resources/data/EColi - synthetic/ecoli_test
 ```
 
 ## Authors
+
 * Authors: Dunja Vesinger, Domagoj Pluščec  
 * Project made as part of Bioinformatics course at Faculty of Electrical Engineering and Computing, University of Zagreb  
 * Academic year 2018/2019  
@@ -122,10 +132,10 @@ bioinformatics/build/bioinformatics 'resources/data/EColi - synthetic/ecoli_test
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
 ## List of References
-> [H. Du i C. Liang. Assembly of chromosome-scale contigs by efficiently resolving repetitive sequences with long reads, 2018.] [hera]  
+> [H. Du i C. Liang. Assembly of chromosome-scale contigs by efficiently resolving repetitive sequences with long reads, 2018.][hera]  
 > [H. Li. Minimap and miniasm: fast mapping and de novo assembly for noisy long sequences, 2017.][minimap2]  
 > [H. Li. Minimap2: pairwise alignment for nucleotide sequences, 2018.][doi]  
-> Mile Šikic i Mirjana Domazet-Lošo. ´ Bioinformatika. 2013.  
+> Mile Šikić i Mirjana Domazet-Lošo. Bioinformatika. 2013.  
 
 [doi]: https://doi.org/10.1093/bioinformatics/bty191
 [paf]: https://github.com/lh3/miniasm/blob/master/PAF.md
