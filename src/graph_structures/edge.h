@@ -109,7 +109,7 @@ class Edge {
    * Getter method for obtaining edge sequence identity.
    * @return edge sequence identity
    */
-  double GetSequenceIdentity();  // TODO why is sequence identity not used ?
+  double GetSequenceIdentity();
   /**
    * Getter method for obtaining edge overlap length.
    * @return edge overlap length

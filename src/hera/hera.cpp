@@ -78,7 +78,7 @@ std::vector<Path *> Hera::GeneratePaths(std::string &conting_id) {
   selections.push_back(new ExtensionSelection());
   selections.push_back(new OverlapSelection());
   int monte_carlo_repetition = n_monte_carlo_;
-  for (int i = 0; i < monte_carlo_repetition; i++){
+  for (int i = 0; i < monte_carlo_repetition; i++) {
     selections.push_back(new MonteCarloSelection());
   }
 
@@ -121,7 +121,7 @@ Path *Hera::GeneratePath(Path* path,
     std::vector<Edge*> edges = node->GetEdges();
     Edge *next_edge = selection->SelectEdge(edges, traversed_nodes);
     if (next_edge == NULL) {
-      return NULL;  // TODO povratak na prethodni cvor
+      return NULL;
     }
 
     edge_count++;
@@ -259,8 +259,6 @@ std::vector<Group *> Hera::GroupPaths(std::vector<Path *> &paths,
   }
   path_groups.push_back(new Group(curr_paths, target_id));
 
-  // TODO join widnow groups
-
   return path_groups;
 }
 
@@ -280,7 +278,6 @@ std::vector<ConsensusSequence *> Hera::CreateConsensusSequenceFromGroups(
         new ConsensusSequence(groups.at(i), origin, target_node);
     consensus_sequences.push_back(new_sequence);
   }
-  // TODO check if groups are cleared somewhere, if not it should be done
   return consensus_sequences;
 }
 
