@@ -8,7 +8,7 @@ Goal of the program is to try to connect contigs by using reads.
 ## Getting Started 
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
-Script containing all commands can also be found in file [install.sh](install.sh)
+Script containing all commands can also be found in the file [install.sh](install.sh)
 
 ### Prerequisites
 
@@ -126,7 +126,7 @@ bioinformatics/build/bioinformatics 'resources/data/EColi - synthetic/ecoli_test
 
 ## Authors
 
-* Authors: Dunja Vesinger, Domagoj Pluščec  
+* Authors: Domagoj Pluščec, Dunja Vesinger  
 * Project made as part of Bioinformatics course at Faculty of Electrical Engineering and Computing, University of Zagreb  
 * Academic year 2018/2019  
 * Course link: https://www.fer.unizg.hr/en/course/bio  
