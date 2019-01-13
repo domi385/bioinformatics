@@ -329,7 +329,7 @@ std::vector<ConnectionNode *> Hera::ConstructConnectionGraph(
         continue;
       }
       double conflict_index = curr_node->GetConflictIndex();
-      if (conflict_index > max_conflict_index) {
+      if (conflict_index > max_conflict_index_) {
         continue;
       }
 
