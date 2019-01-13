@@ -1,12 +1,15 @@
 # Improvement of the partially assembled genome with long readings
+Implementation of algorithm *[HERA - Highly efficient repeat assembly ][hera]* based on paper 
+> H. Du i C. Liang. Assembly of chromosome-scale contigs by efficiently resolving repetitive sequences with long reads, 2018.
+Goal of the program is to try to connect contigs by using reads.
 
 ## Getting Started 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
 ### Prerequisites
-For building this project system needs to have instaled git and cmake, for unpacking downloaded data it is necessary to have unzip or similar program, for calculating overlaps system needs to have minimap2 which requires libz for building. 
+For building this project system needs to have installed git and cmake, for unpacking downloaded data it is necessary to have unzip or similar program, for calculating overlaps system needs to have minimap2 which requires libz for building from source. 
 
-Commands to setup prerequsites.
+Commands to setup prerequisites.
 ```
 # install packages
 sudo apt-get update
@@ -19,10 +22,10 @@ sudo apt-get install libz-dev
 ```
 
 ### Installing
-Guide for seting up the project. 
+Guide for setting up the project. 
 
 #### Setting up minimap2
-Minimap2 is used to calculate overlaps between reads and reads, reads and contigs. Minimap is avaliable on [github](https://github.com/lh3/minimap2) and is described in 
+Minimap2 is used to calculate overlaps between reads and reads, reads and contigs. Minimap2 is available on [GitHub](https://github.com/lh3/minimap2) and is described in 
 > Li, H. (2018). Minimap2: pairwise alignment for nucleotide sequences.
 > Bioinformatics. [doi:10.1093/bioinformatics/bty191][doi]
 
@@ -34,10 +37,10 @@ make
 cd ..
 ```
 
-#### Build project source
+#### Build the project source
 
 ```
-# clone project from github and build
+# clone project from GitHub and build
 git clone https://github.com/domi385/bioinformatics.git
 cd bioinformatics
 mkdir build
@@ -52,7 +55,7 @@ cd ../../
 ```
 
 #### Downloading example data
-Example data is consisted of three datasets: BGrahamii (real), CJejuni (real), EColi (synthetic). Every dataset contains read sequences, contig sequences and reference sequence.
+Example data contains three datasets: BGrahamii (real), CJejuni (real), E. Coli (synthetic). Every dataset contains read sequences, contig sequences and a reference sequence.
 ```
 # data setup
 mkdir resources
@@ -66,12 +69,12 @@ mv 'Bioinformatika - scaffolding' data
 # inside data directory we have 3 directories 
 # 'BGrahamii - real'  'CJejuni - real'  'EColi - synthetic'
 # which contain initial data
-# return to initial directory
+# return to the initial directory
 cd ..
 ```
 
 #### Calculate overlaps
-Overlaps between reads and contigs or reads and reads are calculated using minimap2 and result is writen in [PAF format][paf]. 
+Overlaps between reads and contigs or reads and reads are calculated using minimap2 and result is written in [PAF format][paf]. 
 BGrahamii - real
 ```
 # read read overlaps
@@ -110,7 +113,7 @@ bioinformatics/build/bioinformatics 'resources/data/EColi - synthetic/ecoli_test
 
 ## Authors
 * Authors: Dunja Vesinger, Domagoj Pluščec
-* Project made as part of Bioinformatics cours at Faculty of Electrical Engineering and Computing, University of Zagreb
+* Project made as part of Bioinformatics course at Faculty of Electrical Engineering and Computing, University of Zagreb
 * Academic year 2018/2019
 * Course link: https://www.fer.unizg.hr/en/course/bio
 
@@ -118,5 +121,13 @@ bioinformatics/build/bioinformatics 'resources/data/EColi - synthetic/ecoli_test
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
+## List of References
+> [H. Du i C. Liang. Assembly of chromosome-scale contigs by efficiently resolving repetitive sequences with long reads, 2018.] [hera]
+> [H. Li. Minimap and miniasm: fast mapping and de novo assembly for noisy long sequences, 2017.][minimap2]
+> [H. Li. Minimap2: pairwise alignment for nucleotide sequences, 2018.][doi]
+> Mile Šikic i Mirjana Domazet-Lošo. ´ Bioinformatika. 2013.
+
 [doi]: https://doi.org/10.1093/bioinformatics/bty191
 [paf]: https://github.com/lh3/miniasm/blob/master/PAF.md
+[minimap2]: https://arxiv.org/abs/1512.01801
+[hera]: https://www.biorxiv.org/content/early/2018/06/13/345983
