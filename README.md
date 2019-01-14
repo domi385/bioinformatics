@@ -106,6 +106,34 @@ minimap2/minimap2 -x ava-pb 'resources/data/EColi - synthetic/ecoli_test_reads.f
 minimap2/minimap2 -x ava-pb 'resources/data/EColi - synthetic/ecoli_test_reads.fasta' 'resources/data/EColi - synthetic/ecoli_test_contigs.fasta' > 'resources/data/EColi - synthetic/overlaps_ecol.paf'
 ```
 
+### Program parameters
+Program can be run by using folowing command template:
+```
+bioinformatics contigs_path reads_path conting_read_overlaps_path read_read_overlaps_path result_path [si_min si_max n_monte_carlo n_max_node ci_max]
+```
+where parameters represent following:
+* conting_path - path to file containing contig sequences in FASTA or FASTQ format
+* reads_path - path to file containing read sequences in FASTA or FASTQ format
+* conting_read_overlaps_path - path to file containing overlaps between conting sequences and read sequences in PAF format (generated with minimap2)
+* read_read_overlaps_path - path to file containing overlaps between read sequences with themselves in PAF format (generated with minimap2)
+* result_path - path to file where result should be written
+* si_min - minimal sequence identity, overlaps with smaller SI will be filtered 
+* si_max - maximal seuqnce identity, overlaps with SI bigger of equal to si_max will be filtered
+* n_monte_carlo - number of Monte Carlo path generation iterations
+* ci_max - maximal conflict index in connection graph, if the node has conflict index equal or greater than ci_max it won't be connected to other node
+
+Program can accept 5 or 10 parameters where parameters given in [] are optional. Default values are si_min = 0.5, si_max = 1, n_monte_carlo = 1, n_max_node = 1000, ci_max = 0.7
+
+Example of running program with default parameters:
+```
+bioinformatics/build/bioinformatics 'resources/data/BGrahamii - real/BGrahamii - contigs.fasta' 'resources/data/BGrahamii - real/BGrahamii - reads.fastq' 'resources/data/BGrahamii - real/overlaps_bgra.paf' 'resources/data/BGrahamii - real/read_overlaps_bgra.paf' results/result_bgrahamii.fasta
+```
+
+Example of running program with custom parameters:
+```
+bioinformatics/build/bioinformatics resources/data/CJejuni - real/CJejuni - contigs.fasta resources/data/CJejuni - real/CJejuni - reads.fastq resources/data/CJejuni - real/overlaps_cjej.paf resources/data/CJejuni - real/read_overlaps_cjej.paf results/result_cjejuni.fasta 0.5 1 10 1000 0.7
+```
+
 ### Running examples
 
 BGrahamii - real
@@ -122,7 +150,7 @@ bioinformatics/build/bioinformatics 'resources/data/EColi - synthetic/ecoli_test
 ```
 
 ### Comparing results with reference
-
+Resulting sequences can be compared to reference using [Genome Pair Rapid Dotter (Gepard)][gepard]. 
 
 ## Authors
 
@@ -140,8 +168,10 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 > [H. Li. Minimap and miniasm: fast mapping and de novo assembly for noisy long sequences, 2017.][minimap2]  
 > [H. Li. Minimap2: pairwise alignment for nucleotide sequences, 2018.][doi]  
 > Mile Šikić i Mirjana Domazet-Lošo. Bioinformatika. 2013.  
+> [Krumsiek J, Arnold R, Rattei T. Gepard: A rapid and sensitive tool for creating dotplots on genome scale. Bioinformatics 2007; 23(8): 1026-8. PMID: 17309896][gepard]
 
 [doi]: https://doi.org/10.1093/bioinformatics/bty191
 [paf]: https://github.com/lh3/miniasm/blob/master/PAF.md
 [minimap2]: https://arxiv.org/abs/1512.01801
 [hera]: https://www.biorxiv.org/content/early/2018/06/13/345983
+[gepard]:http://cube.univie.ac.at/gepard

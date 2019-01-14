@@ -57,11 +57,12 @@ int main(int argc, char **argv) {
   double max_conflict_index;
 
   if (argc == default_expected_num_arguments) {
-    max_conflict_index = 0.7;
-    max_node_count = 1000;
-    n_monte_carlo = 1;
     min_sequence_identity_paf = 0.5;
     max_sequence_identity_paf = 1;
+    n_monte_carlo = 1;
+    max_node_count = 1000;
+    max_conflict_index = 0.7;
+
   } else {
     min_sequence_identity_paf = std::stod(argv[6]);
     max_sequence_identity_paf = std::stod(argv[7]);
